@@ -1,0 +1,17 @@
+#Ignoring generated codes
+src/generated/
+
+#Ignoring build outputs
+out/
+build/
+
+#Ignoring Ninja CMake Tool files
+ninja/
+ninja*
+
+#Visual Studio/Visual Studio Code Files
+.vs/
+.vscode/
+
+#CMocka
+cmocka/

@@ -1,0 +1,17 @@
+
+typedef struct LinkedList@FUNC_NAME@
+{
+    struct LinkedList@FUNC_NAME@* Previous;
+
+    @FUNC_TYPE@* Value;
+
+    struct LinkedList@FUNC_NAME@* Next;
+} LinkedList@FUNC_NAME@;
+
+LinkedList@FUNC_NAME@* @FUNC_NAME@ArrayToLinkedList(@FUNC_TYPE@* arr, size_t size);
+
+//void @FUNC_NAME@(@FUNC_TYPE@);
+
+@FUNC_TYPE@ TestSymbol@FUNC_NAME@();
+
+int TestSymbolGlobal@FUNC_NAME@();

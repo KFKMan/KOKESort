@@ -1,0 +1,16 @@
+Input: First node of LinkedList to sort named "ListToSort"
+OUTPUT: Sorted LinkedList
+START
+    Create new LinkedList named "SortedList"
+    foreach item in ListToSort:
+        GetInsertIndex(SortedList, item)
+
+
+
+
+END
+
+Function GetInsertIndex(LinkedList, value):
+    Find best position for value in the LinkedList via BinarySearch as LinkedList Node "node"
+    return node
+END

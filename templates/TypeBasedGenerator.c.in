@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "@FUNC_NAME@.h"
+
+LinkedList@FUNC_NAME@* @FUNC_NAME@ArrayToLinkedList(@FUNC_TYPE@* arr, size_t size) {
+    //Argument checks
+    if (!arr)
+    {
+        #ifdef ERROR_PRINT
+        fprintf(stderr, "'arr' argument can't be NULL\n");
+        #endif
+
+        return NULL;
+    }
+
+    if(size == 0)
+    {
+        #ifdef ERROR_PRINT
+        fprintf(stderr, "'size' argument can't be zero\n");
+        #endif
+        
+        return NULL;
+    }
+
+    //Allocate all nodes in one
+    LinkedList@FUNC_NAME@* nodes = (LinkedList@FUNC_NAME@*)calloc(size, sizeof(LinkedList@FUNC_NAME@));
+    if (!nodes) {
+        #ifdef ERROR_PRINT
+        fprintf(stderr, "Memory Allocation Error\n");
+        #endif
+
+        return NULL;
+    }
+
+    //TODO: Can be more optimized
+    for (size_t i = 0; i < size; i++) {
+        nodes[i].Value = &arr[i];
+
+        if (i > 0) 
+        {
+            nodes[i].Previous = &nodes[i - 1];
+            nodes[i - 1].Next = &nodes[i];
+        }
+    }
+
+    //Returning first element
+    return &nodes[0]; 
+}
+
+/*
+void @FUNC_NAME@(@FUNC_PARAMS@){
+    int x = 5;
+    printf("%d",x);
+}
+*/
+
+/// @brief Function symbol for testing
+/// @return Always return 1
+@FUNC_TYPE@ TestSymbol@FUNC_NAME@(){
+    return 1;
+}
+
+int TestSymbolGlobal@FUNC_NAME@(){
+    return 1;
+}
