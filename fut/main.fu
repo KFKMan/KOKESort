@@ -1,0 +1,61 @@
+public static class KOKESort
+{
+    public static int[]# Sort(int[] array, int size)
+    {
+        if(size < 1)
+        {
+            int[]# arr = new int[1];
+            return arr;
+        }
+
+        int[]# sortedArray = new int[size];
+        int arraySize = 0;
+
+        for(int i = 0; i < size; i++)
+        {
+            int element = array[i];
+
+            AddElementToSortedArray(sortedArray, arraySize, element);
+            arraySize++;
+        }
+
+        return sortedArray;
+    }
+
+    public static void AddElementToSortedArray(int[]# sortedArray, int arraySize, int element)
+    {
+        int insertIndex = GetInsertIndexBS(sortedArray, arraySize, element);
+
+        int currentIndex = arraySize;
+
+        while (currentIndex > insertIndex)
+        {
+            sortedArray[currentIndex] = sortedArray[currentIndex - 1];
+            currentIndex--;
+        }
+
+        sortedArray[insertIndex] = element;
+    }
+
+    public static int GetInsertIndexBS(int[]# sortedArray, int arraySize, int element)
+    {
+        int left = 0;
+        int right = arraySize;
+
+        while (left < right)
+        {
+            int mid = left + (right - left) / 2;
+
+            if (sortedArray[mid] < element)
+            {
+                left = mid + 1;
+            }
+            else
+            {
+                right = mid;
+            }
+        }
+
+        return left;
+    }
+}

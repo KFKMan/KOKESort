@@ -42,7 +42,7 @@ int main(void)
         // 2. Expected value
 
         char* linePtr = NULL;
-        char *array_str = strtok_r(line, ";", &linePtr);
+        char *array_str = strtok_s(line, ";", &linePtr);
 
         if (!array_str)
         {
@@ -58,7 +58,7 @@ int main(void)
         // Reading array with " " join/split character
         int arr[MAX_NUM_ELEMENTS];
         char* arrContext = NULL;
-        int count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
+        size_t count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
 
         #ifdef DEBUG
         printf("Calling Function... \n");
@@ -83,7 +83,7 @@ int main(void)
             PrintArray(arr, count);
             printf("\n");
             char buffer[4096] = "";
-            SerializeBinaryTree(result, buffer);
+            SerializeBinaryTree(result, buffer, 4096);
             printf("Result: %s", buffer);
             printf("\n");
             //printf("Result: ");

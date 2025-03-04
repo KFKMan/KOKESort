@@ -31,61 +31,44 @@ int main(void)
             continue;
         }
 
+        char* linePtr = line;
+
         // Getting data
         // 1. Array
-        // 2. Expected value
-
-        char* linePtr = NULL;
-        char *array_str = strtok_r(line, ";", &linePtr);
-        char *element_str = strtok_r(NULL, ";", &linePtr);
-        char *expected_str = strtok_r(NULL, ";", &linePtr);
+        // 2. Target value
+        // 3. Expected value
+        char *array_str = strtok_s(line, ";", &linePtr);
+        char *target_str = strtok_s(NULL, ";", &linePtr);
+        char *expected_str = strtok_s(NULL, ";", &linePtr);
 
         // If any of them is null, continue
-        if (!array_str || !element_str || !expected_str)
+        if (!array_str || !target_str || !expected_str)
         {
             fprintf(stderr, "Format error: %s\n", line);
             return EXIT_FAILURE;
             //continue;
         }
 
-        #ifdef DEBUG
-        printf("array_str: %s\n", array_str);
-        printf("expected_str: %s\n", expected_str);
-        #endif
+        // Converting to integers
+        int target = atoi(target_str);
+        int expected = atoi(expected_str);
 
         // Reading array with " " join/split character
         int arr[MAX_NUM_ELEMENTS];
         char* arrContext = NULL;
-        int count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
-
-        int element = atoi(element_str);
-        
-        int expectedArr[MAX_NUM_ELEMENTS];
-        char* expectedContext = NULL;
-        int expectedCount = ReadArray(expectedArr, expected_str, " ", &expectedContext, MAX_NUM_ELEMENTS);
+        size_t count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
 
         // Calling function and getting result
-        int* result = InsertToSortedArray(arr, count, element);
+        size_t result = FindInsertIndexBS(arr, count, target);
         test_count++;
 
-        if (ArrayEqual(result, expectedArr, expectedCount) == 0)
+        if (result == expected)
         {
-            printf("Test %d PASSED: \n", test_count);
+            printf("Test %d PASSED: target = %d, expected = %d\n", test_count, target, expected);
         }
         else
         {
-            printf("Test %d FAILED: \n", test_count);
-            printf("Array: ");
-            PrintArray(arr, count);
-            printf("\n");
-            printf("Element: %d", element);
-            printf("\n");
-            printf("Result: ");
-            PrintArray(result, count);
-            printf("\n");
-            printf("Expected: ");
-            PrintArray(expectedArr, expectedCount);
-            printf("\n");
+            printf("Test %d FAILED: target = %d, expected = %d, getted = " SIZE_T_IDENTIFIER "\n", test_count, target, expected, result);
             failed_count++;
         }
     }

@@ -7,6 +7,8 @@ set(CMAKE_CXX_COMPILER "${MULL_DIR}/clang++")
 set(CMAKE_C_COMPILER "${CMAKE_SOURCE_DIR}/tools/mull/clang")
 ]]
 
+set(USE_GENERATOR "")
+
 if(USE_GENERATOR)
 # ➤ Fonksiyonları ve parametrelerini tanımla
 set(FUNCTIONS

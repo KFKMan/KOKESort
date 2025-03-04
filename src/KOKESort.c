@@ -5,7 +5,7 @@
 
 /// @brief Finding Insert Index via Binary Search
 /// @return Index to Insert, -1 if error accoured
-int FindInsertIndexBS(VariableType* arr, size_t size, VariableType element)
+size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element)
 {
     //log two base n => logn Complexity
 
@@ -23,12 +23,12 @@ int FindInsertIndexBS(VariableType* arr, size_t size, VariableType element)
         return 0;
     }
 
-    int left = 0;
-    int right = size;
+    size_t left = 0;
+    size_t right = size;
 
     while (left < right)
     {
-        int mid = left + (right - left) / 2;
+        size_t mid = left + (right - left) / 2;
 
         if (arr[mid] < element)
         {
@@ -64,13 +64,13 @@ VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType e
         return newArr;
     }
 
-    int insertIndex = FindInsertIndexBS(arr, size, element); //logN Complexity
+    size_t insertIndex = FindInsertIndexBS(arr, size, element); //logN Complexity
     
     //QA: Realloc or already allocated block can be used for optimization
     VariableType* newArr = calloc(size + 1, sizeof(VariableType));
 
-    unsigned int arrIndex = 0;
-    unsigned int newArrIndex = 0;
+    size_t arrIndex = 0;
+    size_t newArrIndex = 0;
 
     //QA: Don't need to set all of them, just shift from the Insert Index
 
@@ -97,23 +97,9 @@ VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType e
 /// @param element Element To Insert
 void InsertToSortedAllocatedArray(VariableType* arr, size_t currentSize, VariableType element)
 {
-    if(arr == NULL || currentSize == 0)
-    {
-        #ifdef DEBUG
-        debugPrint("Array NULL or Array Size is Zero, returning insert element");
-        #endif
-
-        VariableType* newArr = malloc(sizeof(VariableType));  // Allocate space for one element
-        if (newArr != NULL)
-        {
-            newArr[0] = element;
-        }
-        return newArr;
-    }
-
-    int insertIndex = FindInsertIndexBS(arr, currentSize, element); //logN Complexity
+    size_t insertIndex = FindInsertIndexBS(arr, currentSize, element); //logN Complexity
     
-    unsigned int currentIndex = currentSize;
+    size_t currentIndex = currentSize;
 
     while (currentIndex > insertIndex)
     {
@@ -152,16 +138,13 @@ VariableType* SortV1(VariableType* arr, size_t size)
     }
 
     size_t selfArraySize = 0;
-    VariableType* selfArray = NULL;
+    VariableType* selfArray = calloc(size, sizeof(VariableType));
 
     for(unsigned int i = 0; i < size; i++) //N Complexity, 0->N
     {
         VariableType element = arr[i];
-        VariableType* tempArray = InsertToSortedArray(selfArray, selfArraySize, element); //N+logN Complexity
-        
-        free(selfArray);
+        InsertToSortedAllocatedArray(selfArray, selfArraySize, element);
 
-        selfArray = tempArray;
         selfArraySize++;
     }
 

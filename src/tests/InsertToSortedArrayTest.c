@@ -36,11 +36,12 @@ int main(void)
         // 2. Expected value
 
         char* linePtr = NULL;
-        char *array_str = strtok_r(line, ";", &linePtr);
-        char *expected_str = strtok_r(NULL, ";", &linePtr);
+        char *array_str = strtok_s(line, ";", &linePtr);
+        char *element_str = strtok_s(NULL, ";", &linePtr);
+        char *expected_str = strtok_s(NULL, ";", &linePtr);
 
         // If any of them is null, continue
-        if (!array_str || !expected_str)
+        if (!array_str || !element_str || !expected_str)
         {
             fprintf(stderr, "Format error: %s\n", line);
             return EXIT_FAILURE;
@@ -55,25 +56,29 @@ int main(void)
         // Reading array with " " join/split character
         int arr[MAX_NUM_ELEMENTS];
         char* arrContext = NULL;
-        int count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
+        size_t count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
 
+        int element = atoi(element_str);
+        
         int expectedArr[MAX_NUM_ELEMENTS];
         char* expectedContext = NULL;
-        int expectedCount = ReadArray(expectedArr, expected_str, " ", &expectedContext, MAX_NUM_ELEMENTS);
+        size_t expectedCount = ReadArray(expectedArr, expected_str, " ", &expectedContext, MAX_NUM_ELEMENTS);
 
         // Calling function and getting result
-        int* result = SortV1(arr, count);
+        int* result = InsertToSortedArray(arr, count, element);
         test_count++;
 
-        if (ArrayEqual(result, expectedArr, count) == 0)
+        if (ArrayEqual(result, expectedArr, expectedCount) == 0)
         {
             printf("Test %d PASSED: \n", test_count);
         }
         else
         {
             printf("Test %d FAILED: \n", test_count);
-            printf("Parameter: ");
+            printf("Array: ");
             PrintArray(arr, count);
+            printf("\n");
+            printf("Element: %d", element);
             printf("\n");
             printf("Result: ");
             PrintArray(result, count);

@@ -5,30 +5,39 @@ src/generated/
 out/
 build/
 
+src/out
+src/build
+
 #Ignoring Ninja CMake Tool files
 ninja/
 ninja*
+
+src/ninja/
+src/ninja*
 
 #Visual Studio/Visual Studio Code Files
 .vs/
 .vscode/
 
 #CMocka
+src/cmocka/
 cmocka/
 
-ctest_output.txt
-ctest_output.txt*
+src/ctest_output.txt
+src/ctest_output.txt*
 
+src/tools/
 tools/
 
+src/mull.zip
 mull.zip
 
-cmocka-install.bat
-mull-install*
+src/cmocka-install.bat
+src/mull-install*
 
-dumbmutate/
-dumbmutate*
+src/dumbmutate/
+src/dumbmutate*
 
-build_dumbmutate*
+src/build_dumbmutate*
 
-buildwithmutationtest*
+src/buildwithmutationtest*

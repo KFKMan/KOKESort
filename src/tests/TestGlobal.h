@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "SecureFunctions.h"
 #include "KOKESort.h"
 
-#if _WIN32
+/*
+#ifdef _MSC_VER
 #define SECURE_FUNCTIONS
 #endif
 
@@ -41,6 +43,19 @@ int strcat_s_fake(char *_Destination, rsize_t _SizeInBytes, const char *_Source)
 #define strcat_r strcat_s_fake
 #endif
 
+#ifdef SECURE_FUNCTIONS
+#define fscanf_r fscanf_s //inline int __cdecl fscanf_s(FILE *const _Stream, const char *const _Format, ...)
+#else
+#define fscanf_r fscanf //inline int __cdecl fscanf(FILE *const _Stream, const char *const _Format, ...)
+#endif
+
+#ifndef SECURE_FUNCTIONS
+#define strcat_r strcat_s //errno_t __cdecl strcat_s(char *_Destination, rsize_t _SizeInBytes, const char *_Source)
+#else
+#define strcat_r(dest, bytes, source) strcat(dest, source) //char *__cdecl strcat(char *_Destination, const char *_Source)
+#endif
+*/
+
 #ifdef _WIN32
 #include <direct.h> // Windows için _getcwd()
 #define getcwd _getcwd
@@ -55,19 +70,10 @@ int strcat_s_fake(char *_Destination, rsize_t _SizeInBytes, const char *_Source)
 /// @return 0 if success, another value if failed 
 int OpenFile(FILE** fp, const char* filename, const char* mode)
 {
-    #ifdef SECURE_FUNCTIONS
     if(fopen_s(fp, filename, mode) != 0){
         return 1;
     }
     return 0;
-    #else
-    *fp = fopen(filename, mode);
-    if(*fp == NULL)
-    {
-        return 1;
-    }
-    return 0;
-    #endif
 }
 
 int SearchAndOpenFile(FILE** file, const char* filename, const char* mode)
@@ -98,26 +104,26 @@ int SearchAndOpenFile(FILE** file, const char* filename, const char* mode)
 const char* ChangeFileExtension(const char* fileName, const char* extension) 
 {
     static char newFileName[256];
-    strcpy_r(newFileName, 256, fileName);
+    strcpy_s(newFileName, 256, fileName);
     char* dotPos = strrchr(newFileName, '.');
     if (dotPos) 
     {
         *dotPos = '\0'; // Uzantıyı sil
     }
-    strcat_r(newFileName, 256, extension); // Yeni uzantıyı ekle
+    strcat_s(newFileName, 256, extension); // Yeni uzantıyı ekle
     return newFileName;
 }
 
 #define TryOpenTestDataFile(file, mode) SearchAndOpenFile(file, ChangeFileExtension(__FILE__, ".txt"), mode)
 
-int ReadArray(int* arr, char* str, const char* delimiter, char** context, int limit)
+size_t ReadArray(int* arr, char* str, const char* delimiter, char** context, size_t limit)
 {
-    int count = 0;
-    char *token = strtok_r(str, delimiter, context);
+    size_t count = 0;
+    char *token = strtok_s(str, delimiter, context);
     while (token && count < limit)
     {
         arr[count++] = atoi(token);
-        token = strtok_r(NULL, delimiter, context);
+        token = strtok_s(NULL, delimiter, context);
     }
 
     return count;
@@ -128,9 +134,9 @@ int ReadArray(int* arr, char* str, const char* delimiter, char** context, int li
 /// @param otherArr 
 /// @param size 
 /// @return 0 if equal, other value if not equal 
-int ArrayEqual(int* arr, int* otherArr, int size)
+int ArrayEqual(int* arr, int* otherArr, size_t size)
 {
-    for(int i = 0; i < size; i++)
+    for(size_t i = 0; i < size; i++)
     {
         if(arr[i] != otherArr[i])
         {
@@ -140,11 +146,11 @@ int ArrayEqual(int* arr, int* otherArr, int size)
     return 0;
 }
 
-void PrintArray(int* arr, int size)
+void PrintArray(int* arr, size_t size)
 {
-    printf("[%d - ", size);
+    printf("[" SIZE_T_IDENTIFIER " - ", size);
     printf("(");
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         printf("%d", arr[i]);
         if (i < size - 1)
@@ -156,7 +162,7 @@ void PrintArray(int* arr, int size)
     printf("]");
 }
 
-void PrintBinaryTreeInOrderTraversal(struct BinaryTree* root) {
+void PrintBinaryTreeInOrderTraversal(BinaryTree* root) {
     if (root != NULL) {
         PrintBinaryTreeInOrderTraversal(root->Left);  // Visit left subtree
         printf("%d ", root->Data);    // Print root
@@ -165,7 +171,7 @@ void PrintBinaryTreeInOrderTraversal(struct BinaryTree* root) {
 }
 
 // Pre-order traversal of the tree (root, left, right)
-void PrintBinaryTreePreOrderTraversal(struct BinaryTree* root) {
+void PrintBinaryTreePreOrderTraversal(BinaryTree* root) {
     if (root != NULL) {
         printf("%d ", root->Data);    // Print root
         PrintBinaryTreePreOrderTraversal(root->Left);  // Visit left subtree
@@ -174,7 +180,7 @@ void PrintBinaryTreePreOrderTraversal(struct BinaryTree* root) {
 }
 
 // Post-order traversal of the tree (left, right, root)
-void PrintBinaryTreePostOrderTraversal(struct BinaryTree* root) {
+void PrintBinaryTreePostOrderTraversal(BinaryTree* root) {
     if (root != NULL) {
         PrintBinaryTreePostOrderTraversal(root->Left);  // Visit left subtree
         PrintBinaryTreePostOrderTraversal(root->Right); // Visit right subtree
@@ -193,16 +199,16 @@ BinaryTree* CreateBinaryTreeNode(int data) {
     return newNode;
 }
 
-void SerializeBinaryTree(BinaryTree *root, char *buffer) {
+void SerializeBinaryTree(BinaryTree *root, char *buffer, size_t bufferSize) {
     if (root == NULL) {
-        strcat(buffer, "# ");
+        strcat_s(buffer, bufferSize, "# ");
         return;
     }
     char temp[20];
-    sprintf(temp, "%d ", root->Data);
-    strcat(buffer, temp);
-    SerializeBinaryTree(root->Left, buffer);
-    SerializeBinaryTree(root->Right, buffer);
+    sprintf_s(temp, 20, "%d ", root->Data);
+    strcat_s(buffer, bufferSize, temp);
+    SerializeBinaryTree(root->Left, buffer, bufferSize);
+    SerializeBinaryTree(root->Right, buffer, bufferSize);
 }
 
 BinaryTree* DeserializeBinaryTree(char **str) 
@@ -294,7 +300,7 @@ BinaryTree* LoadBinaryTree(FILE *fp)
     //QA: Using DeserializeBinaryTree Function?
 
     char token[20]; 
-    if (fscanf(fp, "%s", token) != 1)
+    if (fscanf_s(fp, "%s", token, 20) != 1)
     {
         return NULL;
     }
