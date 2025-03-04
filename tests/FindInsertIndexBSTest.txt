@@ -1,0 +1,13 @@
+10;12;1;First Item Tests
+10;9;0;
+3 5 7;9;3;Last Item Tests
+3 5 7;6;2;
+2 4 6 8 10;5;2;Closest Lower Item Tests
+2 4 6 8 10;11;5;Beyond Range Tests
+50 100 150 200;100;1;Exact Match Tests
+50 100 150 200;175;3;Near Upper Bound Tests
+-5 0 5 10;0;1;Zero Value Tests
+-5 0 5 10;-10;0;Below Minimum Tests
+-5 0 5 10;15;4;Above Maximum Tests
+1000 2000 3000 4000;2500;2;Large Numbers Tests
+1 1 1 1;1;0;Identical Items Tests

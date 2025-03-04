@@ -15,3 +15,20 @@ ninja*
 
 #CMocka
 cmocka/
+
+ctest_output.txt
+ctest_output.txt*
+
+tools/
+
+mull.zip
+
+cmocka-install.bat
+mull-install*
+
+dumbmutate/
+dumbmutate*
+
+build_dumbmutate*
+
+buildwithmutationtest*
