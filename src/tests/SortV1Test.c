@@ -34,7 +34,6 @@ int main(void)
         // Getting data
         // 1. Array
         // 2. Expected value
-
         char* linePtr = NULL;
         char *array_str = strtok_s(line, ";", &linePtr);
         char *expected_str = strtok_s(NULL, ";", &linePtr);

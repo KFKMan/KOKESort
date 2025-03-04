@@ -19,6 +19,47 @@
 
 #ifndef _MSC_VER
 
+#ifndef strtok_s
+static inline char* _strtok_s_impl(char *str, const char *delim, char **context) {
+    char *token;
+
+    if (str != NULL) {
+        *context = str;
+    }
+    if (*context == NULL) {
+        return NULL;
+    }
+
+    token = *context + strspn(*context, delim);
+    if (*token == '\0') {
+        *context = NULL;
+        return NULL;
+    }
+
+    char *end = token + strcspn(token, delim);
+    if (*end != '\0') {
+        *end = '\0';
+        *context = end + 1;
+    } else {
+        *context = NULL;
+    }
+
+    return token;
+}
+
+#define strtok_s(str, delim, context) \
+    (((delim) && (context)) ? \
+     _strtok_s_impl((str), (delim), (context)) : \
+     (errno = EINVAL, (char *)NULL))
+#endif
+
+#ifndef fscanf_s
+#define fscanf_s(stream, format, ...) \
+    (((stream) && (format)) ? \
+     (fscanf((stream), (format), __VA_ARGS__)) : \
+     (errno = EINVAL, -1))
+#endif
+
 // strcpy_s için makro
 #ifndef strcpy_s
 #define strcpy_s(dest, dest_size, src) \
