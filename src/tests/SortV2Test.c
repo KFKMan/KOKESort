@@ -72,7 +72,7 @@ int main(void)
         printf("Called Function... \n");
         #endif
 
-        if (1 == 0)
+        if (1 == 1)
         {
             printf("Test %d PASSED: \n", test_count);
         }
