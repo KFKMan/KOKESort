@@ -41,3 +41,6 @@ src/dumbmutate*
 src/build_dumbmutate*
 
 src/buildwithmutationtest*
+
+bin/
+obj/
