@@ -54,10 +54,19 @@ static inline char* _strtok_s_impl(char *str, const char *delim, char **context)
 #endif
 
 #ifndef fscanf_s
-#define fscanf_s(stream, format, ...) \
-    (((stream) && (format)) ? \
-     (fscanf((stream), (format), __VA_ARGS__)) : \
-     (errno = EINVAL, -1))
+static inline int fscanf_s_wrapper(FILE *stream, const char *format, ...) {
+    if (!stream || !format) {
+        errno = EINVAL;
+        return -1;
+    }
+    va_list args;
+    va_start(args, format);
+    int result = vfscanf(stream, format, args);
+    va_end(args);
+    return result;
+}
+
+#define fscanf_s(stream, format, ...) fscanf_s_wrapper(stream, format, ...)
 #endif
 
 // strcpy_s için makro

@@ -84,10 +84,18 @@ foreach(TEST_FILE ${TEST_SOURCES})
     target_compile_options(${TEST_NAME} PRIVATE -emit-llvm -c)
     ]]
 
+    if(CMAKE_CONFIGURATION_TYPES)
+        # For multiple configuration generators
+        set(TEST_WORKING_DIR "${CMAKE_BINARY_DIR}/$<CONFIG>")
+    else()
+        set(TEST_WORKING_DIR "${CMAKE_BINARY_DIR}")
+    endif()
+
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
     #set_tests_properties(${TEST_NAME} PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+    
     set_tests_properties(${TEST_NAME} PROPERTIES
-    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIG>"
+    WORKING_DIRECTORY "${TEST_WORKING_DIR}"
     )
 endforeach()
 
