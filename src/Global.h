@@ -10,10 +10,12 @@
 #endif
 
 #ifdef _WIN32
-    #ifdef KOKESORT_EXPORTS
+    #ifdef KOKESORT_IMPORTS
+        #define KOKESORT_API __declspec(dllimport)
+    #elif defined(KOKESORT_EXPORTS)
         #define KOKESORT_API __declspec(dllexport)
     #else
-        #define KOKESORT_API __declspec(dllimport)
+        #define KOKESORT_API
     #endif
 #else
     #define KOKESORT_API

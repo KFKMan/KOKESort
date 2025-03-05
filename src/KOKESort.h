@@ -1,9 +1,8 @@
 #include "Global.h"
+#include "Config.h"
 
 #ifndef KOKESort
 #define KOKESort
-
-#define VariableType int
 
 typedef struct BinaryTree
 { 

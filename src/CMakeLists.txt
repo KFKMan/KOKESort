@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.0) #Not Tested
+cmake_minimum_required(VERSION 3.15.0) #Not Tested
 project(KOKESort VERSION 0.1.0 LANGUAGES C)
 
 #[[
@@ -59,6 +59,11 @@ add_library(KOKESort ${LIB_TYPE} KOKESort.c)
 target_include_directories(KOKESort PUBLIC src)
 endif()
 
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)
+
+#target_compile_definitions(KOKESort PRIVATE KOKESORT_IMPORTS)
 target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
 
 #[[
@@ -75,6 +80,4 @@ include(CTest)
 enable_testing()
 add_subdirectory(tests)
 
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
+add_subdirectory(pybindwrapper)
