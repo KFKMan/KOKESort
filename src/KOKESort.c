@@ -3,6 +3,11 @@
 #include "Global.h"
 #include "KOKESort.h"
 
+void FreeMemory(void* pointer)
+{
+    free(pointer);
+}
+
 /// @brief Finding Insert Index via Binary Search
 /// @return Index to Insert, -1 if error accoured
 size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element)

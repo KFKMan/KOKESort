@@ -7,6 +7,12 @@ set(CMAKE_CXX_COMPILER "${MULL_DIR}/clang++")
 set(CMAKE_C_COMPILER "${CMAKE_SOURCE_DIR}/tools/mull/clang")
 ]]
 
+if(WIN32)
+    set(LIB_TYPE SHARED) # For Windows create DLL
+else()
+    set(LIB_TYPE STATIC) # For others create LIB
+endif()
+
 set(USE_GENERATOR "")
 
 if(USE_GENERATOR)
@@ -41,17 +47,19 @@ endforeach()
 file(GLOB GENERATED_SOURCES "${GENERATED_DIR}/*.c")
 
 # ➤ Kütüphaneyi oluştur
-add_library(KOKESort KOKESort.c ${GENERATED_SOURCES})
+add_library(KOKESort ${LIB_TYPE} KOKESort.c ${GENERATED_SOURCES})
 
 # ➤ Include dizinlerini ekle
 target_include_directories(KOKESort PUBLIC src ${GENERATED_DIR})
 else()
 # ➤ Kütüphaneyi oluştur
-add_library(KOKESort KOKESort.c)
+add_library(KOKESort ${LIB_TYPE} KOKESort.c)
 
 # ➤ Include dizinlerini ekle
 target_include_directories(KOKESort PUBLIC src)
 endif()
+
+target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
 
 #[[
 # Mutation Test Symbols

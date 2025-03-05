@@ -74,6 +74,7 @@ foreach(TEST_FILE ${TEST_SOURCES})
 
     add_executable(${TEST_NAME} ${TEST_FILE})
     target_link_libraries(${TEST_NAME} KOKESort)
+
     target_include_directories(${TEST_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../ ${CMAKE_CURRENT_SOURCE_DIR})
 
     set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
@@ -84,7 +85,10 @@ foreach(TEST_FILE ${TEST_SOURCES})
     ]]
 
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
-    set_tests_properties(${TEST_NAME} PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+    #set_tests_properties(${TEST_NAME} PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+    set_tests_properties(${TEST_NAME} PROPERTIES
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIG>"
+    )
 endforeach()
 
 #[[

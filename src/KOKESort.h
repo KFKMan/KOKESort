@@ -1,3 +1,5 @@
+#include "Global.h"
+
 #ifndef KOKESort
 #define KOKESort
 
@@ -10,14 +12,16 @@ typedef struct BinaryTree
     struct BinaryTree *Right;
 } BinaryTree;
 
-size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element);
+KOKESORT_API size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element);
 
-VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType element);
+KOKESORT_API VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType element);
 
-void InsertToSortedAllocatedArray(VariableType* arr, size_t currentSize, VariableType element);
+KOKESORT_API void InsertToSortedAllocatedArray(VariableType* arr, size_t currentSize, VariableType element);
 
-VariableType* SortV1(VariableType* arr, size_t size);
+KOKESORT_API VariableType* SortV1(VariableType* arr, size_t size);
 
-BinaryTree* SortV2(VariableType* arr, size_t size);
+KOKESORT_API BinaryTree* SortV2(VariableType* arr, size_t size);
+
+KOKESORT_API void FreeMemory(void* pointer);
 
 #endif
