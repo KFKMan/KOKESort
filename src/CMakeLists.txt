@@ -63,6 +63,8 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
+set_target_properties(KOKESort PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
 #target_compile_definitions(KOKESort PRIVATE KOKESORT_IMPORTS)
 target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
 
