@@ -67,7 +67,7 @@ static inline int fscanf_s_wrapper(FILE *stream, const char *format, ...) {
     return result;
 }
 
-#define fscanf_s(stream, format, ...) fscanf_s_wrapper(stream, format, ...)
+#define fscanf_s(stream, format, ...) fscanf_s_wrapper(stream, format, __VA_ARGS__)
 #endif
 
 // strcpy_s için makro
