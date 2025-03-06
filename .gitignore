@@ -44,3 +44,14 @@ src/buildwithmutationtest*
 
 bin/
 obj/
+
+dist/
+KOKESort.egg-info/
+KOKESortWrapper.egg-info/
+
+KOKESort.dll
+KOKESort.lib
+KOKESort.exp
+KOKESort.pdb
+
+__backup__*

@@ -1,5 +1,10 @@
+#ifdef NO_INCLUDE_DIR
+#include "../../Global.h"
+#include "../../Config.h"
+#else
 #include "Global.h"
 #include "Config.h"
+#endif
 
 extern "C"
 {

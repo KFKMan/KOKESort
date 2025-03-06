@@ -12,7 +12,8 @@ FetchContent_MakeAvailable(pybind11)
 
 find_package(Python3 COMPONENTS Interpreter Development)
 
-add_library(KOKESortWrapper MODULE wrapper.cpp)
+#add_library(KOKESortWrapper MODULE wrapper.cpp)
+pybind11_add_module(KOKESortWrapper src/wrapper.cpp)
 
 target_compile_definitions(KOKESortWrapper PRIVATE KOKESORT_IMPORTS)
 
