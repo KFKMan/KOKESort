@@ -5,6 +5,10 @@ option(PYBINDWRAPPER "Adding pybindwrapper to list" OFF)
 
 option(USE_TESTS "Using tests" ON)
 
+option(USE_BENCHMARKS "Using bechmarks" OFF)
+
+option(USE_GENERATOR "Use generators" ON)
+
 #[[
 # For Mull Usage
 set(CMAKE_CXX_COMPILER "${MULL_DIR}/clang++")
@@ -16,8 +20,6 @@ if(WIN32)
 else()
     set(LIB_TYPE STATIC) # For others create LIB
 endif()
-
-set(USE_GENERATOR 1)
 
 if(USE_GENERATOR)
 # ➤ Fonksiyonları ve parametrelerini tanımla
@@ -100,4 +102,8 @@ endif()
 
 if(PYBINDWRAPPER)
 add_subdirectory(pybindwrapper)
+endif()
+
+if(USE_BENCHMARKS)
+add_subdirectory(benchmark)
 endif()

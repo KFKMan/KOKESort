@@ -55,3 +55,12 @@ KOKESort.exp
 KOKESort.pdb
 
 __backup__*
+
+intro.mp4
+intro_exclude.txt
+intro_exclude_dir.txt
+*.ttf
+
+.git/
+.github/
+counter.py
