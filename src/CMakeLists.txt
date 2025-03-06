@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.15.0) #Not Tested
 project(KOKESort VERSION 0.1.0 LANGUAGES C)
 
+option(PYBINDWRAPPER "Adding pybindwrapper to list" OFF)
+
+option(USE_TESTS "Using tests" ON)
+
 #[[
 # For Mull Usage
 set(CMAKE_CXX_COMPILER "${MULL_DIR}/clang++")
@@ -78,8 +82,12 @@ message(STATUS "CMake compiler: ${CMAKE_CXX_COMPILER}")
 # Mutation Test Symbols
 ]]
 
+if(USE_TESTS)
 include(CTest)
 enable_testing()
 add_subdirectory(tests)
+endif()
 
+if(PYBINDWRAPPER)
 add_subdirectory(pybindwrapper)
+endif()
