@@ -65,7 +65,7 @@ int main(void)
         size_t expectedCount = ReadArray(expectedArr, expected_str, " ", &expectedContext, MAX_NUM_ELEMENTS);
 
         // Calling function and getting result
-        int* result = InsertToSortedArray(arr, count, element);
+        int* result = InsertToSortedArray(arr, count, element, intComparer);
         test_count++;
 
         if (ArrayEqual(result, expectedArr, expectedCount) == 0)

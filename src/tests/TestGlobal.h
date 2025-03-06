@@ -1,60 +1,12 @@
+#ifndef TEST_GLOBAL_H
+#define TEST_GLOBAL_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "SecureFunctions.h"
 #include "KOKESort.h"
 
-/*
-#ifdef _MSC_VER
-#define SECURE_FUNCTIONS
-#endif
-
-#ifdef SECURE_FUNCTIONS
-#define strtok_r strtok_s
-#else
-char* strtok_s_fake(char* _String, const char *_Delimiter, char **_Context){
-    return strtok(_String, _Delimiter);
-}
-
-#define strtok_r strtok_s_fake
-#endif
-
-#ifdef SECURE_FUNCTIONS
-#define strcpy_r strcpy_s
-#else
-int strcpy_s_fake(char *_Destination, rsize_t _SizeInBytes, const char *_Source)
-{
-    strcpy(_Destination, _Source);
-    return 0;
-}
-
-#define strcpy_r strcpy_s_fake
-#endif
-
-#ifdef SECURE_FUNCTIONS
-#define strcat_r strcat_s
-#else
-int strcat_s_fake(char *_Destination, rsize_t _SizeInBytes, const char *_Source)
-{
-    strcat(_Destination, _Source);
-    return 0;
-}
-
-#define strcat_r strcat_s_fake
-#endif
-
-#ifdef SECURE_FUNCTIONS
-#define fscanf_r fscanf_s //inline int __cdecl fscanf_s(FILE *const _Stream, const char *const _Format, ...)
-#else
-#define fscanf_r fscanf //inline int __cdecl fscanf(FILE *const _Stream, const char *const _Format, ...)
-#endif
-
-#ifndef SECURE_FUNCTIONS
-#define strcat_r strcat_s //errno_t __cdecl strcat_s(char *_Destination, rsize_t _SizeInBytes, const char *_Source)
-#else
-#define strcat_r(dest, bytes, source) strcat(dest, source) //char *__cdecl strcat(char *_Destination, const char *_Source)
-#endif
-*/
 
 #ifdef _WIN32
 #include <direct.h> // Windows için _getcwd()
@@ -162,159 +114,21 @@ void PrintArray(int* arr, size_t size)
     printf("]");
 }
 
-void PrintBinaryTreeInOrderTraversal(BinaryTree* root) {
-    if (root != NULL) {
-        PrintBinaryTreeInOrderTraversal(root->Left);  // Visit left subtree
-        printf("%d ", root->Data);    // Print root
-        PrintBinaryTreeInOrderTraversal(root->Right); // Visit right subtree
-    }
-}
-
-// Pre-order traversal of the tree (root, left, right)
-void PrintBinaryTreePreOrderTraversal(BinaryTree* root) {
-    if (root != NULL) {
-        printf("%d ", root->Data);    // Print root
-        PrintBinaryTreePreOrderTraversal(root->Left);  // Visit left subtree
-        PrintBinaryTreePreOrderTraversal(root->Right); // Visit right subtree
-    }
-}
-
-// Post-order traversal of the tree (left, right, root)
-void PrintBinaryTreePostOrderTraversal(BinaryTree* root) {
-    if (root != NULL) {
-        PrintBinaryTreePostOrderTraversal(root->Left);  // Visit left subtree
-        PrintBinaryTreePostOrderTraversal(root->Right); // Visit right subtree
-        printf("%d ", root->Data);      // Print root
-    }
-}
-
-BinaryTree* CreateBinaryTreeNode(int data) {
-    BinaryTree *newNode = malloc(sizeof(BinaryTree));
-    if (!newNode) {
-        fprintf(stderr, "Allocation Error\n");
-        return NULL;
-    }
-    newNode->Data = data;
-    newNode->Left = newNode->Right = NULL;
-    return newNode;
-}
-
-void SerializeBinaryTree(BinaryTree *root, char *buffer, size_t bufferSize) {
-    if (root == NULL) {
-        strcat_s(buffer, bufferSize, "# ");
-        return;
-    }
-    char temp[20];
-    sprintf_s(temp, 20, "%d ", root->Data);
-    strcat_s(buffer, bufferSize, temp);
-    SerializeBinaryTree(root->Left, buffer, bufferSize);
-    SerializeBinaryTree(root->Right, buffer, bufferSize);
-}
-
-BinaryTree* DeserializeBinaryTree(char **str) 
+int intComparer(const void* val1ptr, const void* val2ptr)
 {
-    while (**str == ' ') 
-    {
-        (*str)++;
-    }
-
-    if (**str == '\0')
-    {
-        return NULL;
-    }
-    
-    char token[20];
-    int i = 0;
-
-    while (**str != ' ' && **str != '\0') 
-    {
-        token[i++] = **str;
-        (*str)++;
-    }
-    token[i] = '\0';
-    
-    while (**str == ' ')
-    {
-        (*str)++;
-    }
-    
-    if (strcmp(token, "#") == 0)
-    {
-        return NULL;
-    }
-    
-    int data = atoi(token);
-    BinaryTree *node = CreateBinaryTreeNode(data);
-    node->Left = DeserializeBinaryTree(str);
-    node->Right = DeserializeBinaryTree(str);
-    return node;
-}
-
-int CompareBinaryTree(BinaryTree *root1, BinaryTree *root2) {
-    if (root1 == NULL && root2 == NULL)
+    const int val1 = *(const int*)val1ptr;
+    const int val2 = *(const int*)val2ptr;
+    if(val1 > val2)
     {
         return 1;
     }
-
-    if (root1 == NULL || root2 == NULL)
+    if(val1 == val2)
     {
         return 0;
     }
-
-    if (root1->Data != root2->Data)
-    {
-        return 0;
-    }
-
-    return CompareBinaryTree(root1->Left, root2->Left) &&
-           CompareBinaryTree(root1->Right, root2->Right);
+    return -1;
 }
 
-void FreeTree(BinaryTree *root) {
-    if (root == NULL)
-    {
-        return;
-    }
-
-    FreeTree(root->Left);
-    FreeTree(root->Right);
-    free(root);
-}
-
-void SaveBinaryTree(BinaryTree *root, FILE *fp) 
-{
-    //QA: Using SerializeBinaryTree Function?
-
-    if (root == NULL) 
-    {
-        fprintf(fp, "# ");
-        return;
-    }
-    fprintf(fp, "%d ", root->Data);
-    SaveBinaryTree(root->Left, fp);
-    SaveBinaryTree(root->Right, fp);
-}
-
-BinaryTree* LoadBinaryTree(FILE *fp) 
-{
-    //QA: Using DeserializeBinaryTree Function?
-
-    char token[20]; 
-    if (fscanf_s(fp, "%s", token, 20) != 1)
-    {
-        return NULL;
-    }
-    
-    if (strcmp(token, "#") == 0)
-    {
-        return NULL;
-    }
-    
-    int data = atoi(token);
-    BinaryTree *node = CreateBinaryTreeNode(data);
-    node->Left = LoadBinaryTree(fp);
-    node->Right = LoadBinaryTree(fp);
-    return node;
-}
+#endif
 
 

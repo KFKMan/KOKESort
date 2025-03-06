@@ -61,7 +61,7 @@ int main(void)
         size_t expectedCount = ReadArray(expectedArr, expected_str, " ", &expectedContext, MAX_NUM_ELEMENTS);
 
         // Calling function and getting result
-        int* result = SortV1(arr, count);
+        int* result = SortV1(arr, count, intComparer);
         test_count++;
 
         if (ArrayEqual(result, expectedArr, count) == 0)

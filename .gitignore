@@ -1,5 +1,5 @@
 #Ignoring generated codes
-src/generated/
+generated/
 
 #Ignoring build outputs
 out/

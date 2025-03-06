@@ -59,7 +59,7 @@ int main(void)
         size_t count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
 
         // Calling function and getting result
-        size_t result = FindInsertIndexBS(arr, count, target);
+        size_t result = FindInsertIndexBS(arr, count, target, intComparer);
         test_count++;
 
         if (result == expected)

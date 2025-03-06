@@ -8,9 +8,10 @@ void FreeMemory(void* pointer)
     free(pointer);
 }
 
+#ifdef USE_COMPARER
 /// @brief Finding Insert Index via Binary Search
 /// @return Index to Insert, -1 if error accoured
-size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element)
+size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element, CompareFunction comparer)
 {
     //log two base n => logn Complexity
 
@@ -35,7 +36,11 @@ size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element)
     {
         size_t mid = left + (right - left) / 2;
 
-        if (arr[mid] < element)
+        #ifdef COMPARE_USE_SIMPLE
+        if (comparer(&element, &arr[mid]) == 1) //arr[mid] < element
+        #else
+        if (comparer(&element, &arr[mid]) > 0)
+        #endif
         {
             left = mid + 1;
         }
@@ -48,12 +53,7 @@ size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element)
     return left;
 }
 
-/// @brief Inserting Element to Sorted Array with BinarySearch (FindInsertIndexBS)
-/// @param arr Array to Insert, null pointer can handled
-/// @param size Size of the Array, 0 size can handled
-/// @param element Element To Insert
-/// @return New Array Allocated
-VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType element)
+VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType element, CompareFunction comparer)
 {
     if(arr == NULL || size == 0)
     {
@@ -69,7 +69,7 @@ VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType e
         return newArr;
     }
 
-    size_t insertIndex = FindInsertIndexBS(arr, size, element); //logN Complexity
+    size_t insertIndex = FindInsertIndexBS(arr, size, element, comparer); //logN Complexity
     
     //QA: Realloc or already allocated block can be used for optimization
     VariableType* newArr = calloc(size + 1, sizeof(VariableType));
@@ -100,9 +100,9 @@ VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType e
 /// @param arr Array to Insert, null pointer can handled
 /// @param currentSize Size of the Array (real element count), 0 size can handled
 /// @param element Element To Insert
-void InsertToSortedAllocatedArray(VariableType* arr, size_t currentSize, VariableType element)
+void InsertToSortedAllocatedArray(VariableType* arr, size_t currentSize, VariableType element, CompareFunction comparer)
 {
-    size_t insertIndex = FindInsertIndexBS(arr, currentSize, element); //logN Complexity
+    size_t insertIndex = FindInsertIndexBS(arr, currentSize, element, comparer); //logN Complexity
     
     size_t currentIndex = currentSize;
 
@@ -121,7 +121,7 @@ void InsertToSortedAllocatedArray(VariableType* arr, size_t currentSize, Variabl
 /// @param arr Array to sort
 /// @param size Size of array
 /// @return Sorted new array
-VariableType* SortV1(VariableType* arr, size_t size)
+VariableType* SortV1(VariableType* arr, size_t size, CompareFunction comparer)
 {
     //Argument checks
     if (!arr)
@@ -148,7 +148,7 @@ VariableType* SortV1(VariableType* arr, size_t size)
     for(unsigned int i = 0; i < size; i++) //N Complexity, 0->N
     {
         VariableType element = arr[i];
-        InsertToSortedAllocatedArray(selfArray, selfArraySize, element);
+        InsertToSortedAllocatedArray(selfArray, selfArraySize, element, comparer);
 
         selfArraySize++;
     }
@@ -156,93 +156,4 @@ VariableType* SortV1(VariableType* arr, size_t size)
     return selfArray;
 }
 
-/// @brief 
-/// @param tree 
-/// @param element Element to Add
-/// @return Return created BinaryTree element, not the given "tree" parameter 
-BinaryTree* AddElementToBinaryTree(BinaryTree* tree, int element)
-{
-    if(tree == NULL)
-    {
-        return NULL;
-    }
-
-    BinaryTree* treeElement = malloc(sizeof(BinaryTree));
-    treeElement->Data = element;
-    treeElement->Left = NULL;
-    treeElement->Right = NULL;
-
-    //QA: Adding count property for stacking same values in BinaryTree? Or maybe denying same values?
-
-    //QA: Skip List, Balanced Binary Tree Usage
-
-    BinaryTree* currentTree = tree;
-    while (1 == 1)
-    {
-        BinaryTree* tempTree;
-        if(currentTree->Data < element)
-        {
-            tempTree = currentTree->Right;
-            if(tempTree == NULL)
-            {
-                currentTree->Right = treeElement;
-                break;
-            }
-        }
-        else
-        {
-            tempTree = currentTree->Left;
-            if(tempTree == NULL)
-            {
-                currentTree->Left = treeElement;
-                break;
-            }
-        }
-
-        currentTree = tempTree;
-    }
-    
-    return treeElement;
-}
-
-BinaryTree* SortV2(VariableType* arr, size_t size)
-{
-    //Argument checks
-    if (!arr)
-    {
-        #ifdef ERROR_PRINT
-        debugError("'arr' argument can't be NULL\n");
-        #endif
-
-        return NULL;
-    }
-
-    if(size == 0)
-    {
-        #ifdef ERROR_PRINT
-        debugError("'size' argument can't be zero\n");
-        #endif
-        
-        return NULL;
-    }
-
-    BinaryTree* tree = malloc(sizeof(BinaryTree));
-    tree->Left = NULL;
-    tree->Right = NULL;
-
-    for(unsigned int i = 0; i < size; i++) //N Complexity, 0->N
-    {
-        VariableType element = arr[i];
-
-        if(i == 0)
-        {
-            tree->Data = element;
-        }
-        else
-        {
-            AddElementToBinaryTree(tree, element);
-        }
-    }
-
-    return tree;
-}
+#endif

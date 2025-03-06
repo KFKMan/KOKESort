@@ -1,26 +1,28 @@
-#include "Global.h"
-#include "Config.h"
-
 #ifndef KOKESort
 #define KOKESort
 
-typedef struct BinaryTree
-{ 
-    VariableType Data;
-    struct BinaryTree *Left;
-    struct BinaryTree *Right;
-} BinaryTree;
+#include "Global.h"
+#include "Config.h"
 
-KOKESORT_API size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element);
+#define USE_COMPARER
 
-KOKESORT_API VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType element);
+//Enabling Simple Compare Functions -1 (less), 0 (equal), 1 (more)
+//#define COMPARE_USE_SIMPLE 1
 
-KOKESORT_API void InsertToSortedAllocatedArray(VariableType* arr, size_t currentSize, VariableType element);
+#ifdef USE_COMPARER
 
-KOKESORT_API VariableType* SortV1(VariableType* arr, size_t size);
+typedef int (*CompareFunction)(const void *, const void *);
 
-KOKESORT_API BinaryTree* SortV2(VariableType* arr, size_t size);
+KOKESORT_API size_t FindInsertIndexBS(VariableType* arr, size_t size, VariableType element, CompareFunction comparer);
+
+KOKESORT_API VariableType* InsertToSortedArray(VariableType* arr, size_t size, VariableType element, CompareFunction comparer);
+
+KOKESORT_API void InsertToSortedAllocatedArray(VariableType* arr, size_t currentSize, VariableType element, CompareFunction comparer);
+
+KOKESORT_API VariableType* SortV1(VariableType* arr, size_t size, CompareFunction comparer);
 
 KOKESORT_API void FreeMemory(void* pointer);
+
+#endif
 
 #endif

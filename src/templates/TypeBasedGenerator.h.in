@@ -1,17 +1,17 @@
+#ifndef GENERATED_@FUNC_NAME@_H
+#define GENERATED_@FUNC_NAME@_H
 
-typedef struct LinkedList@FUNC_NAME@
-{
-    struct LinkedList@FUNC_NAME@* Previous;
+#include "Global.h"
+#include "SecureFunctions.h"
 
-    @FUNC_TYPE@* Value;
+size_t FindInsertIndexBS@FUNC_NAME@(@FUNC_TYPE@* arr, size_t size, @FUNC_TYPE@ element);
 
-    struct LinkedList@FUNC_NAME@* Next;
-} LinkedList@FUNC_NAME@;
+@FUNC_TYPE@* InsertToSortedArray@FUNC_NAME@(@FUNC_TYPE@* arr, size_t size, @FUNC_TYPE@ element);
 
-LinkedList@FUNC_NAME@* @FUNC_NAME@ArrayToLinkedList(@FUNC_TYPE@* arr, size_t size);
+void InsertToSortedAllocatedArray@FUNC_NAME@(@FUNC_TYPE@* arr, size_t currentSize, @FUNC_TYPE@ element);
 
-//void @FUNC_NAME@(@FUNC_TYPE@);
+@FUNC_TYPE@* SortV1@FUNC_NAME@(@FUNC_TYPE@* arr, size_t size);
 
-@FUNC_TYPE@ TestSymbol@FUNC_NAME@();
+int TestSymbol@FUNC_NAME@();
 
-int TestSymbolGlobal@FUNC_NAME@();
+#endif 
