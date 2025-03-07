@@ -9,10 +9,10 @@
 
 
 #ifdef _WIN32
-#include <direct.h> // Windows için _getcwd()
+#include <direct.h> // For Windows _getcwd()
 #define getcwd _getcwd
 #else
-#include <unistd.h> // Linux/Unix için getcwd()
+#include <unistd.h> // For Linux/Unix getcwd()
 #endif
 
 /// @brief 
@@ -22,7 +22,8 @@
 /// @return 0 if success, another value if failed 
 int OpenFile(FILE** fp, const char* filename, const char* mode)
 {
-    if(fopen_s(fp, filename, mode) != 0){
+    if(fopen_s(fp, filename, mode) != 0)
+    {
         return 1;
     }
     return 0;
@@ -30,27 +31,30 @@ int OpenFile(FILE** fp, const char* filename, const char* mode)
 
 int SearchAndOpenFile(FILE** file, const char* filename, const char* mode)
 {
+    const char* directories[] = {".", "tests", "benchmark", "example"};
+    const size_t dirCount = sizeof(directories) / sizeof(directories[0]);
+
     FILE *fp = NULL;
-    int fileState = OpenFile(&fp, filename, "r");
+    char filepath[256];
 
-    if (fileState != 0)
+    for (size_t i = 0; i < dirCount; ++i)
     {
-        char filepath[256];
-        snprintf(filepath, sizeof(filepath), "tests/%s", filename);
-        fileState = OpenFile(&fp, filepath, "r");
+        snprintf(filepath, sizeof(filepath), "%s/%s", directories[i], filename);
+        int fileState = OpenFile(&fp, filepath, mode);
 
-        if (fileState != 0)
+        if (fileState == 0)
         {
-            char cwd[256];
-            if (getcwd(cwd, sizeof(cwd)) != NULL)
-            {
-                fprintf(stderr, "Working Directory: %s\n", cwd);
-            }
-            return 1;
+            *file = fp;
+            return 0;
         }
     }
-    *file = fp;
-    return 0;
+
+    char cwd[256];
+    if (getcwd(cwd, sizeof(cwd)) != NULL)
+    {
+        fprintf(stderr, "File not found in directories. Working Directory: %s\n", cwd);
+    }
+    return 1;
 }
 
 const char* ChangeFileExtension(const char* fileName, const char* extension) 
@@ -60,9 +64,9 @@ const char* ChangeFileExtension(const char* fileName, const char* extension)
     char* dotPos = strrchr(newFileName, '.');
     if (dotPos) 
     {
-        *dotPos = '\0'; // Uzantıyı sil
+        *dotPos = '\0'; // Removing the extension string to empty
     }
-    strcat_s(newFileName, 256, extension); // Yeni uzantıyı ekle
+    strcat_s(newFileName, 256, extension); // Adding new extension string
     return newFileName;
 }
 
