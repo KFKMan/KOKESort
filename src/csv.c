@@ -153,7 +153,7 @@ long GetPageSize()
 }
 
 // Function to open a file and return the file handle
-int OpenFile(const char *filename) 
+int OpenFileCsv(const char *filename) 
 {
     int fh = open(filename, O_RDONLY);
     if (fh < 0) 
@@ -231,7 +231,7 @@ CsvHandle CsvOpen2(const char *filename, char delim, char quote, char escape)
     handle->blockSize = GET_PAGE_ALIGNED(BUFFER_WIDTH_APROX, pageSize);
 
     // Open the file
-    handle->fh = OpenFile(filename);
+    handle->fh = OpenFileCsv(filename);
     if (handle->fh < 0) 
     {
         return HandleError(handle);
