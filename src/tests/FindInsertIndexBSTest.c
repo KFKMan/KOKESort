@@ -13,7 +13,7 @@ int main(void)
     int rows = 1;
     CsvHandle handle = CsvOpen2(GetTestDataFile(), ',', '"', '\\');
     
-    while (row = CsvReadNextRow(handle))
+    while ((row = CsvReadNextRow(handle)))
     {   
         const char* col;
 
