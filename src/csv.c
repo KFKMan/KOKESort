@@ -55,7 +55,7 @@ struct CsvHandle_
     size_t quotes;
     void *auxbuf;
 
-#if defined(__unix__)
+#if defined(__unix__) || defined(__APPLE__)
     int fh;
 #elif defined(_WIN32)
     HANDLE fh;
@@ -89,90 +89,123 @@ CsvHandle CsvOpen(const char *filename)
 #include <unistd.h>
 #include <errno.h>
 
-void *HandleError(CsvHandle handle)
+void* HandleError(CsvHandle handle)
 {
-    free(handle);
+    if(handle)
+    {
+        free(handle);
+    }
 
     return NULL;
 }
 
-CsvHandle CsvOpen2(const char *filename,
-                   char delim,
-                   char quote,
-                   char escape)
+// Function to get the system page size
+long GetPageSize() 
 {
-    /* alloc zero-initialized mem */
-    long pageSize;
-    struct stat fs;
+    long pageSize = sysconf(_SC_PAGESIZE);
+    if (pageSize < 0) 
+    {
+        return -1;
+    }
+    return pageSize;
+}
 
+// Function to open a file and return the file handle
+int OpenFile(const char *filename) 
+{
+    int fh = open(filename, O_RDONLY);
+    if (fh < 0) {
+        perror("File open failed");
+    }
+    return fh;
+}
+
+// Function to get the file size using fstat
+int GetFileSize(int fh, struct stat *fs) 
+{
+    return fstat(fh, fs);
+}
+
+// Function to map memory to the file
+void *MapFileToMemory(int fh, size_t blockSize, size_t mapSize) 
+{
+    return mmap(0, blockSize, PROT_READ | PROT_WRITE, MAP_PRIVATE, fh, mapSize);
+}
+
+// Function to unmap the memory
+void UnmapMem(void *mem, size_t blockSize) 
+{
+    if (mem) 
+    {
+        munmap(mem, blockSize);
+    }
+}
+
+// Function to close the file and free resources
+void CsvClose(CsvHandle handle) 
+{
+    if (!handle) 
+    {
+        return;
+    }
+
+    UnmapMem(handle->mem, handle->blockSize);
+
+    close(handle->fh);
+    free(handle->auxbuf);
+    free(handle);
+}
+
+// CsvOpen2 function using the refactored helper functions
+CsvHandle CsvOpen2(const char *filename, char delim, char quote, char escape) 
+{
+    long pageSize = GetPageSize();
+    if (pageSize < 0) 
+    {
+        return NULL;
+    }
+
+    // Allocate memory for the CsvHandle structure
     CsvHandle handle = calloc(1, sizeof(struct CsvHandle_));
-    if (!handle)
+    if (!handle) 
     {
         return HandleError(handle);
     }
 
-    /* set chars */
+    // Set characters
     handle->delim = delim;
     handle->quote = quote;
     handle->escape = escape;
 
-    /* page size */
-    pageSize = sysconf(_SC_PAGESIZE);
-    if (pageSize < 0)
-    {
-        return HandleError(handle);
-    }
-
-    /* align to system page size */
+    // Set the block size based on page alignment
     handle->blockSize = GET_PAGE_ALIGNED(BUFFER_WIDTH_APROX, pageSize);
 
-    /* open new fd */
-    handle->fh = open(filename, O_RDONLY);
-    if (handle->fh < 0)
+    // Open the file
+    handle->fh = OpenFile(filename);
+    if (handle->fh < 0) 
     {
         return HandleError(handle);
     }
 
-    /* get real file size */
-    if (fstat(handle->fh, &fs))
+    // Get the file size
+    struct stat fs;
+    if (GetFileSize(handle->fh, &fs)) 
     {
         close(handle->fh);
         return HandleError(handle);
     }
 
+    // Set file size in the handle
     handle->fileSize = fs.st_size;
+
     return handle;
 }
 
-static void *MapMem(CsvHandle handle)
+// Map the file into memory
+static void *MapMem(CsvHandle handle) 
 {
-    handle->mem = mmap(0, handle->blockSize,
-                       PROT_READ | PROT_WRITE,
-                       MAP_PRIVATE,
-                       handle->fh, handle->mapSize);
+    handle->mem = MapFileToMemory(handle->fh, handle->blockSize, handle->mapSize);
     return handle->mem;
-}
-
-static void UnmapMem(CsvHandle handle)
-{
-    if (handle->mem)
-    {
-        munmap(handle->mem, handle->blockSize);
-    }
-}
-
-void CsvClose(CsvHandle handle)
-{
-    if (!handle)
-    {
-        return;
-    }
-
-    UnmapMem(handle);
-
-    close(handle->fh);
-    free(handle->auxbuf);
-    free(handle);
 }
 
 #else
