@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "csv.h"
@@ -114,7 +115,8 @@ long GetPageSize()
 int OpenFile(const char *filename) 
 {
     int fh = open(filename, O_RDONLY);
-    if (fh < 0) {
+    if (fh < 0) 
+    {
         perror("File open failed");
     }
     return fh;
@@ -132,12 +134,19 @@ void *MapFileToMemory(int fh, size_t blockSize, size_t mapSize)
     return mmap(0, blockSize, PROT_READ | PROT_WRITE, MAP_PRIVATE, fh, mapSize);
 }
 
-// Function to unmap the memory
-void UnmapMem(void *mem, size_t blockSize) 
+// Map the file into memory
+static void *MapMem(CsvHandle handle) 
 {
-    if (mem) 
+    handle->mem = MapFileToMemory(handle->fh, handle->blockSize, handle->mapSize);
+    return handle->mem;
+}
+
+// Function to unmap the memory
+static void UnmapMem(CsvHandle handle)
+{
+    if (handle->mem)
     {
-        munmap(mem, blockSize);
+        munmap(handle->mem, handle->blockSize);
     }
 }
 
@@ -199,13 +208,6 @@ CsvHandle CsvOpen2(const char *filename, char delim, char quote, char escape)
     handle->fileSize = fs.st_size;
 
     return handle;
-}
-
-// Map the file into memory
-static void *MapMem(CsvHandle handle) 
-{
-    handle->mem = MapFileToMemory(handle->fh, handle->blockSize, handle->mapSize);
-    return handle->mem;
 }
 
 #else
