@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15.0) #Not Tested
+cmake_minimum_required(VERSION 3.20.0)
 project(KOKESort VERSION 0.1.0 LANGUAGES C)
 
 option(PYBINDWRAPPER "Adding pybindwrapper to list" OFF)
@@ -9,17 +9,14 @@ option(USE_BENCHMARKS "Using bechmarks" OFF)
 
 option(USE_GENERATOR "Use generators" ON)
 
-#[[
-# For Mull Usage
-set(CMAKE_CXX_COMPILER "${MULL_DIR}/clang++")
-set(CMAKE_C_COMPILER "${CMAKE_SOURCE_DIR}/tools/mull/clang")
-]]
-
 if(WIN32)
     set(LIB_TYPE SHARED) # For Windows create DLL
 else()
     set(LIB_TYPE STATIC) # For others create LIB
 endif()
+
+set(SRC_FILES KOKESort.c)
+set(INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
 if(USE_GENERATOR)
 # ➤ Fonksiyonları ve parametrelerini tanımla
@@ -62,18 +59,18 @@ configure_file(${CMAKE_SOURCE_DIR}/templates/MasterHeader.h.in ${GENERATED_DIR}/
 # ➤ Kaynak dosyaları topla
 file(GLOB GENERATED_SOURCES "${GENERATED_DIR}/*.c")
 
-# ➤ Kütüphaneyi oluştur
-add_library(KOKESort ${LIB_TYPE} KOKESort.c ${GENERATED_SOURCES})
-
-# ➤ Include dizinlerini ekle
-target_include_directories(KOKESort PUBLIC src ${GENERATED_DIR} ${CMAKE_SOURCE_DIR})
-else()
-# ➤ Kütüphaneyi oluştur
-add_library(KOKESort ${LIB_TYPE} KOKESort.c)
-
-# ➤ Include dizinlerini ekle
-target_include_directories(KOKESort PUBLIC src)
+list(APPEND SRC_FILES ${GENERATED_SOURCES})
+list(APPEND INCLUDE_DIRS ${GENERATED_DIR})
 endif()
+
+if(USE_TESTS)
+list(APPEND SRC_FILES csv.c)
+endif()
+
+add_library(KOKESort ${LIB_TYPE} ${SRC_FILES})
+target_include_directories(KOKESort PUBLIC ${INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR})
+
+
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
@@ -83,16 +80,6 @@ set_target_properties(KOKESort PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 #target_compile_definitions(KOKESort PRIVATE KOKESORT_IMPORTS)
 target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
-
-#[[
-# Mutation Test Symbols
-target_compile_options(KOKESort PRIVATE -emit-llvm -c)
-set_target_properties(KOKESort PROPERTIES OUTPUT_NAME "KOKESort.bc")
-set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE ON)
-
-message(STATUS "CMake compiler: ${CMAKE_CXX_COMPILER}")
-# Mutation Test Symbols
-]]
 
 if(USE_TESTS)
 include(CTest)

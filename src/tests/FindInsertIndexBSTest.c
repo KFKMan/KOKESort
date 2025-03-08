@@ -12,7 +12,7 @@ int main(void)
     if(fileState != 0)
     {
         perror("File can't opened: ");
-        perror(__FILE__);
+        perror(GetFilename(__FILE__));
         return EXIT_FAILURE;
     }
 
@@ -59,7 +59,7 @@ int main(void)
         size_t count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
 
         // Calling function and getting result
-        size_t result = FindInsertIndexBS(arr, count, target, intComparer);
+        size_t result = FindInsertIndexBS((void*)arr, count, (void*)&target, intComparer, sizeof(int));
         test_count++;
 
         if (result == expected)

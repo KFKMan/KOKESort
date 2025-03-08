@@ -21,4 +21,4 @@ target_link_libraries(KOKESortWrapper PRIVATE pybind11::module)
 target_link_libraries(KOKESortWrapper PRIVATE KOKESort)
 
 
-target_include_directories(KOKESortWrapper PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../ ${CMAKE_CURRENT_SOURCE_DIR} ${pybind11_INCLUDE_DIRS})
+target_include_directories(KOKESortWrapper PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../ ${CMAKE_CURRENT_SOURCE_DIR} ${pybind11_INCLUDE_DIRS})

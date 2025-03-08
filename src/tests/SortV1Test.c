@@ -12,7 +12,7 @@ int main(void)
     if(fileState != 0)
     {
         perror("File can't opened: ");
-        perror(__FILE__);
+        perror(GetFilename(__FILE__));
         return EXIT_FAILURE;
     }
 
@@ -61,10 +61,10 @@ int main(void)
         size_t expectedCount = ReadArray(expectedArr, expected_str, " ", &expectedContext, MAX_NUM_ELEMENTS);
 
         // Calling function and getting result
-        int* result = SortV1(arr, count, intComparer);
+        void* result = SortV1(arr, count, intComparer, sizeof(int));
         test_count++;
 
-        if (ArrayEqual(result, expectedArr, count) == 0)
+        if (ArrayEqual(result, expectedArr, count, intComparer, sizeof(int)) == 0)
         {
             printf("Test %d PASSED: \n", test_count);
         }

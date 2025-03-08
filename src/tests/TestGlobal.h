@@ -15,6 +15,8 @@
 #include <unistd.h> // For Linux/Unix getcwd()
 #endif
 
+#define MAX_FILE_PATH_SIZE 4096
+
 /// @brief 
 /// @param fp 
 /// @param filename 
@@ -35,42 +37,69 @@ int SearchAndOpenFile(FILE** file, const char* filename, const char* mode)
     const size_t dirCount = sizeof(directories) / sizeof(directories[0]);
 
     FILE *fp = NULL;
-    char filepath[256];
+    char filepath[MAX_FILE_PATH_SIZE];
 
+    // Try opening the file in each directory
     for (size_t i = 0; i < dirCount; ++i)
     {
         snprintf(filepath, sizeof(filepath), "%s/%s", directories[i], filename);
-        int fileState = OpenFile(&fp, filepath, mode);
 
+        // Try opening the file
+        int fileState = OpenFile(&fp, filepath, mode);
         if (fileState == 0)
         {
             *file = fp;
-            return 0;
+            return 0;  // Success, file opened
         }
     }
 
-    char cwd[256];
+    // If file wasn't found, print the current working directory
+    char cwd[MAX_FILE_PATH_SIZE];
     if (getcwd(cwd, sizeof(cwd)) != NULL)
     {
         fprintf(stderr, "File not found in directories. Working Directory: %s\n", cwd);
     }
-    return 1;
+    else
+    {
+        fprintf(stderr, "Error getting current working directory.\n");
+    }
+    
+    return 1;  // Failed to open the file
+}
+
+const char* GetFilename(const char* path)
+{
+    const char *filename = strrchr(path, '/');  // Find the last occurrence of '/'
+
+    if (filename == NULL) 
+    {
+        filename = strrchr(path, '\\');  // If '/' is not found, try '\' -> For Windows
+    }
+
+    if (filename != NULL) 
+    {
+        return filename + 1;  // Skip the '/' character to get the filename
+    } 
+    else 
+    {
+        return path;  // Return the original path if no '/' is found
+    }
 }
 
 const char* ChangeFileExtension(const char* fileName, const char* extension) 
 {
-    static char newFileName[256];
-    strcpy_s(newFileName, 256, fileName);
+    static char newFileName[MAX_FILE_PATH_SIZE];
+    strcpy_s(newFileName, MAX_FILE_PATH_SIZE, fileName);
     char* dotPos = strrchr(newFileName, '.');
     if (dotPos) 
     {
         *dotPos = '\0'; // Removing the extension string to empty
     }
-    strcat_s(newFileName, 256, extension); // Adding new extension string
+    strcat_s(newFileName, MAX_FILE_PATH_SIZE, extension); // Adding new extension string
     return newFileName;
 }
 
-#define TryOpenTestDataFile(file, mode) SearchAndOpenFile(file, ChangeFileExtension(__FILE__, ".txt"), mode)
+#define TryOpenTestDataFile(file, mode) SearchAndOpenFile(file, ChangeFileExtension(GetFilename(__FILE__), ".txt"), mode)
 
 size_t ReadArray(int* arr, char* str, const char* delimiter, char** context, size_t limit)
 {
@@ -90,11 +119,11 @@ size_t ReadArray(int* arr, char* str, const char* delimiter, char** context, siz
 /// @param otherArr 
 /// @param size 
 /// @return 0 if equal, other value if not equal 
-int ArrayEqual(int* arr, int* otherArr, size_t size)
+int ArrayEqual(void* arr, void* otherArr, size_t size, CompareFunction comparer, unsigned int elementSize)
 {
     for(size_t i = 0; i < size; i++)
     {
-        if(arr[i] != otherArr[i])
+        if(comparer(GetIndex(arr,i,elementSize), GetIndex(otherArr, i, elementSize)) != 0)
         {
             return 1;
         }
@@ -102,8 +131,9 @@ int ArrayEqual(int* arr, int* otherArr, size_t size)
     return 0;
 }
 
-void PrintArray(int* arr, size_t size)
+void PrintArray(void* Varr, size_t size)
 {
+    int* arr = Varr;
     printf("[" SIZE_T_IDENTIFIER " - ", size);
     printf("(");
     for (size_t i = 0; i < size; i++)

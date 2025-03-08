@@ -10,10 +10,10 @@
 
 #define debugErrorFast(fmt, ...) do { fprintf(stderr, "[%s:%d] " fmt, __FILE__, __LINE__, ##__VA_ARGS__); fflush(stderr); } while (1 == 0)
 #else
-#define debugPrint(fmt, ...) 1
-#define debugPrintFast(fmt, ...) 1
-#define debugError(fmt, ...) 1
-#define debugErrorFast(fmt, ...) 1
+#define debugPrint(fmt, ...) 
+#define debugPrintFast(fmt, ...) 
+#define debugError(fmt, ...) 
+#define debugErrorFast(fmt, ...) 
 #endif
 
 #ifdef _WIN32
