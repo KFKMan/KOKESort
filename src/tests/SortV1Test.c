@@ -11,7 +11,7 @@ int main(void)
 
     char* row;
     int rows = 1;
-    CsvHandle handle = CsvOpen2(GetTestDataFile(), ',', '"', '\\');
+    CsvHandle handle = CsvOpen2(GetTestDataFile(), ';', '"', '\\');
     
     while ((row = CsvReadNextRow(handle)))
     {   
