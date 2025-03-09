@@ -57,14 +57,14 @@ jobs:
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
       - name: Install coverage tools (Ubuntu only)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl' && matrix.c_compiler != 'clang'
         run: sudo apt update && sudo apt install -y lcov
 
       - name: Set CMake coverage flag
         id: coverage
         shell: bash
         run: |
-          if [ "${{ matrix.os }}" = "ubuntu-latest" ] && [ "${{ matrix.c_compiler }}" != "cl" ]; then
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ] && [ "${{ matrix.c_compiler }}" != "cl" ] && [ "${{ matrix.c_compiler }}" != "clang" ]; then
             echo "coverage_flag=-DENABLE_COVERAGE=ON" >> "$GITHUB_OUTPUT"
           else
             echo "coverage_flag=" >> "$GITHUB_OUTPUT"
@@ -87,15 +87,15 @@ jobs:
         run: ctest --verbose --build-config ${{ matrix.build_type }}
 
       - name: Capture coverage (Ubuntu only)
-        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl'
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl' && matrix.c_compiler != 'clang'
         working-directory: ${{ steps.strings.outputs.build-output-dir }}
         run: |
           lcov --capture --directory . --output-file coverage.info --ignore-errors version --ignore-errors gcov
           lcov --remove coverage.info '/usr/*' --output-file coverage.info --ignore-errors unused --ignore-errors version --ignore-errors gcov
-          genhtml coverage.info --output-directory coverage_report --ignore-errors gcov
+          genhtml coverage.info --output-directory coverage_report
 
       - name: Upload coverage report (Ubuntu only)
-        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl'
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl' && matrix.c_compiler != 'clang'
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-${{ matrix.c_compiler }}
