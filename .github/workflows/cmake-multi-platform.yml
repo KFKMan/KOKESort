@@ -92,7 +92,7 @@ jobs:
         run: |
           lcov --capture --directory . --output-file coverage.info
           lcov --remove coverage.info '/usr/*' --output-file coverage.info --ignore-errors unused
-          genhtml coverage.info --output-directory coverage_report
+          genhtml coverage.info --output-directory coverage_report --ignore-errors version
 
       - name: Upload coverage report (Ubuntu only)
         if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl'
