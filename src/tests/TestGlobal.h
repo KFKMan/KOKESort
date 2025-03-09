@@ -163,6 +163,16 @@ int intComparer(const void* val1ptr, const void* val2ptr)
     return -1;
 }
 
+#define GetTestDataFile() ChangeFileExtension(GetFilename(__FILE__), ".txt")
+
+int HandleError_Imp(const char* file, int line)
+{
+    printf("Error Accoured on [%s:%d]\n", __FILE__, line);
+    return EXIT_FAILURE;
+}
+
+#define HandleError() HandleError_Imp(__FILE__, __LINE__)
+
 #endif
 
 

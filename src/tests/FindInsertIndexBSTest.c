@@ -1,64 +1,52 @@
 #include "TestGlobal.h"
 #include "KOKESort.h"
+#include "csv.h"
 
 #define MAX_LINE_LEN 2048
 #define MAX_NUM_ELEMENTS 1000
 
 int main(void)
 {
-    FILE* fp;
-    int fileState = TryOpenTestDataFile(&fp, "r");
-
-    if(fileState != 0)
-    {
-        perror("File can't opened: ");
-        perror(GetFilename(__FILE__));
-        return EXIT_FAILURE;
-    }
-
-    char line[MAX_LINE_LEN];
     int test_count = 0, failed_count = 0;
 
-    // Reading all test data, row by row
-    while (fgets(line, sizeof(line), fp))
-    {
-        // Deleting new line characters
-        line[strcspn(line, "\r\n")] = 0;
+    char* row;
+    int rows = 1;
+    CsvHandle handle = CsvOpen2(GetTestDataFile(), ';', '"', '\\');
+    
+    while ((row = CsvReadNextRow(handle)))
+    {   
+        const char* col;
 
-        // Skipping empty lines
-        if (line[0] == '\0')
+        if(!(col = CsvReadNextCol(row, handle)))
         {
-            continue;
+            printf("Format Error On %d -> Array \n", rows);
+            return HandleError();
         }
 
-        char* linePtr = line;
+        char* tempCol = strdup(col);
 
-        // Getting data
-        // 1. Array
-        // 2. Target value
-        // 3. Expected value
-        char *array_str = strtok_s(line, ";", &linePtr);
-        char *target_str = strtok_s(NULL, ";", &linePtr);
-        char *expected_str = strtok_s(NULL, ";", &linePtr);
-
-        // If any of them is null, continue
-        if (!array_str || !target_str || !expected_str)
-        {
-            fprintf(stderr, "Format error: %s\n", line);
-            return EXIT_FAILURE;
-            //continue;
-        }
-
-        // Converting to integers
-        int target = atoi(target_str);
-        int expected = atoi(expected_str);
-
-        // Reading array with " " join/split character
         int arr[MAX_NUM_ELEMENTS];
         char* arrContext = NULL;
-        size_t count = ReadArray(arr, array_str, " ", &arrContext, MAX_NUM_ELEMENTS);
+        size_t count = ReadArray(arr, tempCol, " ", &arrContext, MAX_NUM_ELEMENTS);
 
-        // Calling function and getting result
+        free(tempCol);
+
+        if(!(col = CsvReadNextCol(row, handle)))
+        {
+            printf("Format Error On %d -> Target \n", rows);
+            return HandleError();
+        }
+
+        int target = atoi(col);
+
+        if(!(col = CsvReadNextCol(row, handle)))
+        {
+            printf("Format Error On %d -> Expected \n", rows);
+            return HandleError();
+        }
+
+        int expected = atoi(col);
+
         size_t result = FindInsertIndexBS((void*)arr, count, (void*)&target, intComparer, sizeof(int));
         test_count++;
 
@@ -71,9 +59,11 @@ int main(void)
             printf("Test %d FAILED: target = %d, expected = %d, getted = " SIZE_T_IDENTIFIER "\n", test_count, target, expected, result);
             failed_count++;
         }
+
+        rows++;
     }
 
-    fclose(fp);
+    CsvClose(handle);
 
     printf("\nTotal test: %d, Passed: %d, Failed: %d\n", test_count, test_count - failed_count, failed_count);
 
