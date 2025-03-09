@@ -9,6 +9,26 @@ option(USE_BENCHMARKS "Using bechmarks" OFF)
 
 option(USE_GENERATOR "Use generators" ON)
 
+option(ENABLE_COVERAGE "Enable code coverage" OFF)
+
+if(ENABLE_COVERAGE)
+    #set(CMAKE_BUILD_TYPE Debug)
+
+    if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+        message(WARNING "Coverage enabled: Forcing Debug build type")
+        set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type" FORCE)
+    endif()
+
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -O0 -g")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage -O0 -g")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+        set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} --coverage")
+    else()
+        message(WARNING "Coverage is only supported for GCC and Clang.")
+    endif()
+endif()
+
 if(WIN32)
     set(LIB_TYPE SHARED) # For Windows create DLL
 else()

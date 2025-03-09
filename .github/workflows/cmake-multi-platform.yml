@@ -56,12 +56,17 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+      - name: Install coverage tools (Ubuntu only)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt update && sudo apt install -y lcov
+
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          ${{ matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl' && '-DENABLE_COVERAGE=ON' || '' }}
           -S ${{ github.workspace }}/src
 
       - name: Build
@@ -70,3 +75,18 @@ jobs:
       - name: Test
         working-directory: ${{ steps.strings.outputs.build-output-dir }}
         run: ctest --build-config ${{ matrix.build_type }}
+
+      - name: Capture coverage (Ubuntu only)
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl'
+        working-directory: ${{ steps.strings.outputs.build-output-dir }}
+        run: |
+          lcov --capture --directory . --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          genhtml coverage.info --output-directory coverage_report
+
+      - name: Upload coverage report (Ubuntu only)
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-${{ matrix.c_compiler }}
+          path: ${{ steps.strings.outputs.build-output-dir }}/coverage_report
