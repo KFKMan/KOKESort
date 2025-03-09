@@ -84,13 +84,13 @@ jobs:
 
       - name: Test
         working-directory: ${{ steps.strings.outputs.build-output-dir }}
-        run: ctest --build-config ${{ matrix.build_type }}
+        run: ctest --verbose --build-config ${{ matrix.build_type }}
 
       - name: Capture coverage (Ubuntu only)
         if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl'
         working-directory: ${{ steps.strings.outputs.build-output-dir }}
         run: |
-          lcov --capture --directory . --output-file coverage.info
+          lcov --capture --directory . --output-file coverage.info --ignore-errors version
           lcov --remove coverage.info '/usr/*' --output-file coverage.info --ignore-errors unused --ignore-errors version
           genhtml coverage.info --output-directory coverage_report
 

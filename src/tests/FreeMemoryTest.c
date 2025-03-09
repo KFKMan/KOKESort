@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    int arr[] = {10, 15, 13, 24};
+    int arr[] = {123456, 123459, 123458, 123457};
     void* sortedArr = SortV1(arr, sizeof(arr)/sizeof(int), intComparer, sizeof(int));
 
     if(!sortedArr)
@@ -16,7 +16,7 @@ int main(void)
 
     int* number = GetIndex(sortedArr, 0, sizeof(int));
 
-    if(*number != 10)
+    if(*number != 123456)
     {
         return EXIT_SUCCESS;
     }
