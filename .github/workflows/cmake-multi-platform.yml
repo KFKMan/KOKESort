@@ -60,13 +60,23 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt update && sudo apt install -y lcov
 
+      - name: Set CMake coverage flag
+        id: coverage
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ] && [ "${{ matrix.c_compiler }}" != "cl" ]; then
+            echo "coverage_flag=-DENABLE_COVERAGE=ON" >> "$GITHUB_OUTPUT"
+          else
+            echo "coverage_flag=" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-          ${{ matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl' ? '-DENABLE_COVERAGE=ON' || '' }}
+          ${{ steps.coverage.outputs.coverage_flag }}
           -S ${{ github.workspace }}/src
 
       - name: Build
