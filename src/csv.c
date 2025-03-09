@@ -42,47 +42,6 @@ typedef off_t file_off_t;
  * @quote: quote '"'
  * @escape: escape char
  */
-
-//https://stackoverflow.com/a/5920028
-//https://stackoverflow.com/a/18729350
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-   //define something for Windows (32-bit and 64-bit, this part is common)
-    #define WINDOWS
-
-   #ifdef _WIN64
-      //define something for Windows (64-bit only)
-   #else
-      //define something for Windows (32-bit only)
-   #endif
-#elif __APPLE__
-    #include "TargetConditionals.h"
-    #define APPLE
-    #if TARGET_OS_IPHONE && TARGET_OS_SIMULATOR
-        // define something for simulator
-        // (although, checking for TARGET_OS_IPHONE should not be required).
-    #elif TARGET_OS_IPHONE && TARGET_OS_MACCATALYST
-        // define something for Mac's Catalyst
-    #elif TARGET_OS_IPHONE
-        // define something for iphone  
-    #else
-        #define TARGET_OS_OSX 1
-        // define something for OSX
-    #endif
-#elif __ANDROID__
-    // Below __linux__ check should be enough to handle Android,
-    // but something may be unique to Android.
-    #define ANDROID
-#elif __linux__
-    #define LINUX
-#elif __unix__ // all unices not caught above
-   #define UNIX
-#elif defined(_POSIX_VERSION)
-    // POSIX
-    #define POSIX
-#else
-#error "Unknown compiler"
-#endif
-
 struct CsvHandle_
 {
     void *mem;
