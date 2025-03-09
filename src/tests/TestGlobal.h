@@ -173,6 +173,29 @@ int HandleError_Imp(const char* file, int line)
 
 #define HandleError() HandleError_Imp(__FILE__, __LINE__)
 
+char* SumStringsToNew(const char* first, const char* second, size_t size)
+{
+    char* array = (char*)malloc(size);
+    if (array == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+    }
+
+    array[0] = '\0';
+
+    strcat(array, first);
+    strcat(array, second);
+
+    return array;
+}
+
+char* SumStringsToNewAuto(const char* first, const char* second)
+{
+    return SumStringsToNew(first, second, strlen(first) + strlen(second) + 1);
+}
+
+#define GetSuffixedTestDataFile(suffix) SumStringsToNewAuto(GetTestDataFile(), suffix)
+
 #endif
 
 

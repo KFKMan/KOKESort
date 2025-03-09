@@ -19,9 +19,11 @@ void* GetIndex(void* arr, size_t index, unsigned int elementSize)
     return arrIndexPtr;
 }
 
+
+//WARNING: size_t can't return -1 !!!!!
 /// @brief Finding Insert Index via Binary Search
-/// @return Index to Insert, -1 if error accoured
-size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
+/// @return 1 if success, 0 if fail
+int FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize, size_t* insertIndex)
 {
     //log two base n => logn Complexity
 
@@ -31,12 +33,14 @@ size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType elemen
         debugError("'arr' argument can't be NULL\n");
         #endif
 
-        return -1;
+        *insertIndex = 0;
+        return 1;
     }
 
     if(size == 0)
     {
-        return 0;
+        *insertIndex = 0;
+        return 1;
     }
 
     size_t left = 0;
@@ -60,7 +64,8 @@ size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType elemen
         }
     }
 
-    return left;
+    *insertIndex = left;
+    return 1;
 }
 
 VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
@@ -80,7 +85,11 @@ VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, Variab
         return newArr;
     }
 
-    size_t insertIndex = FindInsertIndexBS(arr, size, element, comparer, elementSize); //logN Complexity
+    size_t insertIndex;
+    if(FindInsertIndexBS(arr, size, element, comparer, elementSize, &insertIndex) == 0)
+    {
+        return NULL;
+    }
     
     VariableTypeArray newArr = calloc(size + 1, elementSize);
 
@@ -110,9 +119,14 @@ VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, Variab
 /// @param arr Array to Insert, null pointer can handled
 /// @param currentSize Size of the Array (real element count), 0 size can handled
 /// @param element Element To Insert
-void InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
+/// @return 1 if success, 0 if fail
+int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
 {
-    size_t insertIndex = FindInsertIndexBS(arr, currentSize, element, comparer, elementSize); //logN Complexity
+    size_t insertIndex;
+    if(FindInsertIndexBS(arr, currentSize, element, comparer, elementSize, &insertIndex) == 0)
+    {
+        return 0;
+    }
     
     size_t currentIndex = currentSize;
 
@@ -128,6 +142,8 @@ void InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, Var
 
     void* arrInsertIndexPtr = GetIndex(arr, insertIndex, elementSize);
     memcpy(arrInsertIndexPtr, element, elementSize);
+
+    return 1;
 }
 
 /// @brief First Sorting Algorithm, Insertion to new array with BinarySearch 
@@ -164,7 +180,13 @@ VariableTypeArray SortV1(VariableTypeArray arr, size_t size, CompareFunction com
     {
         void* element = GetIndex(arr, i, elementSize);
 
-        InsertToSortedAllocatedArray(selfArray, selfArraySize, element, comparer, elementSize);
+        if(InsertToSortedAllocatedArray(selfArray, selfArraySize, element, comparer, elementSize) == 0)
+        {
+            #ifdef ERROR_PRINT
+            debugError("InsertToSortedAllocatedArray failed\n");
+            #endif
+            return NULL;
+        }
 
         selfArraySize++;
     }

@@ -23,11 +23,11 @@ typedef int (*CompareFunction)(const void *, const void *);
 
 KOKESORT_API void* GetIndex(void* arr, size_t index, unsigned int elementSize);
 
-KOKESORT_API size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize);
+KOKESORT_API int FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize, size_t* insertIndex);
 
 KOKESORT_API VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize);
 
-KOKESORT_API void InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize);
+KOKESORT_API int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize);
 
 KOKESORT_API VariableTypeArray SortV1(VariableTypeArray arr, size_t size, CompareFunction comparer, unsigned int elementSize);
 

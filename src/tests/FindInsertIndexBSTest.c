@@ -47,10 +47,11 @@ int main(void)
 
         int expected = atoi(col);
 
-        size_t result = FindInsertIndexBS((void*)arr, count, (void*)&target, intComparer, sizeof(int));
+        size_t result;
+        int state = FindInsertIndexBS((void*)arr, count, (void*)&target, intComparer, sizeof(int), &result);
         test_count++;
 
-        if (result == expected)
+        if (state == 1 && result == expected)
         {
             printf("Test %d PASSED: target = %d, expected = %d\n", test_count, target, expected);
         }
