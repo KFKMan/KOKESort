@@ -90,7 +90,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'cl'
         working-directory: ${{ steps.strings.outputs.build-output-dir }}
         run: |
-          lcov --capture --directory . --output-file coverage.info --ignore-errors version
+          lcov --capture --directory . --output-file coverage.info --ignore-errors version --ignore-errors gcov
           lcov --remove coverage.info '/usr/*' --output-file coverage.info --ignore-errors unused --ignore-errors version
           genhtml coverage.info --output-directory coverage_report
 
