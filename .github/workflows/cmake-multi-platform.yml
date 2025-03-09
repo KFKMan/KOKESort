@@ -91,7 +91,7 @@ jobs:
         working-directory: ${{ steps.strings.outputs.build-output-dir }}
         run: |
           lcov --capture --directory . --output-file coverage.info
-          lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info --ignore-errors unused
           genhtml coverage.info --output-directory coverage_report
 
       - name: Upload coverage report (Ubuntu only)
