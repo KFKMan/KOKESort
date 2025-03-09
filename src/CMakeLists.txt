@@ -11,6 +11,9 @@ option(USE_GENERATOR "Use generators" ON)
 
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
 
+message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
+message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
+
 if(ENABLE_COVERAGE)
     #set(CMAKE_BUILD_TYPE Debug)
 
@@ -19,7 +22,8 @@ if(ENABLE_COVERAGE)
         set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type" FORCE)
     endif()
 
-    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    #More control flag can be good.
+    if(CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "GNU") 
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -O0 -g")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage -O0 -g")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
