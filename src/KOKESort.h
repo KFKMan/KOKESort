@@ -38,7 +38,7 @@ KOKESORT_API void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, siz
 
 KOKESORT_API int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize);
 
-KOKESORT_API void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, unsigned int elementSize);
+KOKESORT_API void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t size, CompareFunction comparer, unsigned int elementSize);
 
 KOKESORT_API void SortV1AllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, unsigned int elementSize);
 

@@ -45,6 +45,11 @@ CArray parseCArray(const std::string& line) {
 
 std::vector<CArray> readCArraysFromFile(const std::string& filepath) {
     std::ifstream file(filepath);
+    if (!file) {
+        std::cerr << "Error opening file: " << filepath << std::endl;
+        return {};
+    }
+
     std::vector<CArray> arrays;
     std::string line;
     while (std::getline(file, line)) {
@@ -74,8 +79,50 @@ class DurationFormatter {
         }
     };
 
+void benchmarkSortV1(const std::string& benchName, const int* data, size_t size) {
+    int* copy = new int[size];
+    std::copy(data, data + size, copy);
+
+    if (copy == nullptr) {
+        std::cerr << "Memory allocation failed!" << std::endl;
+        return;
+    }
+
+    auto start = std::chrono::high_resolution_clock::now();
+
+    //int res = SortV1Self(copy, size, intComparer, sizeof(int));
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+    std::cout << benchName << " | SortV1 | " << size << " --> " << duration.count() << "ns" << " || " << DurationFormatter::format(duration) << std::endl;
+
+    delete[] copy;
+}
+
+void benchmarkQuickSort(const std::string& benchName, const int* data, size_t size) {
+    int* copy = new int[size];
+    std::copy(data, data + size, copy);
+
+    if (copy == nullptr) {
+        std::cerr << "Memory allocation failed!" << std::endl;
+        return;
+    }
+
+    auto start = std::chrono::high_resolution_clock::now();
+
+    std::qsort(copy, size, sizeof(int), intComparer);
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+    std::cout << benchName << " | QuickSort | " << size << " --> " << duration.count() << "ns" << " || " << DurationFormatter::format(duration) << std::endl;
+
+    delete[] copy;
+}
+
 int main(int argc, char** argv) {
-    // Çalışma dizinindeki tüm .txt dosyalarını tarıyoruz.
+    std::cout << "App Started" << std::endl;
     for (const auto& entry : fs::directory_iterator(".")) {
         if (entry.path().extension() == ".txt") {
             auto arrays = readCArraysFromFile(entry.path().string());
@@ -84,30 +131,10 @@ int main(int argc, char** argv) {
                 std::string benchName = entry.path().filename().string() + "_" + std::to_string(i);
                 auto currentArray = arrays[i];
                 
-                int* copy = new int[currentArray.size];
-                std::copy(currentArray.data, currentArray.data + currentArray.size, copy);
-
-                auto start = high_resolution_clock::now();
-
-                
-                auto cache1 = SortV1(copy, currentArray.size, intComparer, sizeof(int));
-                auto cache2 = SortV1(copy, currentArray.size, intComparer, sizeof(int));
-                auto cache3 = SortV1(copy, currentArray.size, intComparer, sizeof(int));
-                auto cache4 = SortV1(copy, currentArray.size, intComparer, sizeof(int));
-                auto cache5 = SortV1(copy, currentArray.size, intComparer, sizeof(int));
-
-                auto end = high_resolution_clock::now();
-                auto duration = duration_cast<nanoseconds>(end - start) / 5;
-
-                std::cout << benchName << " | " << currentArray.size << " --> " << duration.count() << "ns" << " || " << DurationFormatter::format(duration) << std::endl;
-
-                delete[] copy;
-
-                free(cache1);
-                free(cache2);
-                free(cache3);
-                free(cache4);
-                free(cache5);
+                std::cout << "SortV1" << std::endl;
+                benchmarkSortV1(benchName, currentArray.data, currentArray.size);
+                std::cout << "QuickSort" << std::endl;
+                benchmarkQuickSort(benchName, currentArray.data, currentArray.size);
             }
 
             for (auto& carr : arrays) {

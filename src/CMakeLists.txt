@@ -16,6 +16,12 @@ option(USE_BENCHMARKS_R2 "Using advanced benchmarks" OFF)
 message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
 message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
 
+if (USE_BENCHMARKS OR USE_BENCHMARKS_R2)
+    message(STATUS "Release build with maximum optimization")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
 include(get_cpm)
 

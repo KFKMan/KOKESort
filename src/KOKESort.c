@@ -108,10 +108,33 @@ VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, Variab
     return InsertToSortedArrayNonSafe(arr, size, element, comparer, elementSize);
 }
 
+void MoveElement(VariableTypeArray arr, size_t elementSize, int fromIndex, int toIndex)
+{
+    void* elementBackup = malloc(elementSize);
+    memcpy(elementBackup, GetIndex(arr, fromIndex, elementSize), elementSize);
+
+    if (fromIndex > toIndex) {
+        memmove(GetIndex(arr, toIndex + 1, elementSize), 
+                GetIndex(arr, toIndex, elementSize), 
+                (fromIndex - toIndex) * elementSize);
+    } else 
+    {
+        memmove(GetIndex(arr, toIndex, elementSize), 
+                GetIndex(arr, toIndex + 1, elementSize), 
+                (fromIndex - toIndex) * elementSize);
+    }
+
+    memcpy(GetIndex(arr, toIndex, elementSize), elementBackup, elementSize);
+    free(elementBackup);
+}
+
 void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
 {
     size_t insertIndex = FindInsertIndexBSNonSafe(arr, currentSize, element, comparer, elementSize);
     
+    MoveElement(arr, elementSize, currentSize, insertIndex);
+
+    /*
     size_t currentIndex = currentSize;
 
     while (currentIndex > insertIndex)
@@ -126,6 +149,7 @@ void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSi
 
     void* arrInsertIndexPtr = GetIndex(arr, insertIndex, elementSize);
     memcpy(arrInsertIndexPtr, element, elementSize);
+    */
 }
 
 /// @brief Inserting Element to Sorted Array with BinarySearch (FindInsertIndexBS)
@@ -164,17 +188,17 @@ void SortV1AllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeAr
     }
 }
 
-void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, unsigned int elementSize)
+void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t size, CompareFunction comparer, unsigned int elementSize)
 {
     size_t selfArraySize = 1;
-    void* elementBackup = calloc(1, elementSize); //You need this if unsortedArr and allocatedArr is same.
+    //void* elementBackup = malloc(elementSize);
 
     for(unsigned int i = 1; i < size; i++) //N Complexity, 0->N
     {
         void* element = GetIndex(unsortedArr, i, elementSize);
-        memcpy(elementBackup, element, elementSize);
+        //memcpy(elementBackup, element, elementSize);
 
-        InsertToSortedAllocatedArrayNonSafe(allocatedArr, selfArraySize, elementBackup, comparer, elementSize);
+        InsertToSortedAllocatedArrayNonSafe(unsortedArr, selfArraySize, element, comparer, elementSize);
 
         selfArraySize++;
     }
@@ -189,7 +213,7 @@ void SortV1AllocatedNonSafe(VariableTypeArray unsortedArr, VariableTypeArray all
 
 VariableTypeArray SortV1NonSafe(VariableTypeArray arr, size_t size, CompareFunction comparer, unsigned int elementSize)
 {
-    VariableType* selfArray = calloc(size, elementSize);
+    VariableType* selfArray = malloc(size * elementSize);
 
     if(!selfArray)
     {
@@ -220,7 +244,7 @@ VariableTypeArray SortV1(VariableTypeArray arr, size_t size, CompareFunction com
 
 void SortV1SelfNonSafe(VariableTypeArray array, size_t size, CompareFunction comparer, unsigned int elementSize)
 {
-    SortV1SelfAllocatedNonZeroNonSafe(array, array, size, comparer, elementSize);
+    SortV1SelfAllocatedNonZeroNonSafe(array, size, comparer, elementSize);
 }
 
 /// @brief 
