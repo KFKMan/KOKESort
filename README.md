@@ -2,6 +2,10 @@ KOKE Sort (also known as Deniz Sort, Dahman Sort)
 
 İstanbul Gelişim University Computer Engineering First Year Second Semester Final Project.
 
+**Project Overview**
+
+KOKE Sort is a **cross-platform** corresponding library written in **C** as a modular sort. Developed as a capstone project, it showcases efficient algorithm implementation along with multi-language interop, in addition to demonstrating clean code, test frameworks, and build automation practices.
+
 **PERFORMANCE**
 
 **USING SCRIPTS**
@@ -34,7 +38,6 @@ For using python wrapper (use scripts in the src/pybindwrapper);
 **GENERAL REQUIRETMENTS**
 
 There's no general requiretments but most of the scripts/projects using **CMake**, **CTest**, **Git, Curl**.
-
 
 As default there is a CMake configuration providen but you don't limited to use that, this steps is for who want to use providen configuration.
 

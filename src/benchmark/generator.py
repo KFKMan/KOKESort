@@ -29,6 +29,6 @@ def save_arrays_to_file(arrays, filename="testdata.txt"):
     print("Writed")
 
 if __name__ == "__main__":
-    arrays = generate_unsorted_arrays(num_arrays=500, min_elements = 5000, max_elements=5000, max_value=10000)
+    arrays = generate_unsorted_arrays(num_arrays=5, min_elements = 100000, max_elements=100000, max_value=10000)
     save_arrays_to_file(arrays)
     print(f"Generated {len(arrays)} unsorted arrays and saved to 'testdata.txt'")

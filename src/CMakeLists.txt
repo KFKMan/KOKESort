@@ -11,8 +11,13 @@ option(USE_GENERATOR "Use generators" ON)
 
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
 
+option(USE_BENCHMARKS_R2 "Using advanced benchmarks" OFF)
+
 message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
 message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
+
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
+include(get_cpm)
 
 if(ENABLE_COVERAGE)
     #set(CMAKE_BUILD_TYPE Debug)
@@ -118,4 +123,8 @@ endif()
 
 if(USE_BENCHMARKS)
 add_subdirectory(benchmark)
+endif()
+
+if(USE_BENCHMARKS_R2)
+add_subdirectory(benchmarkr2)
 endif()

@@ -1,12 +1,16 @@
 cmake_minimum_required(VERSION 3.18)
 project(KOKESortWrapper)
 
+#[[
 include(FetchContent)
 FetchContent_Declare(
     pybind11
     GIT_REPOSITORY https://github.com/pybind/pybind11.git
 )
 FetchContent_MakeAvailable(pybind11)
+]]
+
+CPMAddPackage("gh:pybind/pybind11@2.13.6")
 
 #find_package(pybind11 REQUIRED)
 
