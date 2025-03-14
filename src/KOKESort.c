@@ -20,29 +20,9 @@ void* GetIndex(void* arr, size_t index, unsigned int elementSize)
 }
 
 
-//WARNING: size_t can't return -1 !!!!!
-/// @brief Finding Insert Index via Binary Search
-/// @return 1 if success, 0 if fail
-int FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize, size_t* insertIndex)
+
+size_t FindInsertIndexBSNonSafe(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
 {
-    //log two base n => logn Complexity
-
-    if(arr == NULL)
-    {
-        #ifdef ERROR_PRINT
-        debugError("'arr' argument can't be NULL\n");
-        #endif
-
-        *insertIndex = 0;
-        return 1;
-    }
-
-    if(size == 0)
-    {
-        *insertIndex = 0;
-        return 1;
-    }
-
     size_t left = 0;
     size_t right = size;
 
@@ -64,32 +44,25 @@ int FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, 
         }
     }
 
-    *insertIndex = left;
-    return 1;
+    return left;
 }
 
-VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
+/// @brief Finding Insert Index via Binary Search
+size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
 {
-    if(arr == NULL || size == 0)
-    {
-        #ifdef DEBUG
-        debugPrint("Array NULL or Array Size is Zero, returning insert element");
-        #endif
+    //log two base n => logn Complexity
 
-        VariableTypeArray newArr = malloc(elementSize);  // Allocate space for one element
-        if (newArr == NULL)
-        {
-            return NULL;
-        }
-        memcpy(newArr, element, elementSize);
-        return newArr;
+    if(!arr || size == 0)
+    {
+        return 0;
     }
 
-    size_t insertIndex;
-    if(FindInsertIndexBS(arr, size, element, comparer, elementSize, &insertIndex) == 0)
-    {
-        return NULL;
-    }
+    return FindInsertIndexBSNonSafe(arr, size, element, comparer, elementSize);
+}
+
+VariableTypeArray InsertToSortedArrayNonSafe(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
+{
+    size_t insertIndex = FindInsertIndexBSNonSafe(arr, size, element, comparer, elementSize);
     
     VariableTypeArray newArr = calloc(size + 1, elementSize);
 
@@ -115,18 +88,29 @@ VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, Variab
     return newArr;
 }
 
-/// @brief Inserting Element to Sorted Array with BinarySearch (FindInsertIndexBS)
-/// @param arr Array to Insert, null pointer can handled
-/// @param currentSize Size of the Array (real element count), 0 size can handled
-/// @param element Element To Insert
-/// @return 1 if success, 0 if fail
-int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
+VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
 {
-    size_t insertIndex;
-    if(FindInsertIndexBS(arr, currentSize, element, comparer, elementSize, &insertIndex) == 0)
+    if(!arr || size == 0)
     {
-        return 0;
+        #ifdef DEBUG
+        debugPrint("Array NULL or Array Size is Zero, returning insert element");
+        #endif
+
+        VariableTypeArray newArr = malloc(elementSize);  // Allocate space for one element
+        if (newArr == NULL)
+        {
+            return NULL;
+        }
+        memcpy(newArr, element, elementSize);
+        return newArr;
     }
+
+    return InsertToSortedArrayNonSafe(arr, size, element, comparer, elementSize);
+}
+
+void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
+{
+    size_t insertIndex = FindInsertIndexBSNonSafe(arr, currentSize, element, comparer, elementSize);
     
     size_t currentIndex = currentSize;
 
@@ -142,8 +126,79 @@ int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, Vari
 
     void* arrInsertIndexPtr = GetIndex(arr, insertIndex, elementSize);
     memcpy(arrInsertIndexPtr, element, elementSize);
+}
 
+/// @brief Inserting Element to Sorted Array with BinarySearch (FindInsertIndexBS)
+/// @param arr Array to Insert, null pointer can handled
+/// @param currentSize Size of the Array (real element count), 0 size can handled
+/// @param element Element To Insert
+/// @return 1 if success, 0 if fail
+int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
+{
+    if(!arr)
+    {
+        return 0;
+    }
+
+    if(currentSize == 0)
+    {
+        memcpy(arr, element, elementSize);
+        return 1;
+    }
+
+    InsertToSortedAllocatedArrayNonSafe(arr, currentSize, element, comparer, elementSize);
     return 1;
+}
+
+void SortV1AllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, unsigned int elementSize)
+{
+    size_t selfArraySize = 1;
+
+    for(unsigned int i = 1; i < size; i++) //N Complexity, 0->N
+    {
+        void* element = GetIndex(unsortedArr, i, elementSize);
+
+        InsertToSortedAllocatedArrayNonSafe(allocatedArr, selfArraySize, element, comparer, elementSize);
+
+        selfArraySize++;
+    }
+}
+
+void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, unsigned int elementSize)
+{
+    size_t selfArraySize = 1;
+    void* elementBackup = calloc(1, elementSize); //You need this if unsortedArr and allocatedArr is same.
+
+    for(unsigned int i = 1; i < size; i++) //N Complexity, 0->N
+    {
+        void* element = GetIndex(unsortedArr, i, elementSize);
+        memcpy(elementBackup, element, elementSize);
+
+        InsertToSortedAllocatedArrayNonSafe(allocatedArr, selfArraySize, elementBackup, comparer, elementSize);
+
+        selfArraySize++;
+    }
+}
+
+void SortV1AllocatedNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, unsigned int elementSize)
+{
+    memcpy(allocatedArr, unsortedArr, elementSize);
+
+    SortV1AllocatedNonZeroNonSafe(unsortedArr, allocatedArr, size, comparer, elementSize);
+}
+
+VariableTypeArray SortV1NonSafe(VariableTypeArray arr, size_t size, CompareFunction comparer, unsigned int elementSize)
+{
+    VariableType* selfArray = calloc(size, elementSize);
+
+    if(!selfArray)
+    {
+        return NULL;
+    }
+
+    SortV1AllocatedNonSafe(arr, selfArray, size, comparer, elementSize);
+
+    return selfArray;
 }
 
 /// @brief First Sorting Algorithm, Insertion to new array with BinarySearch 
@@ -151,47 +206,39 @@ int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, Vari
 /// | Space Complexity / Best O(N) - Average O(N) - Worst O(N) |
 /// @param arr Array to sort
 /// @param size Size of array
-/// @return Sorted new array
+/// @return Sorted new array or NULL if array is not valid or size is zero
 VariableTypeArray SortV1(VariableTypeArray arr, size_t size, CompareFunction comparer, unsigned int elementSize)
 {
     //Argument checks
-    if (!arr)
+    if (!arr || size == 0)
     {
-        #ifdef ERROR_PRINT
-        debugError("'arr' argument can't be NULL\n");
-        #endif
-
         return NULL;
     }
 
-    if(size == 0)
+    return SortV1NonSafe(arr, size, comparer, elementSize);
+}
+
+void SortV1SelfNonSafe(VariableTypeArray array, size_t size, CompareFunction comparer, unsigned int elementSize)
+{
+    SortV1SelfAllocatedNonZeroNonSafe(array, array, size, comparer, elementSize);
+}
+
+/// @brief 
+/// @param array 
+/// @param size 
+/// @param comparer 
+/// @param elementSize 
+/// @return Success or not
+int SortV1Self(VariableTypeArray array, size_t size, CompareFunction comparer, unsigned int elementSize)
+{
+    if(!array || size == 0)
     {
-        #ifdef ERROR_PRINT
-        debugError("'size' argument can't be zero\n");
-        #endif
-        
-        return NULL;
+        return FAIL;
     }
 
-    size_t selfArraySize = 0;
-    VariableType* selfArray = calloc(size, elementSize);
+    SortV1SelfNonSafe(array, size, comparer, elementSize);
 
-    for(unsigned int i = 0; i < size; i++) //N Complexity, 0->N
-    {
-        void* element = GetIndex(arr, i, elementSize);
-
-        if(InsertToSortedAllocatedArray(selfArray, selfArraySize, element, comparer, elementSize) == 0)
-        {
-            #ifdef ERROR_PRINT
-            debugError("InsertToSortedAllocatedArray failed\n");
-            #endif
-            return NULL;
-        }
-
-        selfArraySize++;
-    }
-
-    return selfArray;
+    return SUCCESS;
 }
 
 #endif

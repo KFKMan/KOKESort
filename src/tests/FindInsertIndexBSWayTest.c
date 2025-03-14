@@ -4,31 +4,29 @@
 int TestNullArray()
 {
     int element = 5;
-    size_t result;
-    int state = FindInsertIndexBS(NULL, 0, &element, intComparer, sizeof(int), &result);
-    if(state == 1 && result == 0)
+    size_t result = FindInsertIndexBS(NULL, 0, &element, intComparer, sizeof(int));
+    if(result == 0)
     {
-        return 1;
+        return SUCCESS;
     }
-    return 0;
+    return FAIL;
 }
 
 int TestZeroSizeArray()
 {
     int arr[] = {10, 15, 20, 25};
     int element = 18;
-    size_t result;
-    int state = FindInsertIndexBS(arr, 0, &element, intComparer, sizeof(int), &result);
-    if(state == 1 && result == 0)
+    size_t result = FindInsertIndexBS(arr, 0, &element, intComparer, sizeof(int));
+    if(result == 0)
     {
-        return 1;
+        return SUCCESS;
     }
-    return 0;
+    return FAIL;
 }
 
 int main(void)
 {
-    if(TestNullArray() == 1 && TestZeroSizeArray() == 1)
+    if(TestNullArray() == SUCCESS && TestZeroSizeArray() == SUCCESS)
     {
         return EXIT_SUCCESS;
     }

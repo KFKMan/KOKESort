@@ -33,30 +33,34 @@ int main(void)
 
         if(!(col = CsvReadNextCol(row, handle)))
         {
-            printf("Format Error On %d -> Target \n", rows);
-            return HandleError();
-        }
-
-        int target = atoi(col);
-
-        if(!(col = CsvReadNextCol(row, handle)))
-        {
             printf("Format Error On %d -> Expected \n", rows);
             return HandleError();
         }
 
-        int expected = atoi(col);
+        tempCol = strdup(col);
 
-        size_t result = FindInsertIndexBS((void*)arr, count, (void*)&target, intComparer, sizeof(int));
+        int expectedArr[MAX_NUM_ELEMENTS];
+        char* expectedContext = NULL;
+        size_t expectedCount = ReadArray(expectedArr, tempCol, " ", &expectedContext, MAX_NUM_ELEMENTS);
+
+        free(tempCol);
+
+        int result = SortV1Self(arr, count, intComparer, sizeof(int));
         test_count++;
 
-        if (result == expected)
+        if (result == SUCCESS && ArrayEqual(arr, expectedArr, count, intComparer, sizeof(int)) == 0)
         {
-            printf("Test %d PASSED: target = %d, expected = %d\n", test_count, target, expected);
+            printf("Test %d PASSED: \n", test_count);
         }
         else
         {
-            printf("Test %d FAILED: target = %d, expected = %d, getted = " SIZE_T_IDENTIFIER "\n", test_count, target, expected, result);
+            printf("Test %d FAILED: \n", test_count);
+            printf("Parameter: ");
+            PrintArray(arr, count);
+            printf("\n");
+            printf("Expected: ");
+            PrintArray(expectedArr, expectedCount);
+            printf("\n");
             failed_count++;
         }
 

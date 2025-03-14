@@ -1,6 +1,9 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#define SUCCESS 1
+#define FAIL 0
+
 #ifdef DEBUG
 #define ERROR_PRINT
 #define debugPrint(fmt, ...) printf("[%s:%d] " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__)
