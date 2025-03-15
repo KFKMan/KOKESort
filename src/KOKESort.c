@@ -113,16 +113,25 @@ void MoveElement(VariableTypeArray arr, size_t elementSize, int fromIndex, int t
     void* elementBackup = malloc(elementSize);
     memcpy(elementBackup, GetIndex(arr, fromIndex, elementSize), elementSize);
 
-    if (fromIndex > toIndex) {
+    memmove(GetIndex(arr, toIndex + 1, elementSize), 
+                GetIndex(arr, toIndex, elementSize), 
+                (fromIndex - toIndex) * elementSize);
+
+    //In our senario fromIndex always bigger than toIndex
+    /*
+    if (fromIndex > toIndex) 
+    {
         memmove(GetIndex(arr, toIndex + 1, elementSize), 
                 GetIndex(arr, toIndex, elementSize), 
                 (fromIndex - toIndex) * elementSize);
-    } else 
+    } 
+    else 
     {
         memmove(GetIndex(arr, toIndex, elementSize), 
                 GetIndex(arr, toIndex + 1, elementSize), 
                 (fromIndex - toIndex) * elementSize);
     }
+    */
 
     memcpy(GetIndex(arr, toIndex, elementSize), elementBackup, elementSize);
     free(elementBackup);
