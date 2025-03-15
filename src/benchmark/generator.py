@@ -25,10 +25,10 @@ def save_arrays_to_file(arrays, filename="testdata.txt"):
     print("Writing...")
 
     with open(filename, "w") as f:
-        f.write("\n".join(" ".join(map(str, array)) + ";" for array in arrays) + "\n")
+        f.write("\n".join(" ".join(map(str, array)) for array in arrays) + "\n")
     print("Writed")
 
 if __name__ == "__main__":
-    arrays = generate_unsorted_arrays(num_arrays=5, min_elements = 100000, max_elements=100000, max_value=10000)
+    arrays = generate_unsorted_arrays(num_arrays=3, min_elements = 1000000, max_elements=1000000, max_value=99999999) #999999999
     save_arrays_to_file(arrays)
     print(f"Generated {len(arrays)} unsorted arrays and saved to 'testdata.txt'")

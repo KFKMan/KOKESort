@@ -80,24 +80,16 @@ class DurationFormatter {
     };
 
 void benchmarkSortV1(const std::string& benchName, const int* data, size_t size) {
-    int* copy = new int[size];
-    std::copy(data, data + size, copy);
-
-    if (copy == nullptr) {
-        std::cerr << "Memory allocation failed!" << std::endl;
-        return;
-    }
+    int* copy = const_cast<int*>(data);
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    //int res = SortV1Self(copy, size, intComparer, sizeof(int));
+    int res = SortV1Self(copy, size, intComparer, sizeof(int));
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
 
     std::cout << benchName << " | SortV1 | " << size << " --> " << duration.count() << "ns" << " || " << DurationFormatter::format(duration) << std::endl;
-
-    delete[] copy;
 }
 
 void benchmarkQuickSort(const std::string& benchName, const int* data, size_t size) {

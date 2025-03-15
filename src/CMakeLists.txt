@@ -18,8 +18,13 @@ message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
 
 if (USE_BENCHMARKS OR USE_BENCHMARKS_R2)
     message(STATUS "Release build with maximum optimization")
+    if (MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "/O2 /DNDEBUG")
+    set(CMAKE_C_FLAGS_RELEASE "/O2 /DNDEBUG")
+else()
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
     set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+endif()
 endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)

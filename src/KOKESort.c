@@ -132,9 +132,6 @@ void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSi
 {
     size_t insertIndex = FindInsertIndexBSNonSafe(arr, currentSize, element, comparer, elementSize);
     
-    MoveElement(arr, elementSize, currentSize, insertIndex);
-
-    /*
     size_t currentIndex = currentSize;
 
     while (currentIndex > insertIndex)
@@ -149,7 +146,6 @@ void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSi
 
     void* arrInsertIndexPtr = GetIndex(arr, insertIndex, elementSize);
     memcpy(arrInsertIndexPtr, element, elementSize);
-    */
 }
 
 /// @brief Inserting Element to Sorted Array with BinarySearch (FindInsertIndexBS)
@@ -198,7 +194,9 @@ void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t siz
         void* element = GetIndex(unsortedArr, i, elementSize);
         //memcpy(elementBackup, element, elementSize);
 
-        InsertToSortedAllocatedArrayNonSafe(unsortedArr, selfArraySize, element, comparer, elementSize);
+        size_t insertIndex = FindInsertIndexBSNonSafe(unsortedArr, i, element, comparer, elementSize);
+
+        MoveElement(unsortedArr, elementSize, i, insertIndex);
 
         selfArraySize++;
     }
