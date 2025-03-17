@@ -1,6 +1,11 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#define USE_COMPARER
+
+#include <stdio.h>
+#include <stdlib.h>
+
 #define SUCCESS 1
 #define FAIL 0
 
@@ -69,6 +74,13 @@
     #define POSIX
 #else
 #error "Unknown compiler"
+#endif
+
+#ifdef USE_COMPARER
+KOKESORT_API void* GetIndex(void* arr, size_t index, unsigned int elementSize);
+KOKESORT_API void FreeMemory(void* pointer);
+
+typedef int (*CompareFunction)(const void *, const void *);
 #endif
 
 #endif

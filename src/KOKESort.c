@@ -1,25 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "Global.h"
 #include "KOKESort.h"
 
-void FreeMemory(void* pointer)
-{
-    free(pointer);
-}
-
 #ifdef USE_COMPARER
-
-void* GetIndex(void* arr, size_t index, unsigned int elementSize)
-{
-    unsigned char* ptr = (unsigned char*)arr;
-
-    void* arrIndexPtr = ptr + index * elementSize;
-
-    return arrIndexPtr;
-}
-
-
 
 size_t FindInsertIndexBSNonSafe(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
 {

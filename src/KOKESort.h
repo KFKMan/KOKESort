@@ -2,27 +2,20 @@
 #define KOKESort
 
 #include <string.h> //For memcpy
-
 #include "Global.h"
 
 #ifdef __cplusplus
  extern "C" {  /* C++ name mangling */
  #endif
 
-#define USE_COMPARER
-
 //Enabling Simple Compare Functions -1 (less), 0 (equal), 1 (more)
 //#define COMPARE_USE_SIMPLE 1
-
-KOKESORT_API void FreeMemory(void* pointer);
 
 
 #ifdef USE_COMPARER
 
 #define VariableType void*
 #define VariableTypeArray VariableType
-
-typedef int (*CompareFunction)(const void *, const void *);
 
 KOKESORT_API void* GetIndex(void* arr, size_t index, unsigned int elementSize);
 

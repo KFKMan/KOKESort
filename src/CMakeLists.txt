@@ -56,7 +56,7 @@ else()
     set(LIB_TYPE STATIC) # For others create LIB
 endif()
 
-set(SRC_FILES KOKESort.c)
+set(SRC_FILES KOKESort.c KOKESortV2.c Global.c csv.c)
 set(INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
 if(USE_GENERATOR)
