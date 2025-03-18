@@ -105,7 +105,7 @@ list(APPEND INCLUDE_DIRS ${GENERATED_DIR})
 endif()
 
 if(USE_TESTS)
-list(APPEND SRC_FILES csv.c)
+#list(APPEND SRC_FILES csv.c)
 endif()
 
 add_library(KOKESort ${LIB_TYPE} ${SRC_FILES})

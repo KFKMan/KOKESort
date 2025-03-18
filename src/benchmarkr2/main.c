@@ -3,7 +3,8 @@
 #include <string.h>
 #include <time.h>
 #include <csv.h>
-#include <KOKESort.h>
+#include "KOKESort.h"
+#include "KOKESortV2.h"
 
 #define MAX_NUM_ELEMENTS 10000000
 
@@ -17,6 +18,17 @@ int intComparer(const void* val1ptr, const void* val2ptr) {
         return 0;
     }
     return -1;
+}
+
+const int MaxElementCount = 100000000;
+const int SpaceCount = 1000;
+
+int Divider;
+
+size_t indexer(const void* valptr)
+{
+    const int val1 = *(const int*)valptr;
+    return val1/Divider;
 }
 
 
@@ -48,6 +60,27 @@ void benchmarkQuickSort(const char* benchName, const int* data, size_t size) {
 
     printf("%s | QuickSort | %zu --> ", benchName, size);
     formatDuration(start, end);
+    free(copy);
+}
+
+void benchmarkSortV2(const char* benchName, const int* data, size_t size) {
+    int* copy = (int*)malloc(size * sizeof(int));
+    memcpy(copy, data, size * sizeof(int));
+
+    Divider = MaxElementCount / SpaceCount;
+    clock_t start = clock();
+    PossibilitySpace** pbSpaces = SortV2(copy, size, sizeof(int), SpaceCount, indexer, intComparer);
+    clock_t end = clock();
+
+    printf("%s | SortV2 | %zu --> ", benchName, size);
+    formatDuration(start, end);
+
+    start = clock();
+    ToArray(pbSpaces, SpaceCount, size, sizeof(int));
+    end = clock();
+    printf("%s | SortV2 - Convertion | %zu --> ", benchName, size);
+    formatDuration(start, end);
+
     free(copy);
 }
 
@@ -95,11 +128,14 @@ int main(int argc, char** argv) {
             continue;
         }
 
-        printf("SortV1\n");
-        benchmarkSortV1(benchName, array, index);
+        //printf("SortV1\n");
+        //benchmarkSortV1(benchName, array, index);
         
         printf("QuickSort\n");
         benchmarkQuickSort(benchName, array, index);
+
+        printf("SortV2\n");
+        benchmarkSortV2(benchName, array, index);
 
         free(array);
         
