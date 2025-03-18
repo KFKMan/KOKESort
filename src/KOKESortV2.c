@@ -5,6 +5,9 @@
 // 2- Create Backup Space
 // 3- Start To Use
 
+#define LinkedListArch
+
+
 typedef size_t (*SpaceIndexerFn)(const void *);
 
 const size_t PointerSize = sizeof(int *);
@@ -12,8 +15,13 @@ const size_t PointerSize = sizeof(int *);
 typedef struct WayList
 {
     void *Element;
-    WayList *NextElement;
+
+    #ifdef LinkedListArch
+    struct WayList *NextElement;
     // Maybe functionallity for Previous Element?
+    #else
+    int Size;
+    #endif
 } WayList;
 
 typedef struct PossibilitySpace
@@ -55,8 +63,8 @@ void *SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCo
 
         if (pb->Element == NULL)
         {
-            pb->Element = currentElement;
-            //?? exceptionable??
+            //pb->Element = currentElement; //?? exceptionable??
+            memcpy(pb->Element, currentElement, elementSize);
 
             continue;
         }
@@ -64,8 +72,8 @@ void *SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCo
         if (pb->NextElement == NULL)
         {
             WayList *way = GetIndex(waySpace, currentWaySpace, waySpacePerSize);
-            way->Element = currentElement;
-            //?? exceptionable??
+            //way->Element = currentElement; //?? exceptionable??
+            memcpy(way->Element, currentElement, elementSize);
 
             pb->NextElement = way;
 
@@ -80,8 +88,8 @@ void *SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCo
             if (comparerFn(way->Element, currentElement) > 0)
             {
                 WayList *crrWay = GetIndex(waySpace, currentWaySpace, waySpacePerSize);
-                crrWay->Element = currentElement;
-                //?? exceptionable??
+                //crrWay->Element = currentElement; //?? exceptionable??
+                memcpy(crrWay->Element, currentElement, elementSize);
 
                 crrWay->NextElement = way;
                 pb->NextElement = crrWay;
@@ -92,8 +100,8 @@ void *SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCo
             else
             {
                 WayList *crrWay = GetIndex(waySpace, currentWaySpace, waySpacePerSize);
-                crrWay->Element = currentElement;
-                //?? exceptionable??
+                //crrWay->Element = currentElement; //?? exceptionable??
+                memcpy(crrWay->Element, currentElement, elementSize);
 
                 way->NextElement = crrWay;
 
@@ -109,8 +117,8 @@ void *SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCo
             if (comparerFn(way->NextElement->Element, currentElement) > 0)
             {
                 WayList *crrWay = GetIndex(waySpace, currentWaySpace, waySpacePerSize);
-                crrWay->Element = currentElement;
-                //?? exceptionable??
+                //crrWay->Element = currentElement; //?? exceptionable??
+                memcpy(crrWay->Element, currentElement, elementSize);
 
                 crrWay->NextElement = way->NextElement;
                 way->NextElement = crrWay;
@@ -123,8 +131,8 @@ void *SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCo
         }
 
         WayList *cWay = GetIndex(waySpace, currentWaySpace, waySpacePerSize);
-        cWay->Element = currentElement;
-        //?? exceptionable??
+        //cWay->Element = currentElement; //?? exceptionable??
+        memcpy(cWay->Element, currentElement, elementSize);
 
         way->NextElement = cWay;
 
