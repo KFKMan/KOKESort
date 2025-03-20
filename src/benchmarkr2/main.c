@@ -84,9 +84,20 @@ void benchmarkSortV2(const char* benchName, const int* data, size_t size) {
     free(copy);
 }
 
+int GetBool(const char* question)
+{
+    int x = SUCCESS;
+    printf(question);
+    scanf("%d",&x);
+    return x;
+}
+
 // Ana fonksiyon
 int main(int argc, char** argv) {
     printf("Benchmark R2 App Started V1.0.0\n");
+
+    printf("Write %d for TRUE, %d for FALSE \n", SUCCESS, FAIL);
+    int useV1 = GetBool("Use SortV1: ");
 
     const char* benchName = "Automated";
     const char* filepath = "testdata.txt";
@@ -128,9 +139,12 @@ int main(int argc, char** argv) {
             continue;
         }
 
-        //printf("SortV1\n");
-        //benchmarkSortV1(benchName, array, index);
-        
+        if(useV1)
+        {
+            printf("SortV1\n");
+            benchmarkSortV1(benchName, array, index);
+        }
+
         printf("QuickSort\n");
         benchmarkQuickSort(benchName, array, index);
 

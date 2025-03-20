@@ -92,29 +92,15 @@ VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, Variab
 void MoveElement(VariableTypeArray arr, size_t elementSize, int fromIndex, int toIndex)
 {
     void* elementBackup = malloc(elementSize);
+    
     memcpy(elementBackup, GetIndex(arr, fromIndex, elementSize), elementSize);
 
-    memmove(GetIndex(arr, toIndex + 1, elementSize), 
-                GetIndex(arr, toIndex, elementSize), 
-                (fromIndex - toIndex) * elementSize);
-
-    //In our senario fromIndex always bigger than toIndex
-    /*
-    if (fromIndex > toIndex) 
-    {
-        memmove(GetIndex(arr, toIndex + 1, elementSize), 
-                GetIndex(arr, toIndex, elementSize), 
-                (fromIndex - toIndex) * elementSize);
-    } 
-    else 
-    {
-        memmove(GetIndex(arr, toIndex, elementSize), 
-                GetIndex(arr, toIndex + 1, elementSize), 
-                (fromIndex - toIndex) * elementSize);
-    }
-    */
+    memcpy(GetIndex(arr, toIndex + 1, elementSize), 
+           GetIndex(arr, toIndex, elementSize), 
+           (fromIndex - toIndex) * elementSize);
 
     memcpy(GetIndex(arr, toIndex, elementSize), elementBackup, elementSize);
+
     free(elementBackup);
 }
 

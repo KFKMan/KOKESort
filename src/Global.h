@@ -80,7 +80,11 @@
 KOKESORT_API void* GetIndex(void* arr, size_t index, unsigned int elementSize);
 KOKESORT_API void FreeMemory(void* pointer);
 
+/// @brief First element, second element
 typedef int (*CompareFunction)(const void *, const void *);
+
+/// @brief Array, number of elements, size of one element, comparer 
+typedef void (*SortFunction)(void *, size_t, size_t, CompareFunction);
 #endif
 
 #endif
