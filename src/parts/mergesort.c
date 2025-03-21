@@ -3,27 +3,34 @@
 void merge(void *arr, size_t left, size_t mid, size_t right, size_t elementSize, CompareFunction cmp) {
     size_t leftSize = mid - left + 1;
     size_t rightSize = right - mid;
+
     void* leftArr = malloc(leftSize * elementSize);
-    void* rightArr = malloc(rightSize * elementSize);
-    if (!leftArr || !rightArr)
+    if (!leftArr)
     {
         return;
     }
 
-    memcpy(leftArr, GetIndex(arr, left, elementSize), leftSize * elementSize);
-    memcpy(rightArr, GetIndex(arr, mid + 1, elementSize), rightSize * elementSize);
+    void* rightArr = malloc(rightSize * elementSize);
+    if(!rightArr)
+    {
+        free(leftArr);
+        return;
+    }
+
+    memcpy(leftArr, (char*)arr + left * elementSize, leftSize * elementSize);
+    memcpy(rightArr, (char*)arr + (mid + 1) * elementSize, rightSize * elementSize);
 
     size_t i = 0, j = 0, k = left;
     while (i < leftSize && j < rightSize) 
     {
-        if (cmp(GetIndex(leftArr, i, elementSize), GetIndex(rightArr, j, elementSize)) <= 0) 
+        if (cmp((char*)leftArr + i * elementSize, (char*)rightArr + j * elementSize) <= 0) 
         {
-            memcpy(GetIndex(arr, k, elementSize), GetIndex(leftArr, i, elementSize), elementSize);
+            memcpy((char*)arr + k * elementSize, (char*)leftArr + i * elementSize, elementSize);
             i++;
         } 
         else 
         {
-            memcpy(GetIndex(arr, k, elementSize), GetIndex(rightArr, j, elementSize), elementSize);
+            memcpy((char*)arr + k * elementSize, (char*)rightArr + j * elementSize, elementSize);
             j++;
         }
         k++;
@@ -31,13 +38,13 @@ void merge(void *arr, size_t left, size_t mid, size_t right, size_t elementSize,
 
     while (i < leftSize) 
     {
-        memcpy(GetIndex(arr, k, elementSize), GetIndex(leftArr, i, elementSize), elementSize);
+        memcpy((char*)arr + k * elementSize, (char*)leftArr + i * elementSize, elementSize);
         i++, k++;
     }
 
     while (j < rightSize) 
     {
-        memcpy(GetIndex(arr, k, elementSize), GetIndex(rightArr, j, elementSize), elementSize);
+        memcpy((char*)arr + k * elementSize, (char*)rightArr + j * elementSize, elementSize);
         j++, k++;
     }
 
@@ -45,13 +52,17 @@ void merge(void *arr, size_t left, size_t mid, size_t right, size_t elementSize,
     free(rightArr);
 }
 
-/// @brief Sorts an array using Merge Sort
-void mergeSort(void *arr, size_t left, size_t right, size_t elementSize, CompareFunction cmp) {
+void mergeSortOpt(void *arr, size_t left, size_t right, size_t elementSize, CompareFunction cmp) {
     if (left < right) 
     {
         size_t mid = left + (right - left) / 2;
-        mergeSort(arr, left, mid, elementSize, cmp);
-        mergeSort(arr, mid + 1, right, elementSize, cmp);
+        mergeSortOpt(arr, left, mid, elementSize, cmp);
+        mergeSortOpt(arr, mid + 1, right, elementSize, cmp);
         merge(arr, left, mid, right, elementSize, cmp);
     }
+}
+
+void mergeSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp)
+{
+    mergeSortOpt(arr, 0, n-1, elementSize, cmp);
 }

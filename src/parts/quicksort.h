@@ -5,6 +5,6 @@
 
 #define quickSort qsort
 
-void quickSortBasic(void *arr, size_t low, size_t high, size_t elementSize, CompareFunction cmp);
+KOKESORT_API void quickSortBasic(void *arr, size_t low, size_t high, size_t elementSize, CompareFunction cmp);
 
 #endif

@@ -9,6 +9,9 @@
 #define SUCCESS 1
 #define FAIL 0
 
+#define TRUE 1
+#define FALSE 0
+
 #ifdef DEBUG
 #define ERROR_PRINT
 #define debugPrint(fmt, ...) printf("[%s:%d] " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__)

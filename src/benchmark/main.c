@@ -29,7 +29,7 @@ UBENCH_EX(Sort, int)
 
     UBENCH_DO_BENCHMARK() 
     {
-        sortedArr = SortV1(arr, sizeof(arr)/sizeof(int), intComparer, sizeof(int));
+        sortedArr = SortV1(arr, sizeof(arr)/sizeof(int), sizeof(int), intComparer);
     }
 
     free(sortedArr);

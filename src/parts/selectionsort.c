@@ -1,6 +1,6 @@
 #include "selectionsort.h"
 
-void SelectionSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp) 
+void selectionSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp) 
 {
     void* temp = malloc(elementSize);
     if (!temp) 

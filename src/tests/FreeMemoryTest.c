@@ -4,7 +4,7 @@
 int main(void)
 {
     int arr[] = {123456, 123459, 123458, 123453};
-    void* sortedArr = SortV1(arr, sizeof(arr)/sizeof(int), intComparer, sizeof(int));
+    void* sortedArr = SortV1(arr, sizeof(arr)/sizeof(int), sizeof(int), intComparer);
 
     if(!sortedArr)
     {

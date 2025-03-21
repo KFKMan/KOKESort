@@ -34,7 +34,7 @@ void heapSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp)
 {
     for (size_t i = n / 2 - 1; i < n; i--) 
     {
-        Heapify(arr, n, i, elementSize, cmp);
+        heapify(arr, n, i, elementSize, cmp);
     }
 
     for (size_t i = n - 1; i > 0; i--) 

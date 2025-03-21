@@ -13,6 +13,8 @@ option(ENABLE_COVERAGE "Enable code coverage" OFF)
 
 option(USE_BENCHMARKS_R2 "Using advanced benchmarks" OFF)
 
+option(USE_PARTS "Use other sorting algorithms" ON) #Don't change it, currently not supporting OFF parameter
+
 message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
 message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
 
@@ -106,6 +108,13 @@ endif()
 
 if(USE_TESTS)
 #list(APPEND SRC_FILES csv.c)
+endif()
+
+if(USE_PARTS)
+set(PARTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/parts")
+file(GLOB PARTS_SOURCES "${PARTS_DIR}/*.c")
+list(APPEND SRC_FILES ${PARTS_SOURCES})
+list(APPEND INCLUDE_DIRS ${PARTS_DIR})
 endif()
 
 add_library(KOKESort ${LIB_TYPE} ${SRC_FILES})

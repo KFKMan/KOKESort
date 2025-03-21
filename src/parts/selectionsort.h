@@ -3,6 +3,6 @@
 
 #include <sort.h>
 
-void selectionSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp);
+KOKESORT_API void selectionSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp);
 
 #endif

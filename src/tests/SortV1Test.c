@@ -45,7 +45,7 @@ int main(void)
 
         free(tempCol);
 
-        void* result = SortV1(arr, count, intComparer, sizeof(int));
+        void* result = SortV1(arr, count, sizeof(int), intComparer);
         test_count++;
 
         if (ArrayEqual(result, expectedArr, count, intComparer, sizeof(int)) == 0)

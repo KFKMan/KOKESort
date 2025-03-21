@@ -3,6 +3,6 @@
 
 #include <sort.h>
 
-void insertionSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp);
+KOKESORT_API void insertionSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp);
 
 #endif

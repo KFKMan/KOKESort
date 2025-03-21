@@ -29,4 +29,4 @@ target_link_libraries(KOKESortBenchmarkR2 benchmark::benchmark)
 endif()
 ]]
 
-target_include_directories(KOKESortBenchmarkR2 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../ ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(KOKESortBenchmarkR2 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../ ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../parts)

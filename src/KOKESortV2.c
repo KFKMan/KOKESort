@@ -11,6 +11,11 @@ void* CreatePossibilitySpace(size_t elementSize, size_t capacity)
 {
     PossibilitySpace* space = malloc(sizeof(PossibilitySpace) + (elementSize * capacity));
 
+    if(space == NULL)
+    {
+        return NULL;
+    }
+
     space->Element = space + 1;
     space->Size = 0;
     space->Capacity = capacity;
@@ -27,9 +32,22 @@ PossibilitySpace** SortV2(void *array, size_t arraySize, size_t elementSize, siz
 
     PossibilitySpace** pbSpaces = malloc(sizeof(PossibilitySpace*) * pbSpaceCount);
 
+    if(pbSpaces == NULL)
+    {
+        perror("Allocation Error Accoured");
+        return NULL;
+    }
+
     for(size_t c = 0; c < pbSpaceCount; c++)
     {
         PossibilitySpace* pbSpace = CreatePossibilitySpace(elementSize, arraySize);
+
+        if(pbSpace == NULL)
+        {
+            perror("Allocation Error Accoured CreatePossibilitySpace");
+            return NULL;
+        }
+
         pbSpaces[c] = pbSpace;
     }
 
@@ -39,6 +57,12 @@ PossibilitySpace** SortV2(void *array, size_t arraySize, size_t elementSize, siz
     {
         void *currentElement = GetIndex(array, i, elementSize);
         size_t indexerIndex = indexerFn(currentElement);
+
+        if(pbSpaceCount <= indexerIndex)
+        {
+            perror("Out of Possibility Space");
+            return NULL;
+        }
 
         PossibilitySpace* targetPbSpace = pbSpaces[indexerIndex];
 

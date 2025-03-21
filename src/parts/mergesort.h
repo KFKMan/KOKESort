@@ -3,6 +3,7 @@
 
 #include <sort.h>
 
-void mergeSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp);
+KOKESORT_API void mergeSortOpt(void *arr, size_t left, size_t right, size_t elementSize, CompareFunction cmp);
+KOKESORT_API void mergeSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp);
 
 #endif

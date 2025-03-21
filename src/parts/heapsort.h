@@ -3,6 +3,6 @@
 
 #include <sort.h>
 
-void heapSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp);
+KOKESORT_API void heapSort(void *arr, size_t n, size_t elementSize, CompareFunction cmp);
 
 #endif

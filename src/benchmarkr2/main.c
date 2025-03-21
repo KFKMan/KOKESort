@@ -5,6 +5,7 @@
 #include <csv.h>
 #include "KOKESort.h"
 #include "KOKESortV2.h"
+#include "master.h"
 
 #define MAX_NUM_ELEMENTS 10000000
 
@@ -37,50 +38,17 @@ void formatDuration(clock_t start, clock_t end) {
     printf("Duration: %.3f ms\n", duration);
 }
 
-void benchmarkSortV1(const char* benchName, const int* data, size_t size) {
+void benchmarkSortFunction(const char* benchName, const int* data, size_t size, SortFunctionEntry sortFnEntry) {
     int* copy = (int*)malloc(size * sizeof(int));
     memcpy(copy, data, size * sizeof(int));
 
+    printf("%s | %s - Started \n", benchName, sortFnEntry.name);
     clock_t start = clock();
-    SortV1Self(copy, size, intComparer, sizeof(int));
+    sortFnEntry.function(copy, size, sizeof(int), intComparer);
     clock_t end = clock();
 
-    printf("%s | SortV1 | %zu --> ", benchName, size);
+    printf("%s | %s | %zu --> ", benchName, sortFnEntry.name, size);
     formatDuration(start, end);
-    free(copy);
-}
-
-void benchmarkQuickSort(const char* benchName, const int* data, size_t size) {
-    int* copy = (int*)malloc(size * sizeof(int));
-    memcpy(copy, data, size * sizeof(int));
-
-    clock_t start = clock();
-    qsort(copy, size, sizeof(int), intComparer);
-    clock_t end = clock();
-
-    printf("%s | QuickSort | %zu --> ", benchName, size);
-    formatDuration(start, end);
-    free(copy);
-}
-
-void benchmarkSortV2(const char* benchName, const int* data, size_t size) {
-    int* copy = (int*)malloc(size * sizeof(int));
-    memcpy(copy, data, size * sizeof(int));
-
-    Divider = MaxElementCount / SpaceCount;
-    clock_t start = clock();
-    PossibilitySpace** pbSpaces = SortV2(copy, size, sizeof(int), SpaceCount, indexer, intComparer);
-    clock_t end = clock();
-
-    printf("%s | SortV2 | %zu --> ", benchName, size);
-    formatDuration(start, end);
-
-    start = clock();
-    ToArray(pbSpaces, SpaceCount, size, sizeof(int));
-    end = clock();
-    printf("%s | SortV2 - Convertion | %zu --> ", benchName, size);
-    formatDuration(start, end);
-
     free(copy);
 }
 
@@ -92,15 +60,41 @@ int GetBool(const char* question)
     return x;
 }
 
+void SortV1SelfNonOpt(void* arr, size_t size, size_t elementSize, CompareFunction comparer)
+{
+    SortV1Self(arr, size, elementSize, comparer);
+}
+
+void SortV2NonOpt(void* arr, size_t size, size_t elementSize, CompareFunction comparer)
+{
+    PossibilitySpace** pbSpaces = SortV2(arr, size, sizeof(int), SpaceCount, indexer, intComparer);
+}
+
 // Ana fonksiyon
 int main(int argc, char** argv) {
     printf("Benchmark R2 App Started V1.0.0\n");
+
+    Divider = MaxElementCount / SpaceCount; //This is needed for Configuring Indexer Function, SortV2 using it.
 
     printf("Write %d for TRUE, %d for FALSE \n", SUCCESS, FAIL);
     int useV1 = GetBool("Use SortV1: ");
 
     const char* benchName = "Automated";
     const char* filepath = "testdata.txt";
+
+    printf("Functions Initializing... \n");
+
+    size_t count = 0;
+
+    SortFunctionEntry sortingFunctions[] = _SortingFunctions;
+    size_t numAlgorithms = sizeof(sortingFunctions) / sizeof(sortingFunctions[0]);
+
+    SortFunctionEntry sortV1 = {"SortV1",SortV1SelfNonOpt};
+    SortFunctionEntry sortV2 = {"SortV2",SortV2NonOpt};
+
+    printf("Functions Initialized \n");
+
+    printf("Opening File \n");
 
     char* row;
     CsvHandle handle = CsvOpen2(filepath, ' ', '"', '\\');
@@ -109,7 +103,9 @@ int main(int argc, char** argv) {
         return 11;
     }
 
-    size_t count = 0;
+    printf("File Opened \n");
+    
+    printf("Reading and Benching... \n");
 
     while ((row = CsvReadNextRow(handle))) {
         int* array = malloc(MAX_NUM_ELEMENTS * sizeof(int));
@@ -122,7 +118,8 @@ int main(int argc, char** argv) {
         int index = 0;
         const char* col;
         while ((col = CsvReadNextCol(row, handle))) {
-            if (index >= MAX_NUM_ELEMENTS) {
+            if (index >= MAX_NUM_ELEMENTS) 
+            {
                 printf("Array size exceeds maximum limit\n");
                 free(array);
                 CsvClose(handle);
@@ -131,7 +128,6 @@ int main(int argc, char** argv) {
             array[index++] = atoi(col);
         }
 
-        // Eğer array boşsa atla
         if (index == 0) 
         {
             printf("Array is empty skipped");
@@ -139,22 +135,26 @@ int main(int argc, char** argv) {
             continue;
         }
 
-        if(useV1)
+        //PossibilitySpace** pbSpaces = SortV2(array, index, sizeof(int), SpaceCount, indexer, intComparer);
+
+        for(size_t i = 0; i < numAlgorithms; i++)
         {
-            printf("SortV1\n");
-            benchmarkSortV1(benchName, array, index);
+            benchmarkSortFunction(benchName, array, index, sortingFunctions[i]);
         }
 
-        printf("QuickSort\n");
-        benchmarkQuickSort(benchName, array, index);
+        if(useV1)
+        {
+            benchmarkSortFunction(benchName, array, index, sortV1);
+        }
 
-        printf("SortV2\n");
-        benchmarkSortV2(benchName, array, index);
+        benchmarkSortFunction(benchName, array, index, sortV2);
 
         free(array);
         
         count++;
     }
+
+    printf("Readed and Benched \n");
 
     return 0;
 }

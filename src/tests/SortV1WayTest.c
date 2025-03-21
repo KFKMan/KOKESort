@@ -3,7 +3,7 @@
 
 int TestNullArray()
 {
-    void* result = SortV1(NULL, 10, intComparer, sizeof(int));
+    void* result = SortV1(NULL, 10, sizeof(int), intComparer);
 
     if(result == NULL)
     {
@@ -17,7 +17,7 @@ int TestNullArray()
 int TestZeroSizeArray()
 {
     int arr[] = {10, 20, 40, 25};
-    void* result = SortV1(arr, 0, intComparer, sizeof(int));
+    void* result = SortV1(arr, 0, sizeof(int), intComparer);
 
     if(result == NULL)
     {

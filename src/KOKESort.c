@@ -205,7 +205,7 @@ VariableTypeArray SortV1NonSafe(VariableTypeArray arr, size_t size, CompareFunct
 /// @param arr Array to sort
 /// @param size Size of array
 /// @return Sorted new array or NULL if array is not valid or size is zero
-VariableTypeArray SortV1(VariableTypeArray arr, size_t size, CompareFunction comparer, unsigned int elementSize)
+VariableTypeArray SortV1(VariableTypeArray arr, size_t size, unsigned int elementSize, CompareFunction comparer)
 {
     //Argument checks
     if (!arr || size == 0)
@@ -227,7 +227,7 @@ void SortV1SelfNonSafe(VariableTypeArray array, size_t size, CompareFunction com
 /// @param comparer 
 /// @param elementSize 
 /// @return Success or not
-int SortV1Self(VariableTypeArray array, size_t size, CompareFunction comparer, unsigned int elementSize)
+int SortV1Self(VariableTypeArray array, size_t size,  unsigned int elementSize, CompareFunction comparer)
 {
     if(!array || size == 0)
     {
