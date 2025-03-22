@@ -11,24 +11,30 @@
 
 #define MAX_NUM_ELEMENTS 10000000
 
+#define MAX_SORT_ALG_COUNT 100
+#define MAX_LINE_LENGTH 8192
+
 #define MAX_BENCHNAME_LENGTH 8192
 
-const char* int_to_string(char buffer[], size_t buffer_size, int number) {
+const char *int_to_string(char buffer[], size_t buffer_size, int number)
+{
     snprintf(buffer, buffer_size, "%d", number);
     return buffer;
 }
 
-void generate_filename(char* buffer, size_t buffer_size, const char* part1, const char* part2, int number) {
+void generate_filename(char *buffer, size_t buffer_size, const char *part1, const char *part2, int number)
+{
     snprintf(buffer, buffer_size, "%s%s%d.csv", part1, part2, number);
 }
 
-void append_to_csv(const char* filename, int id, long long timestamp) 
+void append_to_csv(const char *filename, int id, long long timestamp)
 {
-    FILE* file = fopen(filename, "a");
-    if (!file) 
+    FILE *file = fopen(filename, "a");
+    if (!file)
     {
         file = fopen(filename, "w");
-        if (!file) {
+        if (!file)
+        {
             perror("File Creation Error");
             return;
         }
@@ -66,33 +72,33 @@ size_t indexer(const void *valptr)
 
 void formatDuration(long long elapsed)
 {
-    double duration_ms = elapsed / 1000000.0;     // Nanosecond -> Milisecond
-    double duration_sec = duration_ms / 1000.0;   // Milisecond -> Saniye
-    double duration_min = duration_sec / 60.0;    // Second -> Minute
-    double duration_hour = duration_min / 60.0;   // Minute -> Hour
+    double duration_ms = elapsed / 1000000.0;   // Nanosecond -> Milisecond
+    double duration_sec = duration_ms / 1000.0; // Milisecond -> Saniye
+    double duration_min = duration_sec / 60.0;  // Second -> Minute
+    double duration_hour = duration_min / 60.0; // Minute -> Hour
 
-    if (duration_ms < 1) 
+    if (duration_ms < 1)
     {
         printf("Duration: %lld ns\n", elapsed);
-    } 
-    else if (duration_sec < 1) 
+    }
+    else if (duration_sec < 1)
     {
         printf("Duration: %.3f ms\n", duration_ms);
-    } 
-    else if (duration_min < 1) 
+    }
+    else if (duration_min < 1)
     {
         printf("Duration: %.3f s\n", duration_sec);
-    } 
-    else if (duration_hour < 1) 
+    }
+    else if (duration_hour < 1)
     {
         printf("Duration: %.3f min\n", duration_min);
-    } 
-    else 
+    }
+    else
     {
-        printf("Duration: %.3f h\n", duration_hour); 
+        printf("Duration: %.3f h\n", duration_hour);
     }
 
-    //Anyway print ms for advanced info
+    // Anyway print ms for advanced info
     printf("Duration: %.3f ms\n", duration_ms);
 }
 
@@ -135,27 +141,88 @@ void SortV1SelfNonOpt(void *arr, size_t size, size_t elementSize, CompareFunctio
 void SortV2NonOpt(void *arr, size_t size, size_t elementSize, CompareFunction comparer)
 {
     PossibilitySpace **pbSpaces = SortV2(arr, size, sizeof(int), SpaceCount, indexer, intComparer);
+    free(pbSpaces);
 }
 
-// Ana fonksiyon
+void AddItemToList(SortFunctionEntry *array, size_t *count, SortFunctionEntry entry)
+{
+    array[*count] = entry;
+    *count = *count + 1;
+}
+
+int isFunctionInList(const char *functionName, char functionNames[MAX_SORT_ALG_COUNT][MAX_LINE_LENGTH], size_t functionCount)
+{
+    for (size_t i = 0; i < functionCount; i++)
+    {
+        if (strcmp(functionNames[i], functionName) == 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+size_t readFunctionNamesFromFile(const char *filename, char functionNames[MAX_SORT_ALG_COUNT][MAX_LINE_LENGTH], size_t maxFunctions, int *errorState)
+{
+    FILE *file = fopen(filename, "r");
+    if (!file)
+    {
+        printf("File Can't Opened");
+        *errorState = FAIL;
+        return 0;
+    }
+
+    size_t count = 0;
+    while (count < maxFunctions && fgets(functionNames[count], MAX_LINE_LENGTH, file))
+    {
+        functionNames[count][strcspn(functionNames[count], "\n")] = '\0';
+        count++;
+    }
+
+    fclose(file);
+    return count;
+}
+
 int main(int argc, char **argv)
 {
     printf("Benchmark R2 App Started V1.0.0\n");
 
     Divider = MaxElementCount / SpaceCount; // This is needed for Configuring Indexer Function, SortV2 using it.
 
-    printf("Write %d for TRUE, %d for FALSE \n", SUCCESS, FAIL);
-    int useV1 = GetBool("Use SortV1: ");
-
     printf("Functions Initializing... \n");
 
-    size_t count = 0;
+    size_t functionCount = 0;
+    SortFunctionEntry *sortingFunctions = malloc(sizeof(SortFunctionEntry) * MAX_SORT_ALG_COUNT);
 
-    SortFunctionEntry sortingFunctions[] = _SortingFunctions;
-    size_t numAlgorithms = sizeof(sortingFunctions) / sizeof(sortingFunctions[0]);
+    SortFunctionEntry __sortingFunctions[] = _SortingFunctions;
+
+    for (size_t i = 0; i < sizeof(__sortingFunctions) / sizeof(__sortingFunctions[0]); i++)
+    {
+        AddItemToList(sortingFunctions, &functionCount, __sortingFunctions[i]);
+    }
 
     SortFunctionEntry sortV1 = {"SortV1S", SortV1SelfNonOpt};
     SortFunctionEntry sortV2 = {"SortV2S", SortV2NonOpt};
+
+    AddItemToList(sortingFunctions, &functionCount, sortV1);
+    AddItemToList(sortingFunctions, &functionCount, sortV2);
+
+    char functionNamesFromFile[MAX_SORT_ALG_COUNT][MAX_LINE_LENGTH];
+    int errState = SUCCESS;
+    size_t fileFunctionCount = readFunctionNamesFromFile("functions.txt", functionNamesFromFile, MAX_SORT_ALG_COUNT, &errState);
+
+    if (errState == SUCCESS)
+    {
+        size_t newCount = 0;
+        for (size_t i = 0; i < functionCount; i++)
+        {
+            if (isFunctionInList(sortingFunctions[i].name, functionNamesFromFile, fileFunctionCount))
+            {
+                sortingFunctions[newCount++] = sortingFunctions[i];
+            }
+        }
+        functionCount = newCount;
+    }
 
     printf("Functions Initialized \n");
 
@@ -168,7 +235,7 @@ int main(int argc, char **argv)
     {
         FileEntry currentFile = entries[currentFileIndex];
 
-        const char* filepath = currentFile.filename;
+        const char *filepath = currentFile.filename;
 
         printf("Processing File %s \n", currentFile.filename);
 
@@ -217,21 +284,12 @@ int main(int argc, char **argv)
 
             // PossibilitySpace** pbSpaces = SortV2(array, index, sizeof(int), SpaceCount, indexer, intComparer);
 
-            for (size_t i = 0; i < numAlgorithms; i++)
+            for (size_t i = 0; i < functionCount; i++)
             {
                 benchmarkSortFunction(currentFile.id, array, index, sortingFunctions[i]);
             }
 
-            if (useV1)
-            {
-                benchmarkSortFunction(currentFile.id, array, index, sortV1);
-            }
-
-            benchmarkSortFunction(currentFile.id, array, index, sortV2);
-
             free(array);
-
-            count++;
         }
     }
 
