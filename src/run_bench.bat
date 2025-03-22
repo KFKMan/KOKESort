@@ -1,4 +1,4 @@
-set GENERATOR_DIR=.\generator\
+set GENERATOR_DIR=.\generator\gen\
 set GENERATOR_TARGET_DIR=.\benchres\
 
 echo Copying files from %GENERATOR_DIR% to %GENERATOR_TARGET_DIR%...

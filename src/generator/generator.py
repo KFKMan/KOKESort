@@ -25,9 +25,17 @@ def save_arrays_to_file(arrays, filename="testdata.txt"):
     """
     print("Writing...")
 
-    with open(filename, "w") as f:
+    output_dir = "gen"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    # Dosya yolunu belirle
+    file_path = os.path.join(output_dir, filename)
+
+    with open(file_path, "w") as f:
         f.write("\n".join(" ".join(map(str, array)) for array in arrays) + "\n")
-    print("Writed")
+
+    print(f"Written to {file_path}")
 
 def main():
     parser = argparse.ArgumentParser(description="Generate and save unsorted arrays.")

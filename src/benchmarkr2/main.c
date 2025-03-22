@@ -154,8 +154,8 @@ int main(int argc, char **argv)
     SortFunctionEntry sortingFunctions[] = _SortingFunctions;
     size_t numAlgorithms = sizeof(sortingFunctions) / sizeof(sortingFunctions[0]);
 
-    SortFunctionEntry sortV1 = {"SortV1", SortV1SelfNonOpt};
-    SortFunctionEntry sortV2 = {"SortV2", SortV2NonOpt};
+    SortFunctionEntry sortV1 = {"SortV1S", SortV1SelfNonOpt};
+    SortFunctionEntry sortV2 = {"SortV2S", SortV2NonOpt};
 
     printf("Functions Initialized \n");
 

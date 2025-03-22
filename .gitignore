@@ -66,4 +66,4 @@ intro_exclude_dir.txt
 counter.py
 
 benchres/
-src/generator/test*
+src/generator/gen/test*
