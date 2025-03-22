@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "SecureFunctions.h"
 
 #define SUCCESS 1
 #define FAIL 0

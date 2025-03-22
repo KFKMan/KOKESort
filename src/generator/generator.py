@@ -32,25 +32,26 @@ def save_arrays_to_file(arrays, filename="testdata.txt"):
 def main():
     parser = argparse.ArgumentParser(description="Generate and save unsorted arrays.")
     parser.add_argument("--num_arrays", type=int, default=3, help="Number of arrays to generate (default: 3)")
-    parser.add_argument("--min_elements", type=int, default=1000000, help="Minimum number of elements in each array (default: 1000000)")
-    parser.add_argument("--max_elements", type=int, default=1000000, help="Maximum number of elements in each array (default: 1000000)")
+    parser.add_argument("--array_sizes", type=str, default="10,20,50", help="Comma-separated sizes of arrays (default: '10,20,50')")
     parser.add_argument("--max_value", type=int, default=99999999, help="Maximum value of elements in the arrays (default: 99999999)")
-    parser.add_argument("--output", type=str, default="testdata.txt", help="Output file name (default: testdata.txt)")
+    parser.add_argument("--output_base_name", type=str, default="test", help="Base name for output files (default: test)")
     
     args = parser.parse_args()
 
-    if args.max_elements < args.min_elements:
-        args.min_elements = args.max_elements
-    
-    arrays = generate_unsorted_arrays(
-        num_arrays=args.num_arrays,
-        min_elements=args.min_elements,
-        max_elements=args.max_elements,
-        max_value=args.max_value
-    )
-    
-    save_arrays_to_file(arrays, args.output)
-    print(f"Generated {len(arrays)} unsorted arrays and saved to '{args.output}'")
+    #Weird parameter and variable name. it's need to be changed.
+    array_sizes = list(map(int, args.array_sizes.split(',')))
+
+    for i, size in enumerate(array_sizes, 1):
+        arrays = generate_unsorted_arrays(
+            num_arrays=args.num_arrays,
+            min_elements=size,
+            max_elements=size,
+            max_value=args.max_value
+        )
+        output_filename = f"{args.output_base_name}{size}.csv"
+        save_arrays_to_file(arrays, output_filename)
+
+        print(f"Generated {len(arrays)} unsorted arrays and saved to '{output_filename}'")
 
 if __name__ == "__main__":
     main()

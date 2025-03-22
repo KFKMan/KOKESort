@@ -20,7 +20,7 @@ endif()
 ]]
 
 #add_executable(KOKESortBenchmarkR2 main.cpp)
-add_executable(KOKESortBenchmarkR2 main.c)
+add_executable(KOKESortBenchmarkR2 main.c file.c advtime.c)
 target_link_libraries(KOKESortBenchmarkR2 KOKESort)
 
 #[[

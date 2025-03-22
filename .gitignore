@@ -64,3 +64,6 @@ intro_exclude_dir.txt
 .git/
 .github/
 counter.py
+
+benchres/
+src/generator/test*
