@@ -5,6 +5,8 @@ import os
 import re
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
+import mplcursors
+from matplotlib.animation import FuncAnimation
 
 def plot_time_complexity(directory):
     directory = os.path.abspath(directory)
@@ -42,12 +44,26 @@ def plot_time_complexity(directory):
         averaged_y = []
         for ux in unique_x:
             averaged_y.append(np.mean(y[x == ux]))
-
+        
         poly_coeffs = np.polyfit(unique_x, averaged_y, 2)
         p = np.poly1d(poly_coeffs)
         
-        plt.plot(unique_x, averaged_y, 'o', label=f'{algorithm_name} Data')
-        plt.plot(unique_x, p(unique_x), '--', label=f'{algorithm_name} Fit')
+        line, = plt.plot(unique_x, averaged_y, 'o', label=f'{algorithm_name} Data')
+        fitline, = plt.plot(unique_x, p(unique_x), '--', label=f'{algorithm_name} Fit')
+        
+        mplcursors.cursor(line, hover=True).connect(
+            "add", lambda sel, algo=algorithm_name: sel.annotation.set_text(f'{algo} Data')
+        )
+        
+        mplcursors.cursor(fitline, hover=True).connect(
+            "add", lambda sel, algo=algorithm_name: sel.annotation.set_text(f'{algo} Fit')
+        )
+
+        cursor = mplcursors.cursor(line, hover=True)
+        cursor.connect("add", lambda sel, algo=algorithm_name: sel.annotation.set_text(f'{algo} Data'))
+        
+        cursor = mplcursors.cursor(fitline, hover=True)
+        cursor.connect("add", lambda sel, algo=algorithm_name: sel.annotation.set_text(f'{algo} Fit'))
 
     plt.xlabel('Parameter Size (Array Size)')
     plt.ylabel('Elapsed Time')
