@@ -59,12 +59,6 @@ def plot_time_complexity(directory):
             "add", lambda sel, algo=algorithm_name: sel.annotation.set_text(f'{algo} Fit')
         )
 
-        cursor = mplcursors.cursor(line, hover=True)
-        cursor.connect("add", lambda sel, algo=algorithm_name: sel.annotation.set_text(f'{algo} Data'))
-        
-        cursor = mplcursors.cursor(fitline, hover=True)
-        cursor.connect("add", lambda sel, algo=algorithm_name: sel.annotation.set_text(f'{algo} Fit'))
-
     plt.xlabel('Parameter Size (Array Size)')
     plt.ylabel('Elapsed Time')
     plt.title('Time Complexity Comparison with Polynomial Fit')
