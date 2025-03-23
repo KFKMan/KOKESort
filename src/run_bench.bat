@@ -14,6 +14,18 @@ if not exist "%TARGET_DIR%" mkdir "%TARGET_DIR%"
 xcopy /E /Y "%SOURCE_DIR%\*" "%TARGET_DIR%\"
 echo Files copied successfully from %SOURCE_DIR% to %TARGET_DIR%
 
+set FUNCTIONS_FILE=.\functions.txt
+set FUNCTIONS_TARGET_FILE=.\benchres\functions.txt
+
+echo Copying %FUNCTIONS_FILE% to %FUNCTIONS_TARGET_FILE%...
+if not exist "%FUNCTIONS_FILE%" (
+    echo Error: Source file does not exist!
+    exit /b 1
+)
+copy /Y "%FUNCTIONS_FILE%" "%FUNCTIONS_TARGET_FILE%"
+
 cd .\benchres\
+
+
 
 ..\build\benchmarkr2\Release\KOKESortBenchmarkR2.exe

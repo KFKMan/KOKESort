@@ -91,4 +91,23 @@ typedef int (*CompareFunction)(const void *, const void *);
 typedef void (*SortFunction)(void *, size_t, size_t, CompareFunction);
 #endif
 
+#define GRAM 1
+#define GVIRTUAL 2
+
+KOKESORT_API int GetPointerAllocationType(void* ptr);
+
+KOKESORT_API void* AllocFn(size_t size);
+KOKESORT_API void* AllocNonVirtualFn(size_t size);
+KOKESORT_API void* AllocVirtualFn(size_t size);
+
+KOKESORT_API void DeAllocFn(void* ptr, size_t size);
+
+KOKESORT_API void DeAllocNonVirtualFn(void* ptr);
+KOKESORT_API void DeAllocVirtualFn(void* ptr, size_t size);
+
+typedef struct MemorySpace
+{
+    int byteCount;
+    void* memory;
+} MemorySpace;
 #endif

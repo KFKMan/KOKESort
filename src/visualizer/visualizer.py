@@ -8,8 +8,9 @@ from numpy.polynomial.polynomial import Polynomial
 import mplcursors
 from matplotlib.animation import FuncAnimation
 import sys
+import argparse
 
-def plot_time_complexity(directory):
+def plot_time_complexity(directory, degree):
     directory = os.path.abspath(directory)
     csv_files = glob.glob(os.path.join(directory, 'result*.csv'))
     
@@ -71,7 +72,7 @@ def plot_time_complexity(directory):
         global_max = max(global_max, max(filtered_y))
 
         # Filtrelenmiş verilerle polinom fit yap
-        poly_coeffs = np.polyfit(filtered_x, filtered_y, 2)
+        poly_coeffs = np.polyfit(filtered_x, filtered_y, degree)
         p = np.poly1d(poly_coeffs)
 
         # Veriyi ve fit çizgisini çiz
@@ -94,7 +95,30 @@ def plot_time_complexity(directory):
         print("Filtered Y:",filtered_y)
 
         algFuncs += f"Polynomial fit for {algorithm_name}:\n"
-        algFuncs += f"f(x) = {poly_coeffs[0]} * x^2 + {poly_coeffs[1]} * x + {poly_coeffs[2]}\n\n"
+        #algFuncs += f"f(x) = {poly_coeffs[0]} * x^2 + {poly_coeffs[1]} * x + {poly_coeffs[2]}\n\n"
+
+        print(poly_coeffs)
+
+        for i in range(degree, -1, -1):
+            coef = poly_coeffs[degree - i]
+    
+            if coef == 0:
+                continue  # Katsayı sıfırsa eklemeyelim
+    
+            term = f"{abs(coef):.20f}"  # Mutlak değeri alarak katsayıyı yazdır (ondalık hassasiyeti ayarlanabilir)
+    
+            if i > 0:
+                term += f" * x^{i}"
+    
+            if i == degree:  
+                # İlk terim ise işareti kontrol etmeye gerek yok
+                algFuncs += term
+            else:
+                # İşarete göre + veya - ekleyelim
+                sign = " + " if coef > 0 else " - "
+                algFuncs += sign + term
+
+        algFuncs += "\n\n"
 
 
     print("Global Min:", global_min)
@@ -111,4 +135,10 @@ def plot_time_complexity(directory):
     plt.show()
 
 directory = r"..\benchres"
-plot_time_complexity(directory)
+
+parser = argparse.ArgumentParser(description="Generate and save unsorted arrays.")
+parser.add_argument("--degree", type=int, default=2, help="Polynom fit degree")
+
+args = parser.parse_args();
+
+plot_time_complexity(directory, args.degree)

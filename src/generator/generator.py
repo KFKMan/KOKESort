@@ -12,7 +12,7 @@ def generate_unsorted_arrays(num_arrays=10, min_elements=100, max_elements=100, 
     :return: List of unsorted arrays
     """
     print("Creating...")
-    arrays = [np.random.randint(0, max_value + 1, size=np.random.randint(min_elements, max_elements + 1)).tolist() for _ in range(num_arrays)]
+    arrays = [np.random.randint(0, max_value + 1, size=np.random.randint(min_elements, max_elements + 1), dtype=np.int64).tolist() for _ in range(num_arrays)]
     print("Created")
     return arrays
 

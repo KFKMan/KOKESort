@@ -58,7 +58,7 @@ int valComparer(const void *val1ptr, const void *val2ptr)
     return -1;
 }
 
-const int SpaceCount = 1000;
+const int SpaceCount = 100;
 
 DATA_TYPE Divider;
 
@@ -281,26 +281,12 @@ int main(int argc, char **argv)
                 continue;
             }
 
-            // PossibilitySpace** pbSpaces = SortV2(array, index, sizeof(int), SpaceCount, indexer, intComparer);
-
             for (size_t i = 0; i < functionCount; i++)
             {
                 benchmarkSortFunction(currentFile.id, array, index, sortingFunctions[i]);
             }
 
-            if(fSpace != NULL)
-            {
-                for(size_t i = 0; i < SpaceCount; i++)
-                {
-                    PossibilitySpace* space = fSpace[i];
-
-                    free(space);
-                }
-
-                free(fSpace);
-
-                fSpace = NULL;
-            }
+            FreePossibilitySpaceArray(fSpace, SpaceCount, sizeof(DATA_TYPE));
 
             free(array);
         }
