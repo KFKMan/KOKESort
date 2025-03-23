@@ -35,6 +35,7 @@ PossibilitySpace** SortV2(void *array, size_t arraySize, size_t elementSize, siz
     if(pbSpaces == NULL)
     {
         perror("Allocation Error Accoured");
+        printf("Requested -->> " SIZE_T_IDENTIFIER "\n", sizeof(PossibilitySpace*) * pbSpaceCount);
         return NULL;
     }
 
@@ -45,6 +46,7 @@ PossibilitySpace** SortV2(void *array, size_t arraySize, size_t elementSize, siz
         if(pbSpace == NULL)
         {
             perror("Allocation Error Accoured CreatePossibilitySpace");
+            printf("Requested -->> " SIZE_T_IDENTIFIER "\n", sizeof(PossibilitySpace) + (elementSize * arraySize));
             return NULL;
         }
 

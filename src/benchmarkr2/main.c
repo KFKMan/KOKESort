@@ -138,10 +138,11 @@ void SortV1SelfNonOpt(void *arr, size_t size, size_t elementSize, CompareFunctio
     SortV1Self(arr, size, elementSize, comparer);
 }
 
+PossibilitySpace** fSpace = NULL;
+
 void SortV2NonOpt(void *arr, size_t size, size_t elementSize, CompareFunction comparer)
 {
-    PossibilitySpace **pbSpaces = SortV2(arr, size, sizeof(int), SpaceCount, indexer, intComparer);
-    free(pbSpaces);
+    fSpace = SortV2(arr, size, sizeof(int), SpaceCount, indexer, intComparer);
 }
 
 void AddItemToList(SortFunctionEntry *array, size_t *count, SortFunctionEntry entry)
@@ -287,6 +288,18 @@ int main(int argc, char **argv)
             for (size_t i = 0; i < functionCount; i++)
             {
                 benchmarkSortFunction(currentFile.id, array, index, sortingFunctions[i]);
+            }
+
+            if(fSpace != NULL)
+            {
+                for(size_t i = 0; i < SpaceCount; i++)
+                {
+                    PossibilitySpace* space = fSpace[i];
+
+                    free(space);
+                }
+
+                free(fSpace);
             }
 
             free(array);
