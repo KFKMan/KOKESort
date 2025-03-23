@@ -20,10 +20,10 @@ int file_exists(const char* filename);
 
 typedef struct {
     char filename[R2_MAX_FILENAME];
-    int id;
+    long long id;
 } FileEntry;
 
-int extract_id(const char *filename);
+long long extract_id(const char *filename);
 
 FileEntry* GetFileEntrys(size_t* numberOfFiles);
 

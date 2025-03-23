@@ -10,7 +10,7 @@ int file_exists(const char* filename) {
     return FALSE;
 }
 
-int extract_id(const char *filename) 
+long long extract_id(const char *filename) 
 {
     if (strncmp(filename, "test", 4) != 0) 
     {
@@ -19,7 +19,7 @@ int extract_id(const char *filename)
 
     const char *start = filename + 4;
     char *end;
-    int id = strtol(start, &end, 10);
+    long long id = strtoll(start, &end, 10);
 
     if (id < 0 || strcmp(end, ".csv") != 0) 
     {
@@ -41,7 +41,7 @@ FileEntry* GetFileEntrys(size_t* numberOfFiles)
     {
         do 
         {
-            int id = extract_id(findFileData.cFileName);
+            long long id = extract_id(findFileData.cFileName);
             if (id != -1) 
             {
                 strncpy(files[count].filename, findFileData.cFileName, sizeof(files[count].filename) - 1);

@@ -41,7 +41,7 @@ def main():
     parser = argparse.ArgumentParser(description="Generate and save unsorted arrays.")
     parser.add_argument("--num_arrays", type=int, default=3, help="Number of arrays to generate (default: 3)")
     parser.add_argument("--array_sizes", type=str, default="10,20,50", help="Comma-separated sizes of arrays (default: '10,20,50')")
-    parser.add_argument("--max_value", type=int, default=99999999, help="Maximum value of elements in the arrays (default: 99999999)")
+    parser.add_argument("--max_value", type=int, default=9223372036854775807, help="Maximum value of elements in the arrays (default: 9223372036854775807)")
     parser.add_argument("--output_base_name", type=str, default="test", help="Base name for output files (default: test)")
     
     args = parser.parse_args()

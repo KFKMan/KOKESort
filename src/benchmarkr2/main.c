@@ -10,24 +10,23 @@
 #include "advtime.h"
 
 #define MAX_NUM_ELEMENTS 10000000
+#define MAX_NUM_VALUE 9223372036854775807
+
+#define DATA_TYPE long long
+#define DATA_TYPE_SPECIFIER "%lld"
+#define DATA_TYPE_PARSER atoll
 
 #define MAX_SORT_ALG_COUNT 100
 #define MAX_LINE_LENGTH 8192
 
 #define MAX_BENCHNAME_LENGTH 8192
 
-const char *int_to_string(char buffer[], size_t buffer_size, int number)
+void generate_filename(char *buffer, size_t buffer_size, const char *part1, const char *part2, DATA_TYPE number)
 {
-    snprintf(buffer, buffer_size, "%d", number);
-    return buffer;
+    snprintf(buffer, buffer_size, "%s%s" DATA_TYPE_SPECIFIER ".csv", part1, part2, number);
 }
 
-void generate_filename(char *buffer, size_t buffer_size, const char *part1, const char *part2, int number)
-{
-    snprintf(buffer, buffer_size, "%s%s%d.csv", part1, part2, number);
-}
-
-void append_to_csv(const char *filename, int id, long long timestamp)
+void append_to_csv(const char *filename, DATA_TYPE id, long long timestamp)
 {
     FILE *file = fopen(filename, "a");
     if (!file)
@@ -40,14 +39,14 @@ void append_to_csv(const char *filename, int id, long long timestamp)
         }
     }
 
-    fprintf(file, "%d,%lld\n", id, timestamp);
+    fprintf(file, DATA_TYPE_SPECIFIER ",%lld\n", id, timestamp);
     fclose(file);
 }
 
-int intComparer(const void *val1ptr, const void *val2ptr)
+int valComparer(const void *val1ptr, const void *val2ptr)
 {
-    const int val1 = *(const int *)val1ptr;
-    const int val2 = *(const int *)val2ptr;
+    const DATA_TYPE val1 = *(const DATA_TYPE *)val1ptr;
+    const DATA_TYPE val2 = *(const DATA_TYPE *)val2ptr;
     if (val1 > val2)
     {
         return 1;
@@ -59,14 +58,13 @@ int intComparer(const void *val1ptr, const void *val2ptr)
     return -1;
 }
 
-const int MaxElementCount = 100000000;
 const int SpaceCount = 1000;
 
-int Divider;
+DATA_TYPE Divider;
 
 size_t indexer(const void *valptr)
 {
-    const int val1 = *(const int *)valptr;
+    const DATA_TYPE val1 = *(const DATA_TYPE *)valptr;
     return val1 / Divider;
 }
 
@@ -102,15 +100,15 @@ void formatDuration(long long elapsed)
     printf("Duration: %.3f ms\n", duration_ms);
 }
 
-void benchmarkSortFunction(int id, const int *data, size_t size, SortFunctionEntry sortFnEntry)
+void benchmarkSortFunction(DATA_TYPE id, const DATA_TYPE *data, size_t size, SortFunctionEntry sortFnEntry)
 {
-    int *copy = (int *)malloc(size * sizeof(int));
-    memcpy(copy, data, size * sizeof(int));
+    DATA_TYPE *copy = (DATA_TYPE *)malloc(size * sizeof(DATA_TYPE));
+    memcpy(copy, data, size * sizeof(DATA_TYPE));
 
     printf("%s - Started \n", sortFnEntry.name);
     long long start, end, elapsed;
     start = get_time_ns();
-    sortFnEntry.function(copy, size, sizeof(int), intComparer);
+    sortFnEntry.function(copy, size, sizeof(DATA_TYPE), valComparer);
     end = get_time_ns();
 
     elapsed = end - start;
@@ -142,7 +140,7 @@ PossibilitySpace** fSpace = NULL;
 
 void SortV2NonOpt(void *arr, size_t size, size_t elementSize, CompareFunction comparer)
 {
-    fSpace = SortV2(arr, size, sizeof(int), SpaceCount, indexer, intComparer);
+    fSpace = SortV2(arr, size, elementSize, SpaceCount, indexer, comparer);
 }
 
 void AddItemToList(SortFunctionEntry *array, size_t *count, SortFunctionEntry entry)
@@ -188,7 +186,7 @@ int main(int argc, char **argv)
 {
     printf("Benchmark R2 App Started V1.0.0\n");
 
-    Divider = MaxElementCount / SpaceCount; // This is needed for Configuring Indexer Function, SortV2 using it.
+    Divider = MAX_NUM_VALUE / SpaceCount; // This is needed for Configuring Indexer Function, SortV2 using it.
 
     printf("Functions Initializing... \n");
 
@@ -254,7 +252,7 @@ int main(int argc, char **argv)
 
         while ((row = CsvReadNextRow(handle)))
         {
-            int *array = malloc(MAX_NUM_ELEMENTS * sizeof(int));
+            DATA_TYPE *array = malloc(MAX_NUM_ELEMENTS * sizeof(DATA_TYPE));
             if (!array)
             {
                 perror("Memory allocation failed");
@@ -262,7 +260,7 @@ int main(int argc, char **argv)
                 return 12;
             }
 
-            int index = 0;
+            size_t index = 0;
             const char *col;
             while ((col = CsvReadNextCol(row, handle)))
             {
@@ -273,7 +271,7 @@ int main(int argc, char **argv)
                     CsvClose(handle);
                     return 13;
                 }
-                array[index++] = atoi(col);
+                array[index++] = DATA_TYPE_PARSER(col);
             }
 
             if (index == 0)
@@ -300,6 +298,8 @@ int main(int argc, char **argv)
                 }
 
                 free(fSpace);
+
+                fSpace = NULL;
             }
 
             free(array);
