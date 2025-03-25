@@ -15,22 +15,40 @@ option(USE_BENCHMARKS_R2 "Using advanced benchmarks" OFF)
 
 option(USE_PARTS "Use other sorting algorithms" ON) #Don't change it, currently not supporting OFF parameter
 
+option(GENERATE_DOCUMENTATION "Generate documentation via Doxygen" OFF)
+
 message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
 message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
+
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
+include(get_cpm)
+
+if (GENERATE_DOCUMENTATION)
+CPMAddPackage(
+    NAME Doxygen
+    GITHUB_REPOSITORY "doxygen/doxygen"
+    VERSION 1.10.0
+    OPTIONS "DOXYGEN_BUILD_DOC OFF"
+)
+
+if (Doxygen_ADDED)
+    set(DOXYGEN_EXECUTABLE ${Doxygen_BINARY_DIR}/bin/doxygen)
+else()
+    message(WARNING "Doxygen can't added")
+    set(GENERATE_DOCUMENTATION OFF)
+endif()
+endif()
 
 if (USE_BENCHMARKS OR USE_BENCHMARKS_R2)
     message(STATUS "Release build with maximum optimization")
     if (MSVC)
-    set(CMAKE_CXX_FLAGS_RELEASE "/O2 /DNDEBUG")
-    set(CMAKE_C_FLAGS_RELEASE "/O2 /DNDEBUG")
-else()
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
-    set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+        set(CMAKE_CXX_FLAGS_RELEASE "/O2 /DNDEBUG")
+        set(CMAKE_C_FLAGS_RELEASE "/O2 /DNDEBUG")
+    else()
+        set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+        set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+    endif()
 endif()
-endif()
-
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
-include(get_cpm)
 
 if(ENABLE_COVERAGE)
     #set(CMAKE_BUILD_TYPE Debug)

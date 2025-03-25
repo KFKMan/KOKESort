@@ -33,7 +33,7 @@ size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType elemen
 {
     //log two base n => logn Complexity
 
-    if(!arr || size == 0)
+    if(!arr)
     {
         return 0;
     }
@@ -45,7 +45,12 @@ VariableTypeArray InsertToSortedArrayNonSafe(VariableTypeArray arr, size_t size,
 {
     size_t insertIndex = FindInsertIndexBSNonSafe(arr, size, element, comparer, elementSize);
     
-    VariableTypeArray newArr = calloc(size + 1, elementSize);
+    VariableTypeArray newArr = malloc((size + 1) * elementSize);
+
+    if(newArr == NULL)
+    {
+        return NULL;
+    }
 
     size_t arrIndex = 0;
     size_t newArrIndex = 0;
@@ -55,12 +60,23 @@ VariableTypeArray InsertToSortedArrayNonSafe(VariableTypeArray arr, size_t size,
         if(arrIndex == insertIndex)
         {
             void* newArrInsertIndexPtr = GetIndex(newArr, newArrIndex, elementSize);
-            memcpy(newArrInsertIndexPtr, element, elementSize);
+            void* newArrInsertIndexCpyRes = memcpy(newArrInsertIndexPtr, element, elementSize);
+
+            if(newArrInsertIndexCpyRes == NULL)
+            {
+                return NULL;
+            }
+
             newArrIndex++;
         }
 
         void* newArrIndexPtr = GetIndex(newArr, newArrIndex, elementSize);
-        memcpy(newArrIndexPtr, GetIndex(arr, arrIndex, elementSize), elementSize);
+        void* newArrIndexCpyRes = memcpy(newArrIndexPtr, GetIndex(arr, arrIndex, elementSize), elementSize);
+
+        if(newArrIndexCpyRes == NULL)
+        {
+            return NULL;
+        }
 
         newArrIndex++;
         arrIndex++;
@@ -89,9 +105,15 @@ VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, Variab
     return InsertToSortedArrayNonSafe(arr, size, element, comparer, elementSize);
 }
 
-void MoveElement(VariableTypeArray arr, size_t elementSize, int fromIndex, int toIndex)
+int MoveElement(VariableTypeArray arr, size_t elementSize, int fromIndex, int toIndex)
 {
     void* elementBackup = malloc(elementSize);
+
+    if(elementBackup == NULL)
+    {
+        perror("MoveElement elementBackup can't allocated");
+        return FAIL;
+    }
     
     memcpy(elementBackup, GetIndex(arr, fromIndex, elementSize), elementSize);
 
@@ -102,6 +124,8 @@ void MoveElement(VariableTypeArray arr, size_t elementSize, int fromIndex, int t
     memcpy(GetIndex(arr, toIndex, elementSize), elementBackup, elementSize);
 
     free(elementBackup);
+
+    return SUCCESS;
 }
 
 void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
@@ -124,11 +148,6 @@ void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSi
     memcpy(arrInsertIndexPtr, element, elementSize);
 }
 
-/// @brief Inserting Element to Sorted Array with BinarySearch (FindInsertIndexBS)
-/// @param arr Array to Insert, null pointer can handled
-/// @param currentSize Size of the Array (real element count), 0 size can handled
-/// @param element Element To Insert
-/// @return 1 if success, 0 if fail
 int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
 {
     if(!arr)
@@ -138,7 +157,11 @@ int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, Vari
 
     if(currentSize == 0)
     {
-        memcpy(arr, element, elementSize);
+        void* copyRes = memcpy(arr, element, elementSize);
+        if(copyRes == NULL)
+        {
+            return 0;
+        }
         return 1;
     }
 

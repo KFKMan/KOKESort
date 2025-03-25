@@ -120,6 +120,11 @@ void *ToArray(PossibilitySpace **pbSpaces, size_t pbSpaceCount, size_t arraySize
 {
     void *arr = AllocFn(arraySize * elementSize);
 
+    if(arr == NULL)
+    {
+        return arr;
+    }
+
     size_t index = 0;
     for (size_t i = 0; i < pbSpaceCount; i++)
     {
