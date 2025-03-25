@@ -140,7 +140,7 @@ PossibilitySpace** fSpace = NULL;
 
 void SortV2NonOpt(void *arr, size_t size, size_t elementSize, CompareFunction comparer)
 {
-    fSpace = SortV2(arr, size, elementSize, SpaceCount, indexer, comparer);
+    fSpace = SortV2(arr, size, elementSize, SpaceCount, indexer, comparer, qsort);
 }
 
 void AddItemToList(SortFunctionEntry *array, size_t *count, SortFunctionEntry entry)

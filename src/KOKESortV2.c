@@ -49,7 +49,7 @@ void FreePossibilitySpaceArray(PossibilitySpace **fSpace, size_t pbSpaceCount, s
     }
 }
 
-PossibilitySpace **SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCount, SpaceIndexerFn indexerFn, CompareFunction comparerFn)
+PossibilitySpace **SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCount, SpaceIndexerFn indexerFn, CompareFunction comparerFn, SortFunction sortFn)
 {
     // We need to store allocation info for deallocation.
     // TODO: Simple Comparer Support Need To Be Added
@@ -104,7 +104,7 @@ PossibilitySpace **SortV2(void *array, size_t arraySize, size_t elementSize, siz
     for (size_t i = 0; i < pbSpaceCount; i++)
     {
         PossibilitySpace *space = pbSpaces[i];
-        qsort(space->Element, space->Size, elementSize, comparerFn);
+        sortFn(space->Element, space->Size, elementSize, comparerFn);
     }
 
     return pbSpaces;

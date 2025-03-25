@@ -24,7 +24,7 @@ KOKESORT_API size_t GetPossibilitySpaceSize(size_t capacity, size_t elementSize)
 
 KOKESORT_API void* CreatePossibilitySpace(size_t elementSize, size_t capacity);
 
-KOKESORT_API PossibilitySpace** SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCount, SpaceIndexerFn indexerFn, CompareFunction comparerFn);
+KOKESORT_API PossibilitySpace** SortV2(void *array, size_t arraySize, size_t elementSize, size_t pbSpaceCount, SpaceIndexerFn indexerFn, CompareFunction comparerFn, SortFunction sortFn);
 
 KOKESORT_API void* ToArray(PossibilitySpace** pbSpaces, size_t pbSpaceCount, size_t arraySize, size_t elementSize);
 
