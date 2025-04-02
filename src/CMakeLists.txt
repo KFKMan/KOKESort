@@ -5,11 +5,11 @@ option(PYBINDWRAPPER "Adding pybindwrapper to list" OFF)
 
 option(USE_TESTS "Using tests" ON)
 
-option(USE_BENCHMARKS "Using bechmarks" OFF)
-
 option(USE_GENERATOR "Use generators" ON)
 
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
+
+option(USE_BENCHMARKS "Using bechmarks" OFF)
 
 option(USE_BENCHMARKS_R2 "Using advanced benchmarks" OFF)
 
@@ -89,7 +89,7 @@ set(FUNCTIONS
 )
 
 # ➤ Çıktı dizinini belirle
-set(GENERATED_DIR "${CMAKE_SOURCE_DIR}/generated")
+set(GENERATED_DIR "${CMAKE_CURRENT_SOURCE_DIR}/generated")
 
 if(EXISTS ${GENERATED_DIR})
     file(REMOVE_RECURSE ${GENERATED_DIR})
@@ -102,8 +102,8 @@ foreach(FUNC_DEF ${FUNCTIONS})
     list(GET FUNC_PARTS 0 FUNC_NAME)
     list(GET FUNC_PARTS 1 FUNC_TYPE)
 
-    configure_file(${CMAKE_SOURCE_DIR}/templates/TypeBasedGenerator.c.in ${GENERATED_DIR}/Sort${FUNC_NAME}.c @ONLY)
-    configure_file(${CMAKE_SOURCE_DIR}/templates/TypeBasedGenerator.h.in ${GENERATED_DIR}/Sort${FUNC_NAME}.h @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/templates/TypeBasedGenerator.c.in ${GENERATED_DIR}/Sort${FUNC_NAME}.c @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/templates/TypeBasedGenerator.h.in ${GENERATED_DIR}/Sort${FUNC_NAME}.h @ONLY)
 endforeach()
 
 set(ALL_INCLUDES "")
@@ -115,7 +115,7 @@ foreach(FUNC_DEF ${FUNCTIONS})
     set(ALL_INCLUDES "${ALL_INCLUDES}\n#include \"Sort${FUNC_NAME}.h\"")
 endforeach()
 
-configure_file(${CMAKE_SOURCE_DIR}/templates/MasterHeader.h.in ${GENERATED_DIR}/MasterHeader.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/templates/MasterHeader.h.in ${GENERATED_DIR}/MasterHeader.h)
 
 # ➤ Kaynak dosyaları topla
 file(GLOB GENERATED_SOURCES "${GENERATED_DIR}/*.c")
