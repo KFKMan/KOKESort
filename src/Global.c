@@ -35,7 +35,7 @@ int GetPointerAllocationType(void* ptr)
     FILE *fp = fopen("/proc/self/maps", "r");
     if (!fp) {
         perror("fopen");
-        return;
+        return GRAM;
     }
 
     unsigned long address = (unsigned long)ptr;
