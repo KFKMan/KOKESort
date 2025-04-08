@@ -1,0 +1,6 @@
+PROJECT_NAME           = KOKESort
+INPUT                 = .
+RECURSIVE             = YES
+OUTPUT_DIRECTORY      = docs
+GENERATE_HTML         = YES
+GENERATE_LATEX        = NO

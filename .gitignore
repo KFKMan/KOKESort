@@ -69,3 +69,8 @@ benchres/
 src/generator/gen/test*
 
 functions.txt
+
+src/vcpkg
+src/docs
+src/html
+src/latex
