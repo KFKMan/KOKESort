@@ -1,3 +1,6 @@
+cmake_minimum_required(VERSION 3.20.0)
+project(KOKESortTest VERSION 0.1.0 LANGUAGES C)
+
 file(GLOB TEST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.c")
 
 foreach(TEST_FILE ${TEST_SOURCES})

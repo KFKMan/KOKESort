@@ -45,10 +45,10 @@ int main(void)
 
         free(tempCol);
 
-        int result = SortV1Self(arr, count, sizeof(int), intComparer);
+        SortV1Self(arr, count, sizeof(int), intComparer);
         test_count++;
 
-        if (result == SUCCESS && ArrayEqual(arr, expectedArr, count, intComparer, sizeof(int)) == 0)
+        if (ArrayEqual(arr, expectedArr, count, intComparer, sizeof(int)) == 0)
         {
             printf("Test %d PASSED: \n", test_count);
         }

@@ -13,13 +13,15 @@ option(USE_BENCHMARKS "Using bechmarks" OFF)
 
 option(USE_BENCHMARKS_R2 "Using advanced benchmarks" OFF)
 
+option(USE_BENCHMARKS_R3 "Using our most advanced benchmark mechanism" OFF)
+
 option(USE_PARTS "Use other sorting algorithms" ON) #Don't change it, currently not supporting OFF parameter
 
 option(GENERATE_DOCUMENTATION "Generate documentation via Doxygen" OFF)
 
 option(GENERATE_DOCUMENTATION_CPM "Generate documentation via Doxygen - CPM (Not Working Currently)" OFF)
 
-option(BUILD_RESTRAURANT_APP "Build Restaurant App" OFF)
+option(USE_RESTRAURANT_APP "Build Restaurant App" OFF)
 
 message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
 message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
@@ -27,7 +29,9 @@ message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
 include(get_cpm)
 
-if(BUILD_RESTRAURANT_APP)
+if(USE_RESTRAURANT_APP)
+    message("Adding VCPKG")
+
     set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" STRING "Vcpkg toolchain file")
 endif()
 
@@ -204,6 +208,12 @@ if(USE_BENCHMARKS_R2)
 add_subdirectory(benchmarkr2)
 endif()
 
-if(BUILD_RESTRAURANT_APP)
+if(USE_BENCHMARKS_R3)
+add_subdirectory(benchmarkr3)
+endif()
+
+if(USE_RESTRAURANT_APP)
+message(INFO "Adding Restaurant App")
 add_subdirectory(restaurant-app)
+message(INFO "Restaurant App Added")
 endif()

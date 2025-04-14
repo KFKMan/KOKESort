@@ -1,0 +1,32 @@
+{
+    "enabled_sorters": [
+      "block",
+      "c_bubble",
+      "c_heap",
+      "c_insertion",
+      "c_merge",
+      "c_quick",
+      "c_selection",
+      "c_kokev1",
+      "counting",
+      "drop_merge",
+      "heap",
+      "insertion",
+      "merge",
+      "pdq",
+      "poplar",
+      "quick",
+      "selection",
+      "ska",
+      "smooth",
+      "splay",
+      "spin",
+      "spread",
+      "tim",
+      "verge"
+    ],
+    "USE_V1": true,
+    "dataset_size": [10000, 100000],
+    "repeat_size": 3,
+    "repeat_dataset": 3
+}  

@@ -12,7 +12,7 @@ import argparse
 
 def plot_time_complexity(directory, degree):
     directory = os.path.abspath(directory)
-    csv_files = glob.glob(os.path.join(directory, 'result*.csv'))
+    csv_files = glob.glob(os.path.join(directory, 'benchmark_results.csv'))
     
     if not csv_files:
         print(f"No CSV files found in directory: {directory}")
@@ -23,20 +23,23 @@ def plot_time_complexity(directory, degree):
     algorithm_data = {}
 
     for file in csv_files:
-        df = pd.read_csv(file, header=None)
+        df = pd.read_csv(file)
         
-        algorithm_name = os.path.basename(file).split('.')[0][6:]
-        
-        algorithm_name = re.sub(r'\d+$', '', algorithm_name)
-        
-        x = df[0]
-        y = df[1]
-        
+        algorithm_name = df['algorithm_name'].iloc[0]
+        dataset_size = df['dataset_size'].iloc[0]
+
         if algorithm_name not in algorithm_data:
-            algorithm_data[algorithm_name] = {'x': [], 'y': []}
+            algorithm_data[algorithm_name] = {'sizes': [], 'times': []}
         
-        algorithm_data[algorithm_name]['x'].extend(x)
-        algorithm_data[algorithm_name]['y'].extend(y)
+        algorithm_data[algorithm_name]['sizes'].append(dataset_size)
+        algorithm_data[algorithm_name]['times'].append(df['time'].tolist())
+
+    for algorithm_name, data in algorithm_data.items():
+        sizes = data['sizes']
+        times = data['times']
+
+        # Her algoritma için farklı çizim
+        plt.plot(sizes, [min(time) for time in times], label=algorithm_name)
 
     global_min = 1000000000 * 1000 
     global_max = -1

@@ -2,7 +2,7 @@
 
 #ifdef USE_COMPARER
 
-size_t FindInsertIndexBSNonSafe(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
+size_t FindInsertIndexBSNonSafe(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, size_t elementSize)
 {
     size_t left = 0;
     size_t right = size;
@@ -29,7 +29,7 @@ size_t FindInsertIndexBSNonSafe(VariableTypeArray arr, size_t size, VariableType
 }
 
 /// @brief Finding Insert Index via Binary Search
-size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
+size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, size_t elementSize)
 {
     //log two base n => logn Complexity
 
@@ -41,7 +41,7 @@ size_t FindInsertIndexBS(VariableTypeArray arr, size_t size, VariableType elemen
     return FindInsertIndexBSNonSafe(arr, size, element, comparer, elementSize);
 }
 
-VariableTypeArray InsertToSortedArrayNonSafe(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
+VariableTypeArray InsertToSortedArrayNonSafe(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, size_t elementSize)
 {
     size_t insertIndex = FindInsertIndexBSNonSafe(arr, size, element, comparer, elementSize);
     
@@ -85,7 +85,7 @@ VariableTypeArray InsertToSortedArrayNonSafe(VariableTypeArray arr, size_t size,
     return newArr;
 }
 
-VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, unsigned int elementSize)
+VariableTypeArray InsertToSortedArray(VariableTypeArray arr, size_t size, VariableType element, CompareFunction comparer, size_t elementSize)
 {
     if(!arr || size == 0)
     {
@@ -128,7 +128,7 @@ int MoveElement(VariableTypeArray arr, size_t elementSize, int fromIndex, int to
     return SUCCESS;
 }
 
-void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
+void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, size_t elementSize)
 {
     size_t insertIndex = FindInsertIndexBSNonSafe(arr, currentSize, element, comparer, elementSize);
     
@@ -148,7 +148,7 @@ void InsertToSortedAllocatedArrayNonSafe(VariableTypeArray arr, size_t currentSi
     memcpy(arrInsertIndexPtr, element, elementSize);
 }
 
-int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, unsigned int elementSize)
+int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, VariableType element, CompareFunction comparer, size_t elementSize)
 {
     if(!arr)
     {
@@ -169,7 +169,7 @@ int InsertToSortedAllocatedArray(VariableTypeArray arr, size_t currentSize, Vari
     return 1;
 }
 
-void SortV1AllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, unsigned int elementSize)
+void SortV1AllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, size_t elementSize)
 {
     size_t selfArraySize = 1;
 
@@ -183,7 +183,7 @@ void SortV1AllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeAr
     }
 }
 
-void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t size, CompareFunction comparer, unsigned int elementSize)
+void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t size, CompareFunction comparer, size_t elementSize)
 {
     size_t selfArraySize = 1;
     //void* elementBackup = malloc(elementSize);
@@ -201,14 +201,14 @@ void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t siz
     }
 }
 
-void SortV1AllocatedNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, unsigned int elementSize)
+void SortV1AllocatedNonSafe(VariableTypeArray unsortedArr, VariableTypeArray allocatedArr, size_t size, CompareFunction comparer, size_t elementSize)
 {
     memcpy(allocatedArr, unsortedArr, elementSize);
 
     SortV1AllocatedNonZeroNonSafe(unsortedArr, allocatedArr, size, comparer, elementSize);
 }
 
-VariableTypeArray SortV1NonSafe(VariableTypeArray arr, size_t size, CompareFunction comparer, unsigned int elementSize)
+VariableTypeArray SortV1NonSafe(VariableTypeArray arr, size_t size, CompareFunction comparer, size_t elementSize)
 {
     VariableType* selfArray = malloc(size * elementSize);
 
@@ -228,7 +228,7 @@ VariableTypeArray SortV1NonSafe(VariableTypeArray arr, size_t size, CompareFunct
 /// @param arr Array to sort
 /// @param size Size of array
 /// @return Sorted new array or NULL if array is not valid or size is zero
-VariableTypeArray SortV1(VariableTypeArray arr, size_t size, unsigned int elementSize, CompareFunction comparer)
+VariableTypeArray SortV1(VariableTypeArray arr, size_t size, size_t elementSize, CompareFunction comparer)
 {
     //Argument checks
     if (!arr || size == 0)
@@ -239,7 +239,7 @@ VariableTypeArray SortV1(VariableTypeArray arr, size_t size, unsigned int elemen
     return SortV1NonSafe(arr, size, comparer, elementSize);
 }
 
-void SortV1SelfNonSafe(VariableTypeArray array, size_t size, CompareFunction comparer, unsigned int elementSize)
+void SortV1SelfNonSafe(VariableTypeArray array, size_t size, CompareFunction comparer, size_t elementSize)
 {
     SortV1SelfAllocatedNonZeroNonSafe(array, size, comparer, elementSize);
 }
@@ -250,16 +250,14 @@ void SortV1SelfNonSafe(VariableTypeArray array, size_t size, CompareFunction com
 /// @param comparer 
 /// @param elementSize 
 /// @return Success or not
-int SortV1Self(VariableTypeArray array, size_t size,  unsigned int elementSize, CompareFunction comparer)
+void SortV1Self(VariableTypeArray array, size_t size, size_t elementSize, CompareFunction comparer)
 {
     if(!array || size == 0)
     {
-        return FAIL;
+        return;
     }
 
     SortV1SelfNonSafe(array, size, comparer, elementSize);
-
-    return SUCCESS;
 }
 
 #endif
