@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36015.10 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KOKEMutator", "KOKEMutator\KOKEMutator.csproj", "{8A3B7032-7CC8-4671-B8B9-73BE0B7F1C41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A3B7032-7CC8-4671-B8B9-73BE0B7F1C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A3B7032-7CC8-4671-B8B9-73BE0B7F1C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A3B7032-7CC8-4671-B8B9-73BE0B7F1C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A3B7032-7CC8-4671-B8B9-73BE0B7F1C41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D642DBB-E440-4CBB-A11B-BBA362D94378}
+	EndGlobalSection
+EndGlobal
