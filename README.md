@@ -4,7 +4,7 @@ KOKE Sort (also known as Deniz Sort, Dahman Sort)
 
 **Project Overview**
 
-KOKE Sort is a **cross-platform** corresponding library written in **C** as a modular sort. Developed as a capstone project, it showcases efficient algorithm implementation along with multi-language interop, in addition to demonstrating clean code, test frameworks, and build automation practices.
+KOKE Sort is a **cross-platform** corresponding library written in **C** as a modular sort. It showcases efficient algorithm implementation along with multi-language interop, in addition to demonstrating clean code, test frameworks, and build automation practices.
 
 **PERFORMANCE**
 
