@@ -11,3 +11,4 @@ public class Options
 	[Option('o', "output", Required = false, HelpText = "Output Path Template {name} for filename, {ext} for file extension, {index} for index, {kind} for type | Use FileOutPaths or OutputPath not both !")]
 	public string? OutputTemplate { get; set; }
 }
+

@@ -36,7 +36,7 @@ namespace KOKEMutator
 
 				if(opt.DirectoryPath != null)
 				{
-					files.AddRange(new DirectoryInfo(opt.DirectoryPath).GetFiles().Select(x => x.FullName));
+					files.AddRange(new DirectoryInfo(opt.DirectoryPath).GetFiles("*.c").Select(x => x.FullName));
 				}
 
 				return files;
@@ -64,14 +64,8 @@ namespace KOKEMutator
 
 				Console.WriteLine($"Processing {fileName} | {file}");
 
-				Console.WriteLine("Finding Mutations...");
-				Mutator mutator = new Mutator(file);
-				var mutations = mutator.FindMutations();
-				Console.WriteLine($"{mutations.Count} mutation found");
-
-				Console.WriteLine("Applying Mutations...");
-				MutatedFileWriter.ApplyMutations(file, opt.OutputTemplate, mutations);
-				Console.WriteLine("Mutations Applied");
+				var mutator = new MutationTool(file, opt.OutputTemplate);
+				mutator.Run();
 
 				Console.WriteLine($"Processed {fileName} | {file}");
 			}
