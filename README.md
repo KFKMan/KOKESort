@@ -1,3 +1,5 @@
+[![CMake on multiple platforms](https://github.com/KFKMan/KOKESort/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/KFKMan/KOKESort/actions/workflows/cmake-multi-platform.yml)
+
 KOKE Sort (also known as Deniz Sort, Dahman Sort)
 
 İstanbul Gelişim University Computer Engineering First Year Second Semester Final Project.
