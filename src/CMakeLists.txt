@@ -23,11 +23,15 @@ option(GENERATE_DOCUMENTATION_CPM "Generate documentation via Doxygen - CPM (Not
 
 option(USE_RESTRAURANT_APP "Build Restaurant App" OFF)
 
+option(USE_MUTATION_TESTS "Using mutation tests" OFF)
+
 message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
 message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
 include(get_cpm)
+
+set(TOOLS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/tools)
 
 if(USE_RESTRAURANT_APP)
     message("Adding VCPKG")
