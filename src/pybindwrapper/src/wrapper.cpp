@@ -15,8 +15,14 @@ int comparer_bridge(const void* a, const void* b) {
     return (*current_py_comparer_ptr)(obj_a, obj_b).cast<int>();
 }
 
+void test_fn() 
+{
+    
+}
+
 PYBIND11_MODULE(KOKESortWrapper, m) 
 {
+    m.def("Test", &test_fn, "A simple example function");
     m.def("KOKESortV1", [](py::list arr, py::function py_comparer) {
         size_t size = arr.size();
         size_t elementSize = sizeof(py::object*);

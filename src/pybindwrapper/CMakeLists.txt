@@ -19,6 +19,14 @@ find_package(Python3 COMPONENTS Interpreter Development)
 #add_library(KOKESortWrapper MODULE wrapper.cpp)
 pybind11_add_module(KOKESortWrapper src/wrapper.cpp)
 
+# wrapper.pybind module'ü derlendikten sonra
+add_custom_command(TARGET KOKESortWrapper
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "$<TARGET_FILE:KOKESort>"
+        "$<TARGET_FILE_DIR:KOKESortWrapper>"
+)
+
 target_compile_definitions(KOKESortWrapper PRIVATE KOKESORT_IMPORTS)
 
 target_link_libraries(KOKESortWrapper PRIVATE pybind11::module)

@@ -8,6 +8,3 @@ for /d /r %%d in (*egg-info*) do (
     echo Deleting %%d
     rmdir /s /q "%%d"
 )
-
-REM 2) Kaynak ve wheel paketlerini oluştur
-python setup.py --verbose sdist bdist_wheel

@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "KOKESortWrapper"
 version = "0.1.0"
 authors = [
-  { name="Kaan Faruk Kınalı", email="kaanfarukkinali@gmail.com" },
+  { name="Kaan Faruk Kınalı" },
   { name="Mehmet Kerem Aslan" },
   { name="Emirhan Uçan" }
 ]
