@@ -32,7 +32,7 @@ PYBIND11_MODULE(KOKESortWrapper, m)
         current_py_comparer_ptr = &py_comparer;
     
         // Calling the SortV1 function with the non-capturing comparer_bridge function
-        void* result = SortV1(c_arr, size, comparer_bridge, elementSize);
+        void* result = SortV1(c_arr, size, elementSize, comparer_bridge);
     
         // Resetting the pointer once the operation is complete
         current_py_comparer_ptr = nullptr;

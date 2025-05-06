@@ -1,3 +1,23 @@
 [build-system]
-requires = ["scikit-build", "cmake", "pybind11"]
-build-backend = "scikit_build.core"
+requires = ["setuptools>=42", "wheel", "cmake", "pybind11"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "KOKESortWrapper"
+version = "0.1.0"
+authors = [
+  { name="Kaan Faruk Kınalı", email="kaanfarukkinali@gmail.com" },
+  { name="Mehmet Kerem Aslan" },
+  { name="Emirhan Uçan" }
+]
+description = ""
+readme = ""
+requires-python = ">=3.7"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent"
+]
+license = {text = "MIT"}
+
+[project.optional-dependencies]
+test = ["pytest>=6.0"]

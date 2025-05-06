@@ -3,7 +3,7 @@ project(KOKESort VERSION 0.1.0 LANGUAGES C)
 
 option(PYBINDWRAPPER "Adding pybindwrapper to list" OFF)
 
-option(USE_TESTS "Using tests" ON)
+option(USE_TESTS "Using tests" OFF)
 
 option(USE_GENERATOR "Use generators" ON)
 
