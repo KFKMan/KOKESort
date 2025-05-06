@@ -10,8 +10,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(pybind11)
 ]]
 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/kokesortwrapper)
-
 CPMAddPackage("gh:pybind/pybind11@2.13.6")
 
 #find_package(pybind11 REQUIRED)

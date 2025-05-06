@@ -3,6 +3,8 @@ import subprocess
 import sys
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
+import shutil
+import glob
 
 GIT_REPO = "https://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@github.com/KFKMan/KOKESort.git"
 
@@ -67,4 +69,6 @@ setup(
     cmdclass={'build_ext': CMakeBuild},
     zip_safe=False,
     python_requires='>=3.7',
+    #packages=['KOKESortWrapper'],  # KOKESortWrapper paketi
+    #package_data={'KOKESortWrapper': ['*.pyd', '*.dll']},  # Bu dosyaların pakette yer almasını sağla
 )

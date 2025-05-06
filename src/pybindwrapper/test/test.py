@@ -3,7 +3,8 @@ import sys
 
 try:
     import KOKESortWrapper
-except ImportError as e:
+except Exception as e:
+    print("Error importing KOKESortWrapper:", e)
     import traceback
     traceback.print_exc()
 
@@ -19,6 +20,7 @@ def comparer(a, b):
 
 print(arr)
 
+KOKESortWrapper.Test()
 newArr = KOKESortWrapper.KOKESortV1(arr, comparer)
 
 print(newArr);

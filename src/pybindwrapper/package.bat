@@ -12,3 +12,5 @@ for /d /r %%d in (*egg-info*) do (
 REM 2) Kaynak ve wheel paketlerini oluştur
 pip install build
 python -m build
+
+python .\fix.py
