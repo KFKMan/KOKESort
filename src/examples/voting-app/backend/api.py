@@ -3,6 +3,20 @@ import os
 import KOKESortWrapper
 import copy
 
+class Candidate:
+    def __init__(self, name: str, vote_count: int):
+        self.name = name
+        self.vote_count = vote_count
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "voteCount": self.vote_count
+        }
+
+    def __repr__(self):
+        return f"{self.name} ({self.vote_count})"
+
 class API:
     def __init__(self):
         self.voters_file = "backend/data/voters.json"
@@ -61,24 +75,13 @@ class API:
 
         pres_list = [{"name": k, "voteCount": int(v)} for k, v in candidates["president"].items()]
 
-        # Comparer fonksiyonu oluşturuluyor
-        def pres_comparer(a, b):
-            return a["voteCount"] - b["voteCount"]
-
-        # SortV1 fonksiyonunu kullanarak sıralama
-        KOKESortWrapper.SortV1(pres_list, pres_comparer)
+        # Sorting here
 
         candidates["president"] = {f"{item['name']}": item["voteCount"] for item in pres_list}
 
-        # Belediye Başkanlarını sıralama
         mayor_list = [{"name": k, "voteCount": int(v)} for k, v in candidates["mayor"].items()]
 
-        # Comparer fonksiyonu oluşturuluyor
-        def mayor_comparer(a, b):
-            return a["voteCount"] - b["voteCount"]
-
-        # SortV1 fonksiyonunu kullanarak sıralama
-        KOKESortWrapper.SortV1(mayor_list, mayor_comparer)
+        # Sorting here
 
         candidates["mayor"] = {f"{item['name']}": item["voteCount"] for item in mayor_list}
 

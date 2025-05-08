@@ -1,42 +1,31 @@
 #Ignoring generated codes
-generated/
+**/generated/
 
 #Ignoring build outputs
-out/
-build/
-
-src/out
-src/build
+**/[Bb][Uu][Ii][Ll][Dd]/
+**/[Ob][Uu][Tt]/
 
 #Ignoring Ninja CMake Tool files
-ninja/
-ninja*
-
-src/ninja/
-src/ninja*
+**/[Nn]inja/
+**/ninja*
 
 #Visual Studio/Visual Studio Code Files
-.vs/
-.vscode/
+**/.vs/
+**/.vscode/
 
 #CMocka
-src/cmocka/
-cmocka/
+**/cmocka/
 
-src/ctest_output.txt
-src/ctest_output.txt*
+**/ctest_output*
 
-src/tools/
-tools/
+**/[Tt]ools/
 
-src/mull.zip
-mull.zip
+**/mull.zip*
+**/mull-install*
+**/cmocka-install*
 
-src/cmocka-install.bat
-src/mull-install*
-
-src/dumbmutate/
-src/dumbmutate*
+**/dumbmutate/
+**/dumbmutate*
 
 src/build_dumbmutate*
 
@@ -47,21 +36,16 @@ dist/
 KOKESort.egg-info/
 KOKESortWrapper.egg-info/
 
-KOKESort.dll
-KOKESort.lib
-KOKESort.exp
-KOKESort.pdb
+**/*.dll
+**/*.lib
+**/*.exp
+**/*.pdb
+**/*.so
 
-__backup__*
+**/__backup__*
 
-intro.mp4
-intro_exclude.txt
-intro_exclude_dir.txt
-*.ttf
-
-.git/
-.github/
-counter.py
+**/.git/
+**/.github/
 
 benchres/
 src/generator/gen/test*
@@ -77,6 +61,9 @@ src/out
 
 mutated/
 
-KOKESort/
+# Git Module
+**/KOKESort/
 
 *.pyd
+*.pyc
+**/__pycache__/
