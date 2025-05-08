@@ -7,6 +7,10 @@
 #include <stdlib.h>
 #include "SecureFunctions.h"
 
+#ifdef __cplusplus
+extern "C" {  /* C++ name mangling */
+#endif
+
 #define SUCCESS 1
 #define FAIL 0
 
@@ -26,18 +30,6 @@
 #define debugPrintFast(fmt, ...) 
 #define debugError(fmt, ...) 
 #define debugErrorFast(fmt, ...) 
-#endif
-
-#ifdef _WIN32
-    #ifdef KOKESORT_IMPORTS
-        #define KOKESORT_API __declspec(dllimport)
-    #elif defined(KOKESORT_EXPORTS)
-        #define KOKESORT_API __declspec(dllexport)
-    #else
-        #define KOKESORT_API
-    #endif
-#else
-    #define KOKESORT_API
 #endif
 
 //https://stackoverflow.com/a/5920028
@@ -80,6 +72,20 @@
 #error "Unknown compiler"
 #endif
 
+#ifdef WINDOWS
+    #if defined(KOKESORT_STATIC)
+        #define KOKESORT_API
+    #elif defined(KOKESORT_IMPORTS)
+        #define KOKESORT_API __declspec(dllimport)
+    #elif defined(KOKESORT_EXPORTS)
+        #define KOKESORT_API __declspec(dllexport)
+    #else
+        #define KOKESORT_API
+    #endif
+#else
+    #define KOKESORT_API
+#endif
+
 #ifdef USE_COMPARER
 KOKESORT_API void* GetIndex(void* arr, size_t index, unsigned int elementSize);
 KOKESORT_API void FreeMemory(void* pointer);
@@ -90,6 +96,8 @@ typedef int (*CompareFunction)(const void *, const void *);
 /// @brief Array, number of elements, size of one element, comparer 
 typedef void (*SortFunction)(void *, size_t, size_t, CompareFunction);
 #endif
+
+KOKESORT_API int TestFunction(void);
 
 #define GRAM 1
 #define GVIRTUAL 2
@@ -110,4 +118,8 @@ typedef struct MemorySpace
     int byteCount;
     void* memory;
 } MemorySpace;
+
+#ifdef __cplusplus
+};
+#endif
 #endif

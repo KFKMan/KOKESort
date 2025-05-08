@@ -1,0 +1,2296 @@
+{
+  "country": [
+    {
+      "name": "Adana",
+      "code": "01"
+    },
+    {
+      "name": "Adıyaman",
+      "code": "02"
+    },
+    {
+      "name": "Afyonkarahisar",
+      "code": "03"
+    },
+    {
+      "name": "Ağrı",
+      "code": "04"
+    },
+    {
+      "name": "Amasya",
+      "code": "05"
+    },
+    {
+      "name": "Ankara",
+      "code": "06"
+    },
+    {
+      "name": "Antalya",
+      "code": "07"
+    },
+    {
+      "name": "Artvin",
+      "code": "08"
+    },
+    {
+      "name": "Aydın",
+      "code": "09"
+    },
+    {
+      "name": "Balıkesir",
+      "code": "10"
+    },
+    {
+      "name": "Bilecik",
+      "code": "11"
+    },
+    {
+      "name": "Bingöl",
+      "code": "12"
+    },
+    {
+      "name": "Bitlis",
+      "code": "13"
+    },
+    {
+      "name": "Bolu",
+      "code": "14"
+    },
+    {
+      "name": "Burdur",
+      "code": "15"
+    },
+    {
+      "name": "Bursa",
+      "code": "16"
+    },
+    {
+      "name": "Çanakkale",
+      "code": "17"
+    },
+    {
+      "name": "Çankırı",
+      "code": "18"
+    },
+    {
+      "name": "Çorum",
+      "code": "19"
+    },
+    {
+      "name": "Denizli",
+      "code": "20"
+    },
+    {
+      "name": "Diyarbakır",
+      "code": "21"
+    },
+    {
+      "name": "Edirne",
+      "code": "22"
+    },
+    {
+      "name": "Elazığ",
+      "code": "23"
+    },
+    {
+      "name": "Erzincan",
+      "code": "24"
+    },
+    {
+      "name": "Erzurum",
+      "code": "25"
+    },
+    {
+      "name": "Eskişehir",
+      "code": "26"
+    },
+    {
+      "name": "Gaziantep",
+      "code": "27"
+    },
+    {
+      "name": "Giresun",
+      "code": "28"
+    },
+    {
+      "name": "Gümüşhane",
+      "code": "29"
+    },
+    {
+      "name": "Hakkari",
+      "code": "30"
+    },
+    {
+      "name": "Hatay",
+      "code": "31"
+    },
+    {
+      "name": "Isparta",
+      "code": "32"
+    },
+    {
+      "name": "Mersin",
+      "code": "33"
+    },
+    {
+      "name": "İstanbul",
+      "code": "34"
+    },
+    {
+      "name": "İzmir",
+      "code": "35"
+    },
+    {
+      "name": "Kars",
+      "code": "36"
+    },
+    {
+      "name": "Kastamonu",
+      "code": "37"
+    },
+    {
+      "name": "Kayseri",
+      "code": "38"
+    },
+    {
+      "name": "Kırklareli",
+      "code": "39"
+    },
+    {
+      "name": "Kırşehir",
+      "code": "40"
+    },
+    {
+      "name": "Kocaeli",
+      "code": "41"
+    },
+    {
+      "name": "Konya",
+      "code": "42"
+    },
+    {
+      "name": "Kütahya",
+      "code": "43"
+    },
+    {
+      "name": "Malatya",
+      "code": "44"
+    },
+    {
+      "name": "Manisa",
+      "code": "45"
+    },
+    {
+      "name": "Kahramanmaraş",
+      "code": "46"
+    },
+    {
+      "name": "Mardin",
+      "code": "47"
+    },
+    {
+      "name": "Muğla",
+      "code": "48"
+    },
+    {
+      "name": "Muş",
+      "code": "49"
+    },
+    {
+      "name": "Nevşehir",
+      "code": "50"
+    },
+    {
+      "name": "Niğde",
+      "code": "51"
+    },
+    {
+      "name": "Ordu",
+      "code": "52"
+    },
+    {
+      "name": "Rize",
+      "code": "53"
+    },
+    {
+      "name": "Sakarya",
+      "code": "54"
+    },
+    {
+      "name": "Samsun",
+      "code": "55"
+    },
+    {
+      "name": "Siirt",
+      "code": "56"
+    },
+    {
+      "name": "Sinop",
+      "code": "57"
+    },
+    {
+      "name": "Sivas",
+      "code": "58"
+    },
+    {
+      "name": "Tekirdağ",
+      "code": "59"
+    },
+    {
+      "name": "Tokat",
+      "code": "60"
+    },
+    {
+      "name": "Trabzon",
+      "code": "61"
+    },
+    {
+      "name": "Tunceli",
+      "code": "62"
+    },
+    {
+      "name": "Şanlıurfa",
+      "code": "63"
+    },
+    {
+      "name": "Uşak",
+      "code": "64"
+    },
+    {
+      "name": "Van",
+      "code": "65"
+    },
+    {
+      "name": "Yozgat",
+      "code": "66"
+    },
+    {
+      "name": "Zonguldak",
+      "code": "67"
+    },
+    {
+      "name": "Aksaray",
+      "code": "68"
+    },
+    {
+      "name": "Bayburt",
+      "code": "69"
+    },
+    {
+      "name": "Karaman",
+      "code": "70"
+    },
+    {
+      "name": "Kırıkkale",
+      "code": "71"
+    },
+    {
+      "name": "Batman",
+      "code": "72"
+    },
+    {
+      "name": "Şırnak",
+      "code": "73"
+    },
+    {
+      "name": "Bartın",
+      "code": "74"
+    },
+    {
+      "name": "Ardahan",
+      "code": "75"
+    },
+    {
+      "name": "Iğdır",
+      "code": "76"
+    },
+    {
+      "name": "Yalova",
+      "code": "77"
+    },
+    {
+      "name": "Karabük",
+      "code": "78"
+    },
+    {
+      "name": "Kilis",
+      "code": "79"
+    },
+    {
+      "name": "Osmaniye",
+      "code": "80"
+    },
+    {
+      "name": "Düzce",
+      "code": "81"
+    }
+  ],
+  "presidents": [
+    {
+      "name": "Kaan Faruk",
+      "surname": "Kınalı",
+      "voteCount": "9"
+    },
+    {
+      "name": "Sudenaz",
+      "surname": "Kınalı",
+      "voteCount": "0"
+    },
+    {
+      "name": "Emirhan",
+      "surname": "Uçan",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mehmet Kerem",
+      "surname": "Aslan",
+      "voteCount": "0"
+    }
+  ],
+  "mayors": [
+    {
+      "name": "Ökkeş",
+      "surname": "Boz",
+      "targetCountry": "1",
+      "voteCount": "0"
+    },
+    {
+      "name": "Rabi̇a",
+      "surname": "Duman",
+      "targetCountry": "1",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bi̇lal",
+      "surname": "Uzun",
+      "targetCountry": "1",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gülsen",
+      "surname": "Acar",
+      "targetCountry": "1",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kazim",
+      "surname": "Çolak",
+      "targetCountry": "2",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sadi̇ye",
+      "surname": "Aydoğan",
+      "targetCountry": "2",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mehmet",
+      "surname": "Koç",
+      "targetCountry": "2",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fazli",
+      "surname": "Baran",
+      "targetCountry": "2",
+      "voteCount": "0"
+    },
+    {
+      "name": "İrfan",
+      "surname": "Özbay",
+      "targetCountry": "3",
+      "voteCount": "0"
+    },
+    {
+      "name": "Emre",
+      "surname": "Temi̇z",
+      "targetCountry": "3",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sali̇he",
+      "surname": "Akay",
+      "targetCountry": "3",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fadi̇le",
+      "surname": "Özden",
+      "targetCountry": "3",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ridvan",
+      "surname": "Tan",
+      "targetCountry": "4",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hali̇t",
+      "surname": "Topal",
+      "targetCountry": "4",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yahya",
+      "surname": "Kuru",
+      "targetCountry": "4",
+      "voteCount": "0"
+    },
+    {
+      "name": "Selma",
+      "surname": "Demi̇rtaş",
+      "targetCountry": "4",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sai̇m",
+      "surname": "Akay",
+      "targetCountry": "5",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hi̇lmi̇",
+      "surname": "Turgut",
+      "targetCountry": "5",
+      "voteCount": "0"
+    },
+    {
+      "name": "Derya",
+      "surname": "Özçeli̇k",
+      "targetCountry": "5",
+      "voteCount": "0"
+    },
+    {
+      "name": "Si̇nem",
+      "surname": "Kandemi̇r",
+      "targetCountry": "5",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fazli",
+      "surname": "Tuncer",
+      "targetCountry": "6",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sabri̇ye",
+      "surname": "Şenol",
+      "targetCountry": "6",
+      "voteCount": "0"
+    },
+    {
+      "name": "Cumali̇",
+      "surname": "Kuş",
+      "targetCountry": "6",
+      "voteCount": "0"
+    },
+    {
+      "name": "Handan",
+      "surname": "Kavak",
+      "targetCountry": "6",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sefer",
+      "surname": "Demi̇rcan",
+      "targetCountry": "7",
+      "voteCount": "0"
+    },
+    {
+      "name": "Asli",
+      "surname": "Gökmen",
+      "targetCountry": "7",
+      "voteCount": "0"
+    },
+    {
+      "name": "Necmi̇ye",
+      "surname": "Zengi̇n",
+      "targetCountry": "7",
+      "voteCount": "0"
+    },
+    {
+      "name": "Zari̇fe",
+      "surname": "Demi̇rtaş",
+      "targetCountry": "7",
+      "voteCount": "0"
+    },
+    {
+      "name": "Eli̇fe",
+      "surname": "Ay",
+      "targetCountry": "8",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mehmet emi̇n",
+      "surname": "Özbay",
+      "targetCountry": "8",
+      "voteCount": "0"
+    },
+    {
+      "name": "Necmetti̇n",
+      "surname": "Şengül",
+      "targetCountry": "8",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nefi̇se",
+      "surname": "Karagöz",
+      "targetCountry": "8",
+      "voteCount": "0"
+    },
+    {
+      "name": "Tülay",
+      "surname": "Gökçe",
+      "targetCountry": "9",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bayram",
+      "surname": "Çeti̇n",
+      "targetCountry": "9",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hedi̇ye",
+      "surname": "Aslan",
+      "targetCountry": "9",
+      "voteCount": "0"
+    },
+    {
+      "name": "İbrahi̇m hali̇l",
+      "surname": "Karakaş",
+      "targetCountry": "9",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şahi̇n",
+      "surname": "Karakaş",
+      "targetCountry": "10",
+      "voteCount": "0"
+    },
+    {
+      "name": "Adem",
+      "surname": "Erol",
+      "targetCountry": "10",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ali̇ osman",
+      "surname": "Kaplan",
+      "targetCountry": "10",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nejla",
+      "surname": "Turgut",
+      "targetCountry": "10",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ni̇met",
+      "surname": "Topal",
+      "targetCountry": "11",
+      "voteCount": "0"
+    },
+    {
+      "name": "Rabi̇a",
+      "surname": "Akar",
+      "targetCountry": "11",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şükri̇ye",
+      "surname": "Gökmen",
+      "targetCountry": "11",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nahi̇de",
+      "surname": "Aydemi̇r",
+      "targetCountry": "11",
+      "voteCount": "0"
+    },
+    {
+      "name": "İbrahi̇m",
+      "surname": "Erkan",
+      "targetCountry": "12",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sezai̇",
+      "surname": "Çi̇men",
+      "targetCountry": "12",
+      "voteCount": "0"
+    },
+    {
+      "name": "Selvi̇",
+      "surname": "Gür",
+      "targetCountry": "12",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hüsne",
+      "surname": "Akyüz",
+      "targetCountry": "12",
+      "voteCount": "0"
+    },
+    {
+      "name": "Rabi̇ye",
+      "surname": "Gürsoy",
+      "targetCountry": "13",
+      "voteCount": "0"
+    },
+    {
+      "name": "Abdullah",
+      "surname": "Atalay",
+      "targetCountry": "13",
+      "voteCount": "0"
+    },
+    {
+      "name": "Avni̇",
+      "surname": "Çevi̇k",
+      "targetCountry": "13",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yildiz",
+      "surname": "Erdoğan",
+      "targetCountry": "13",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ni̇lüfer",
+      "surname": "Erol",
+      "targetCountry": "14",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gülümser",
+      "surname": "Gök",
+      "targetCountry": "14",
+      "voteCount": "0"
+    },
+    {
+      "name": "Volkan",
+      "surname": "Meti̇n",
+      "targetCountry": "14",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nezi̇r",
+      "surname": "Karakaş",
+      "targetCountry": "14",
+      "voteCount": "0"
+    },
+    {
+      "name": "Doğan",
+      "surname": "Gür",
+      "targetCountry": "15",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nazi̇f",
+      "surname": "Öksüz",
+      "targetCountry": "15",
+      "voteCount": "0"
+    },
+    {
+      "name": "Haci̇",
+      "surname": "Polat",
+      "targetCountry": "15",
+      "voteCount": "0"
+    },
+    {
+      "name": "Servet",
+      "surname": "Güneş",
+      "targetCountry": "15",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ertuğrul",
+      "surname": "Gedi̇k",
+      "targetCountry": "16",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nuran",
+      "surname": "Oral",
+      "targetCountry": "16",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yahya",
+      "surname": "Çolak",
+      "targetCountry": "16",
+      "voteCount": "0"
+    },
+    {
+      "name": "Özgül",
+      "surname": "Aydoğan",
+      "targetCountry": "16",
+      "voteCount": "0"
+    },
+    {
+      "name": "Cemi̇l",
+      "surname": "Eki̇ci̇",
+      "targetCountry": "17",
+      "voteCount": "0"
+    },
+    {
+      "name": "Funda",
+      "surname": "Güngör",
+      "targetCountry": "17",
+      "voteCount": "0"
+    },
+    {
+      "name": "Funda",
+      "surname": "Ay",
+      "targetCountry": "17",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nezi̇r",
+      "surname": "Baysal",
+      "targetCountry": "17",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nezahat",
+      "surname": "Akar",
+      "targetCountry": "18",
+      "voteCount": "0"
+    },
+    {
+      "name": "Behi̇ce",
+      "surname": "Şeker",
+      "targetCountry": "18",
+      "voteCount": "0"
+    },
+    {
+      "name": "Asi̇ye",
+      "surname": "Ateş",
+      "targetCountry": "18",
+      "voteCount": "0"
+    },
+    {
+      "name": "Emel",
+      "surname": "Gülmez",
+      "targetCountry": "18",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hali̇me",
+      "surname": "Şenol",
+      "targetCountry": "19",
+      "voteCount": "0"
+    },
+    {
+      "name": "Penpe",
+      "surname": "Sezer",
+      "targetCountry": "19",
+      "voteCount": "0"
+    },
+    {
+      "name": "Tali̇p",
+      "surname": "Demi̇rci̇",
+      "targetCountry": "19",
+      "voteCount": "0"
+    },
+    {
+      "name": "İhsan",
+      "surname": "Ergün",
+      "targetCountry": "19",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kadi̇r",
+      "surname": "Korkmaz",
+      "targetCountry": "20",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fatima",
+      "surname": "Keski̇n",
+      "targetCountry": "20",
+      "voteCount": "0"
+    },
+    {
+      "name": "Aygül",
+      "surname": "Kalkan",
+      "targetCountry": "20",
+      "voteCount": "0"
+    },
+    {
+      "name": "Vasfi̇ye",
+      "surname": "Ünlü",
+      "targetCountry": "20",
+      "voteCount": "0"
+    },
+    {
+      "name": "Veysel",
+      "surname": "Eser",
+      "targetCountry": "21",
+      "voteCount": "0"
+    },
+    {
+      "name": "Meli̇ha",
+      "surname": "Akyüz",
+      "targetCountry": "21",
+      "voteCount": "0"
+    },
+    {
+      "name": "Rasi̇m",
+      "surname": "Demi̇rci̇",
+      "targetCountry": "21",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sari̇ye",
+      "surname": "Engi̇n",
+      "targetCountry": "21",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sadik",
+      "surname": "Ünsal",
+      "targetCountry": "22",
+      "voteCount": "0"
+    },
+    {
+      "name": "Keri̇m",
+      "surname": "Köksal",
+      "targetCountry": "22",
+      "voteCount": "0"
+    },
+    {
+      "name": "Edi̇be",
+      "surname": "Uçar",
+      "targetCountry": "22",
+      "voteCount": "0"
+    },
+    {
+      "name": "Semra",
+      "surname": "Gül",
+      "targetCountry": "22",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şükran",
+      "surname": "Boz",
+      "targetCountry": "23",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bi̇nnaz",
+      "surname": "Tosun",
+      "targetCountry": "23",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hanim",
+      "surname": "Karagöz",
+      "targetCountry": "23",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fehi̇me",
+      "surname": "Gündüz",
+      "targetCountry": "23",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ali̇ riza",
+      "surname": "Ünlü",
+      "targetCountry": "24",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ahmet",
+      "surname": "Şen",
+      "targetCountry": "24",
+      "voteCount": "0"
+    },
+    {
+      "name": "Haci",
+      "surname": "Aktaş",
+      "targetCountry": "24",
+      "voteCount": "0"
+    },
+    {
+      "name": "Satilmiş",
+      "surname": "Orhan",
+      "targetCountry": "24",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bayram",
+      "surname": "Çeti̇n",
+      "targetCountry": "25",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mehtap",
+      "surname": "Akman",
+      "targetCountry": "25",
+      "voteCount": "0"
+    },
+    {
+      "name": "Habi̇be",
+      "surname": "Öner",
+      "targetCountry": "25",
+      "voteCount": "0"
+    },
+    {
+      "name": "Emi̇ne",
+      "surname": "Özkan",
+      "targetCountry": "25",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mürüvvet",
+      "surname": "Özbek",
+      "targetCountry": "26",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gülsen",
+      "surname": "Türkmen",
+      "targetCountry": "26",
+      "voteCount": "0"
+    },
+    {
+      "name": "Güler",
+      "surname": "Aksoy",
+      "targetCountry": "26",
+      "voteCount": "0"
+    },
+    {
+      "name": "Muhi̇tti̇n",
+      "surname": "Bektaş",
+      "targetCountry": "26",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yahya",
+      "surname": "Güçlü",
+      "targetCountry": "27",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kaya",
+      "surname": "Akkuş",
+      "targetCountry": "27",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nezaket",
+      "surname": "Bolat",
+      "targetCountry": "27",
+      "voteCount": "0"
+    },
+    {
+      "name": "Süleyman",
+      "surname": "Erdem",
+      "targetCountry": "27",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sabahatti̇n",
+      "surname": "Atay",
+      "targetCountry": "28",
+      "voteCount": "0"
+    },
+    {
+      "name": "Zafer",
+      "surname": "Aksoy",
+      "targetCountry": "28",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hali̇l",
+      "surname": "Karabulut",
+      "targetCountry": "28",
+      "voteCount": "0"
+    },
+    {
+      "name": "Savaş",
+      "surname": "Güneş",
+      "targetCountry": "28",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nuray",
+      "surname": "Eki̇nci̇",
+      "targetCountry": "29",
+      "voteCount": "0"
+    },
+    {
+      "name": "Özcan",
+      "surname": "Meti̇n",
+      "targetCountry": "29",
+      "voteCount": "0"
+    },
+    {
+      "name": "Seyran",
+      "surname": "Deği̇rmenci̇",
+      "targetCountry": "29",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şeref",
+      "surname": "Budak",
+      "targetCountry": "29",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hatun",
+      "surname": "Çi̇men",
+      "targetCountry": "30",
+      "voteCount": "0"
+    },
+    {
+      "name": "Önder",
+      "surname": "Uğur",
+      "targetCountry": "30",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nuri̇",
+      "surname": "Budak",
+      "targetCountry": "30",
+      "voteCount": "0"
+    },
+    {
+      "name": "İdri̇s",
+      "surname": "Günay",
+      "targetCountry": "30",
+      "voteCount": "0"
+    },
+    {
+      "name": "İskender",
+      "surname": "Şahan",
+      "targetCountry": "31",
+      "voteCount": "0"
+    },
+    {
+      "name": "Tevfi̇k",
+      "surname": "Temi̇z",
+      "targetCountry": "31",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nergi̇z",
+      "surname": "Saraç",
+      "targetCountry": "31",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nadi̇ye",
+      "surname": "Özmen",
+      "targetCountry": "31",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gökhan",
+      "surname": "Akay",
+      "targetCountry": "32",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gülser",
+      "surname": "Akça",
+      "targetCountry": "32",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şükran",
+      "surname": "Kaya",
+      "targetCountry": "32",
+      "voteCount": "0"
+    },
+    {
+      "name": "Murat",
+      "surname": "Başaran",
+      "targetCountry": "32",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sevi̇nç",
+      "surname": "Erdoğan",
+      "targetCountry": "33",
+      "voteCount": "0"
+    },
+    {
+      "name": "Alaatti̇n",
+      "surname": "Bayrak",
+      "targetCountry": "33",
+      "voteCount": "0"
+    },
+    {
+      "name": "Edi̇be",
+      "surname": "Çoban",
+      "targetCountry": "33",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ni̇gar",
+      "surname": "Şener",
+      "targetCountry": "33",
+      "voteCount": "0"
+    },
+    {
+      "name": "Azi̇me",
+      "surname": "Akdoğan",
+      "targetCountry": "34",
+      "voteCount": "1"
+    },
+    {
+      "name": "Ni̇lüfer",
+      "surname": "Atmaca",
+      "targetCountry": "34",
+      "voteCount": "4"
+    },
+    {
+      "name": "Enver",
+      "surname": "Karagöz",
+      "targetCountry": "34",
+      "voteCount": "2"
+    },
+    {
+      "name": "Ertuğrul",
+      "surname": "Öner",
+      "targetCountry": "34",
+      "voteCount": "1"
+    },
+    {
+      "name": "Altun",
+      "surname": "Durmaz",
+      "targetCountry": "35",
+      "voteCount": "0"
+    },
+    {
+      "name": "Seda",
+      "surname": "Sönmez",
+      "targetCountry": "35",
+      "voteCount": "0"
+    },
+    {
+      "name": "Veli̇",
+      "surname": "Şengül",
+      "targetCountry": "35",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hati̇ce",
+      "surname": "Özsoy",
+      "targetCountry": "35",
+      "voteCount": "0"
+    },
+    {
+      "name": "Emel",
+      "surname": "Ünsal",
+      "targetCountry": "36",
+      "voteCount": "0"
+    },
+    {
+      "name": "Emrullah",
+      "surname": "Baran",
+      "targetCountry": "36",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mehmet şeri̇f",
+      "surname": "Bayraktar",
+      "targetCountry": "36",
+      "voteCount": "0"
+    },
+    {
+      "name": "Lütfi̇ye",
+      "surname": "Köksal",
+      "targetCountry": "36",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nurşen",
+      "surname": "Bayram",
+      "targetCountry": "37",
+      "voteCount": "0"
+    },
+    {
+      "name": "Pinar",
+      "surname": "Elmas",
+      "targetCountry": "37",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sai̇t",
+      "surname": "Can",
+      "targetCountry": "37",
+      "voteCount": "0"
+    },
+    {
+      "name": "İzzetti̇n",
+      "surname": "Sezer",
+      "targetCountry": "37",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bedri̇ye",
+      "surname": "Karakaya",
+      "targetCountry": "38",
+      "voteCount": "0"
+    },
+    {
+      "name": "Zübeyde",
+      "surname": "Atalay",
+      "targetCountry": "38",
+      "voteCount": "0"
+    },
+    {
+      "name": "Vahi̇t",
+      "surname": "Önder",
+      "targetCountry": "38",
+      "voteCount": "0"
+    },
+    {
+      "name": "İnci̇",
+      "surname": "Gökmen",
+      "targetCountry": "38",
+      "voteCount": "0"
+    },
+    {
+      "name": "Cevri̇ye",
+      "surname": "Çolak",
+      "targetCountry": "39",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fevzi̇",
+      "surname": "Güzel",
+      "targetCountry": "39",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şadi̇ye",
+      "surname": "Solmaz",
+      "targetCountry": "39",
+      "voteCount": "0"
+    },
+    {
+      "name": "Cafer",
+      "surname": "Karaman",
+      "targetCountry": "39",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şefi̇ka",
+      "surname": "Budak",
+      "targetCountry": "40",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sani̇ye",
+      "surname": "Güngör",
+      "targetCountry": "40",
+      "voteCount": "0"
+    },
+    {
+      "name": "Saki̇ne",
+      "surname": "Ergün",
+      "targetCountry": "40",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sami̇ye",
+      "surname": "Kalkan",
+      "targetCountry": "40",
+      "voteCount": "0"
+    },
+    {
+      "name": "Meli̇ke",
+      "surname": "Şahi̇n",
+      "targetCountry": "41",
+      "voteCount": "0"
+    },
+    {
+      "name": "Selver",
+      "surname": "Bulut",
+      "targetCountry": "41",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nadi̇re",
+      "surname": "Bülbül",
+      "targetCountry": "41",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hedi̇ye",
+      "surname": "Fi̇dan",
+      "targetCountry": "41",
+      "voteCount": "0"
+    },
+    {
+      "name": "Keri̇me",
+      "surname": "Boz",
+      "targetCountry": "42",
+      "voteCount": "0"
+    },
+    {
+      "name": "Esme",
+      "surname": "Savaş",
+      "targetCountry": "42",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mustafa kemal",
+      "surname": "Bi̇lgi̇n",
+      "targetCountry": "42",
+      "voteCount": "0"
+    },
+    {
+      "name": "Coşkun",
+      "surname": "Çakar",
+      "targetCountry": "42",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bahri̇ye",
+      "surname": "Pala",
+      "targetCountry": "43",
+      "voteCount": "0"
+    },
+    {
+      "name": "İsli̇m",
+      "surname": "Günay",
+      "targetCountry": "43",
+      "voteCount": "0"
+    },
+    {
+      "name": "Riza",
+      "surname": "Bayar",
+      "targetCountry": "43",
+      "voteCount": "0"
+    },
+    {
+      "name": "Güli̇",
+      "surname": "Güney",
+      "targetCountry": "43",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fi̇rdes",
+      "surname": "Erdem",
+      "targetCountry": "44",
+      "voteCount": "0"
+    },
+    {
+      "name": "Meti̇n",
+      "surname": "Kaya",
+      "targetCountry": "44",
+      "voteCount": "0"
+    },
+    {
+      "name": "İnci̇",
+      "surname": "Tuna",
+      "targetCountry": "44",
+      "voteCount": "0"
+    },
+    {
+      "name": "Telli̇",
+      "surname": "Köse",
+      "targetCountry": "44",
+      "voteCount": "0"
+    },
+    {
+      "name": "Güneş",
+      "surname": "Küçük",
+      "targetCountry": "45",
+      "voteCount": "0"
+    },
+    {
+      "name": "Edi̇be",
+      "surname": "Yüce",
+      "targetCountry": "45",
+      "voteCount": "0"
+    },
+    {
+      "name": "Emi̇ş",
+      "surname": "Yi̇ği̇t",
+      "targetCountry": "45",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sebi̇ha",
+      "surname": "Akkuş",
+      "targetCountry": "45",
+      "voteCount": "0"
+    },
+    {
+      "name": "Muhsi̇n",
+      "surname": "Güven",
+      "targetCountry": "46",
+      "voteCount": "0"
+    },
+    {
+      "name": "İskender",
+      "surname": "Karahan",
+      "targetCountry": "46",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hali̇m",
+      "surname": "Sağlam",
+      "targetCountry": "46",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yavuz",
+      "surname": "Zengi̇n",
+      "targetCountry": "46",
+      "voteCount": "0"
+    },
+    {
+      "name": "Muazzez",
+      "surname": "Akdağ",
+      "targetCountry": "47",
+      "voteCount": "0"
+    },
+    {
+      "name": "Özkan",
+      "surname": "Tan",
+      "targetCountry": "47",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fuat",
+      "surname": "Coşkun",
+      "targetCountry": "47",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ari̇fe",
+      "surname": "Solak",
+      "targetCountry": "47",
+      "voteCount": "0"
+    },
+    {
+      "name": "Adem",
+      "surname": "Karahan",
+      "targetCountry": "48",
+      "voteCount": "0"
+    },
+    {
+      "name": "Zübeyde",
+      "surname": "Kalkan",
+      "targetCountry": "48",
+      "voteCount": "0"
+    },
+    {
+      "name": "Erkan",
+      "surname": "Karakaş",
+      "targetCountry": "48",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nuretti̇n",
+      "surname": "Erdem",
+      "targetCountry": "48",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gazal",
+      "surname": "Boz",
+      "targetCountry": "49",
+      "voteCount": "0"
+    },
+    {
+      "name": "Zöhre",
+      "surname": "Albayrak",
+      "targetCountry": "49",
+      "voteCount": "0"
+    },
+    {
+      "name": "Musa",
+      "surname": "Çam",
+      "targetCountry": "49",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hani̇fe",
+      "surname": "Uğurlu",
+      "targetCountry": "49",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yüksel",
+      "surname": "Ünlü",
+      "targetCountry": "50",
+      "voteCount": "0"
+    },
+    {
+      "name": "Neci̇p",
+      "surname": "Akça",
+      "targetCountry": "50",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sani̇ye",
+      "surname": "Erdoğan",
+      "targetCountry": "50",
+      "voteCount": "0"
+    },
+    {
+      "name": "Reşat",
+      "surname": "Kutlu",
+      "targetCountry": "50",
+      "voteCount": "0"
+    },
+    {
+      "name": "Vi̇ldan",
+      "surname": "Ölmez",
+      "targetCountry": "51",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bahri̇ye",
+      "surname": "İnce",
+      "targetCountry": "51",
+      "voteCount": "0"
+    },
+    {
+      "name": "Pinar",
+      "surname": "Orhan",
+      "targetCountry": "51",
+      "voteCount": "0"
+    },
+    {
+      "name": "Abdülkadi̇r",
+      "surname": "Polat",
+      "targetCountry": "51",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hüsametti̇n",
+      "surname": "Yeşi̇lyurt",
+      "targetCountry": "52",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fi̇rdevs",
+      "surname": "Gökmen",
+      "targetCountry": "52",
+      "voteCount": "0"
+    },
+    {
+      "name": "Güldane",
+      "surname": "Torun",
+      "targetCountry": "52",
+      "voteCount": "0"
+    },
+    {
+      "name": "Feyzi̇",
+      "surname": "Uslu",
+      "targetCountry": "52",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fatima",
+      "surname": "Durak",
+      "targetCountry": "53",
+      "voteCount": "0"
+    },
+    {
+      "name": "Canan",
+      "surname": "Özden",
+      "targetCountry": "53",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hani̇fe",
+      "surname": "Kuş",
+      "targetCountry": "53",
+      "voteCount": "0"
+    },
+    {
+      "name": "Telli̇",
+      "surname": "Yaşar",
+      "targetCountry": "53",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hedi̇ye",
+      "surname": "Karagöz",
+      "targetCountry": "54",
+      "voteCount": "0"
+    },
+    {
+      "name": "Eşref",
+      "surname": "Akça",
+      "targetCountry": "54",
+      "voteCount": "0"
+    },
+    {
+      "name": "Aygül",
+      "surname": "Akar",
+      "targetCountry": "54",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yavuz",
+      "surname": "Şeker",
+      "targetCountry": "54",
+      "voteCount": "0"
+    },
+    {
+      "name": "Tali̇p",
+      "surname": "Eser",
+      "targetCountry": "55",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hüsne",
+      "surname": "Albayrak",
+      "targetCountry": "55",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hasi̇be",
+      "surname": "Kutlu",
+      "targetCountry": "55",
+      "voteCount": "0"
+    },
+    {
+      "name": "İsa",
+      "surname": "Avşar",
+      "targetCountry": "55",
+      "voteCount": "0"
+    },
+    {
+      "name": "Zeli̇ha",
+      "surname": "Uğur",
+      "targetCountry": "56",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sabahatti̇n",
+      "surname": "Akyüz",
+      "targetCountry": "56",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fi̇kri̇",
+      "surname": "Bayram",
+      "targetCountry": "56",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sai̇t",
+      "surname": "Karabulut",
+      "targetCountry": "56",
+      "voteCount": "0"
+    },
+    {
+      "name": "Enver",
+      "surname": "Boz",
+      "targetCountry": "57",
+      "voteCount": "0"
+    },
+    {
+      "name": "Peri̇han",
+      "surname": "Yavuz",
+      "targetCountry": "57",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hüseyi̇n",
+      "surname": "Çolak",
+      "targetCountry": "57",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bi̇nnaz",
+      "surname": "Duran",
+      "targetCountry": "57",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nazan",
+      "surname": "Şentürk",
+      "targetCountry": "58",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hali̇m",
+      "surname": "Çakmak",
+      "targetCountry": "58",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ali̇ye",
+      "surname": "Yücel",
+      "targetCountry": "58",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nazi̇fe",
+      "surname": "Ay",
+      "targetCountry": "58",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fadi̇le",
+      "surname": "Kalkan",
+      "targetCountry": "59",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nurhan",
+      "surname": "Ergi̇n",
+      "targetCountry": "59",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nadi̇re",
+      "surname": "Çi̇ftçi̇",
+      "targetCountry": "59",
+      "voteCount": "0"
+    },
+    {
+      "name": "Lütfi̇",
+      "surname": "Yeşi̇lyurt",
+      "targetCountry": "59",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ali̇ i̇hsan",
+      "surname": "Ataş",
+      "targetCountry": "60",
+      "voteCount": "0"
+    },
+    {
+      "name": "Aynur",
+      "surname": "Akar",
+      "targetCountry": "60",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şefi̇k",
+      "surname": "Karaaslan",
+      "targetCountry": "60",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ali̇ye",
+      "surname": "Turan",
+      "targetCountry": "60",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hati̇ce",
+      "surname": "Bayar",
+      "targetCountry": "61",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şeri̇f",
+      "surname": "Karaca",
+      "targetCountry": "61",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nuray",
+      "surname": "Toprak",
+      "targetCountry": "61",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kasim",
+      "surname": "Akça",
+      "targetCountry": "61",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ari̇f",
+      "surname": "Solak",
+      "targetCountry": "62",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gülşen",
+      "surname": "Di̇nçer",
+      "targetCountry": "62",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ati̇lla",
+      "surname": "Öztürk",
+      "targetCountry": "62",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kudret",
+      "surname": "Günay",
+      "targetCountry": "62",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nezahat",
+      "surname": "Akman",
+      "targetCountry": "63",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ayla",
+      "surname": "Turan",
+      "targetCountry": "63",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bektaş",
+      "surname": "Uzun",
+      "targetCountry": "63",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ayhan",
+      "surname": "Çoban",
+      "targetCountry": "63",
+      "voteCount": "0"
+    },
+    {
+      "name": "Aysun",
+      "surname": "Karakoç",
+      "targetCountry": "64",
+      "voteCount": "0"
+    },
+    {
+      "name": "Onur",
+      "surname": "Gündüz",
+      "targetCountry": "64",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ebru",
+      "surname": "Aktürk",
+      "targetCountry": "64",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yeli̇z",
+      "surname": "Gümüş",
+      "targetCountry": "64",
+      "voteCount": "0"
+    },
+    {
+      "name": "Haydar",
+      "surname": "Koçak",
+      "targetCountry": "65",
+      "voteCount": "0"
+    },
+    {
+      "name": "Meli̇ke",
+      "surname": "Yüksel",
+      "targetCountry": "65",
+      "voteCount": "0"
+    },
+    {
+      "name": "İdri̇s",
+      "surname": "Akar",
+      "targetCountry": "65",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sevi̇lay",
+      "surname": "Durmuş",
+      "targetCountry": "65",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şaban",
+      "surname": "Ölmez",
+      "targetCountry": "66",
+      "voteCount": "0"
+    },
+    {
+      "name": "Feyzullah",
+      "surname": "Ceylan",
+      "targetCountry": "66",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ökkeş",
+      "surname": "Türk",
+      "targetCountry": "66",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gali̇p",
+      "surname": "Solak",
+      "targetCountry": "66",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nezi̇r",
+      "surname": "Akçay",
+      "targetCountry": "67",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sezai̇",
+      "surname": "Yeşi̇lyurt",
+      "targetCountry": "67",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kasim",
+      "surname": "Sevi̇m",
+      "targetCountry": "67",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nezahat",
+      "surname": "Özden",
+      "targetCountry": "67",
+      "voteCount": "0"
+    },
+    {
+      "name": "Seher",
+      "surname": "Karaman",
+      "targetCountry": "68",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ertuğrul",
+      "surname": "Atmaca",
+      "targetCountry": "68",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hali̇m",
+      "surname": "Yücel",
+      "targetCountry": "68",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kadri̇ye",
+      "surname": "Karakoç",
+      "targetCountry": "68",
+      "voteCount": "0"
+    },
+    {
+      "name": "Dervi̇ş",
+      "surname": "Temi̇z",
+      "targetCountry": "69",
+      "voteCount": "0"
+    },
+    {
+      "name": "Bahri̇",
+      "surname": "Zengi̇n",
+      "targetCountry": "69",
+      "voteCount": "0"
+    },
+    {
+      "name": "Suna",
+      "surname": "Özmen",
+      "targetCountry": "69",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hi̇dayet",
+      "surname": "Aras",
+      "targetCountry": "69",
+      "voteCount": "0"
+    },
+    {
+      "name": "Rafet",
+      "surname": "Gökmen",
+      "targetCountry": "70",
+      "voteCount": "0"
+    },
+    {
+      "name": "Necdet",
+      "surname": "Torun",
+      "targetCountry": "70",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ethem",
+      "surname": "Akgül",
+      "targetCountry": "70",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sadullah",
+      "surname": "Mutlu",
+      "targetCountry": "70",
+      "voteCount": "0"
+    },
+    {
+      "name": "Aysel",
+      "surname": "Uslu",
+      "targetCountry": "71",
+      "voteCount": "0"
+    },
+    {
+      "name": "Pinar",
+      "surname": "Keski̇n",
+      "targetCountry": "71",
+      "voteCount": "0"
+    },
+    {
+      "name": "Asim",
+      "surname": "Koca",
+      "targetCountry": "71",
+      "voteCount": "0"
+    },
+    {
+      "name": "Zeynep",
+      "surname": "Ataş",
+      "targetCountry": "71",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ni̇yazi̇",
+      "surname": "Sezgi̇n",
+      "targetCountry": "72",
+      "voteCount": "0"
+    },
+    {
+      "name": "Müni̇re",
+      "surname": "Demi̇rtaş",
+      "targetCountry": "72",
+      "voteCount": "0"
+    },
+    {
+      "name": "Veysel",
+      "surname": "Arslan",
+      "targetCountry": "72",
+      "voteCount": "0"
+    },
+    {
+      "name": "Handan",
+      "surname": "Çelebi̇",
+      "targetCountry": "72",
+      "voteCount": "0"
+    },
+    {
+      "name": "Coşkun",
+      "surname": "Akman",
+      "targetCountry": "73",
+      "voteCount": "0"
+    },
+    {
+      "name": "Aydin",
+      "surname": "Güney",
+      "targetCountry": "73",
+      "voteCount": "0"
+    },
+    {
+      "name": "Çeti̇n",
+      "surname": "Güven",
+      "targetCountry": "73",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şükrüye",
+      "surname": "Bayram",
+      "targetCountry": "73",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sebahat",
+      "surname": "Toprak",
+      "targetCountry": "74",
+      "voteCount": "0"
+    },
+    {
+      "name": "Suna",
+      "surname": "Köroğlu",
+      "targetCountry": "74",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nurgül",
+      "surname": "Sağlam",
+      "targetCountry": "74",
+      "voteCount": "0"
+    },
+    {
+      "name": "Turgay",
+      "surname": "Sevi̇m",
+      "targetCountry": "74",
+      "voteCount": "0"
+    },
+    {
+      "name": "Sefer",
+      "surname": "Çeli̇k",
+      "targetCountry": "75",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mehmet nuri̇",
+      "surname": "Acar",
+      "targetCountry": "75",
+      "voteCount": "0"
+    },
+    {
+      "name": "Gülsün",
+      "surname": "Kalkan",
+      "targetCountry": "75",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kenan",
+      "surname": "Gökçe",
+      "targetCountry": "75",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şükrüye",
+      "surname": "Türkoğlu",
+      "targetCountry": "76",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hali̇de",
+      "surname": "Torun",
+      "targetCountry": "76",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hamza",
+      "surname": "Karakaş",
+      "targetCountry": "76",
+      "voteCount": "0"
+    },
+    {
+      "name": "Necati̇",
+      "surname": "Gündüz",
+      "targetCountry": "76",
+      "voteCount": "0"
+    },
+    {
+      "name": "Kazi̇m",
+      "surname": "Göktaş",
+      "targetCountry": "77",
+      "voteCount": "0"
+    },
+    {
+      "name": "Hayri̇",
+      "surname": "Gündoğdu",
+      "targetCountry": "77",
+      "voteCount": "0"
+    },
+    {
+      "name": "Nejla",
+      "surname": "Duman",
+      "targetCountry": "77",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ramazan",
+      "surname": "Tuna",
+      "targetCountry": "77",
+      "voteCount": "0"
+    },
+    {
+      "name": "Serkan",
+      "surname": "Demi̇rtaş",
+      "targetCountry": "78",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ni̇met",
+      "surname": "İlhan",
+      "targetCountry": "78",
+      "voteCount": "0"
+    },
+    {
+      "name": "Yeter",
+      "surname": "Alp",
+      "targetCountry": "78",
+      "voteCount": "0"
+    },
+    {
+      "name": "Şehri̇ban",
+      "surname": "Özçeli̇k",
+      "targetCountry": "78",
+      "voteCount": "0"
+    },
+    {
+      "name": "Özgür",
+      "surname": "Yi̇ği̇t",
+      "targetCountry": "79",
+      "voteCount": "0"
+    },
+    {
+      "name": "Aysel",
+      "surname": "Özel",
+      "targetCountry": "79",
+      "voteCount": "0"
+    },
+    {
+      "name": "Serap",
+      "surname": "Koca",
+      "targetCountry": "79",
+      "voteCount": "0"
+    },
+    {
+      "name": "Ertan",
+      "surname": "Köroğlu",
+      "targetCountry": "79",
+      "voteCount": "0"
+    },
+    {
+      "name": "Zehra",
+      "surname": "Çam",
+      "targetCountry": "80",
+      "voteCount": "0"
+    },
+    {
+      "name": "Mürsel",
+      "surname": "Ayhan",
+      "targetCountry": "80",
+      "voteCount": "0"
+    },
+    {
+      "name": "Fi̇kri̇",
+      "surname": "Sezgi̇n",
+      "targetCountry": "80",
+      "voteCount": "0"
+    },
+    {
+      "name": "Tuncay",
+      "surname": "Akyol",
+      "targetCountry": "80",
+      "voteCount": "0"
+    },
+    {
+      "name": "Eyyüp",
+      "surname": "Karakaya",
+      "targetCountry": "81",
+      "voteCount": "0"
+    },
+    {
+      "name": "Huri̇",
+      "surname": "Kartal",
+      "targetCountry": "81",
+      "voteCount": "0"
+    },
+    {
+      "name": "Rahi̇me",
+      "surname": "Demi̇rel",
+      "targetCountry": "81",
+      "voteCount": "0"
+    },
+    {
+      "name": "Haci",
+      "surname": "Budak",
+      "targetCountry": "81",
+      "voteCount": "0"
+    }
+  ]
+}

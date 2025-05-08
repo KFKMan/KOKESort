@@ -78,3 +78,5 @@ src/out
 mutated/
 
 KOKESort/
+
+*.pyd

@@ -10,7 +10,9 @@ for /d /r %%d in (*egg-info*) do (
 )
 
 REM 2) Kaynak ve wheel paketlerini oluştur
-pip install build
-python -m build
-
-python .\fix.py
+python -m pip install nanobind
+python -m pip install build
+REM python -m build
+set DEBUG=1
+python setup.py build_ext --inplace
+python setup.py bdist_wheel

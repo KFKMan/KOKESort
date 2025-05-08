@@ -1,0 +1,2 @@
+include *.pyd
+exclude *.py

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20.0)
 project(KOKESort VERSION 0.1.0 LANGUAGES C)
 
-option(PYBINDWRAPPER "Adding pybindwrapper to list" OFF)
+option(PYBINDWRAPPER "Adding pybindwrapper to list" ON)
 
 option(USE_TESTS "Using tests" OFF)
 
@@ -115,9 +115,11 @@ if(ENABLE_COVERAGE)
     endif()
 endif()
 
-if(WIN32)
+if(WIN32 AND NOT PYBINDWRAPPER)
+    message(STATUS "Library Type Selected: SHARED")
     set(LIB_TYPE SHARED) # For Windows create DLL
 else()
+    message(STATUS "Library Type Selected: STATIC")
     set(LIB_TYPE STATIC) # For others create LIB
 endif()
 
@@ -191,8 +193,15 @@ include(CPack)
 
 set_target_properties(KOKESort PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
+if(WIN32 AND NOT PYBINDWRAPPER)
+    target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
+else()
+    message(INFO "KOKESORT_STATIC Defined")
+    target_compile_definitions(KOKESort PRIVATE KOKESORT_STATIC)
+endif()
+
 #target_compile_definitions(KOKESort PRIVATE KOKESORT_IMPORTS)
-target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
+#target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
 
 if(USE_TESTS)
 include(CTest)

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Voting System Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="card shadow p-4">
+      <h2 class="mb-4">Voting System</h2>
+      <form id="loginForm">
+        <div class="mb-3">
+          <input type="text" id="name" class="form-control" placeholder="Name" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" id="surname" class="form-control" placeholder="Surname" required>
+        </div>
+        <div class="mb-3">
+          <input type="text" id="tc" class="form-control" placeholder="Identity Id" pattern="\d{11}"
+            title="11 character Identity Id" required>
+        </div>
+        <div class="mb-3">
+          <select id="province" class="form-select" required>
+            <option value="" disabled selected>Select City</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+      </form>
+      <div id="secretAdminTrigger" class="text-muted mt-3 text-center" style="cursor:pointer">X</div>
+    </div>
+  </div>
+
+  <script>
+    let trigger = "";
+    document.getElementById("secretAdminTrigger").addEventListener("click", () => {
+      trigger += ".";
+      if (trigger.length > 10) {
+        let password = prompt("Admin şifresi:");
+        if (password === "admin") window.location.href = "admin.html";
+      }
+    });
+
+    async function loadProvinces() {
+      let interval = setInterval(async function () {
+        if (window.pywebview && window.pywebview.api) {
+          clearInterval(interval); // API ready, clear interval
+          try {
+            let countries = await window.pywebview.api.get_countries();
+            let provinceSelect = document.getElementById("province");
+
+            countries.forEach(country => {
+              let option = document.createElement("option");
+              option.value = country.code;
+              option.innerHTML = country.name;
+              provinceSelect.appendChild(option);
+            });
+          } catch (error) {
+            console.error("Error accoured on getting cities:", error);
+          }
+        }
+      }, 100);
+    }
+
+    window.onload = loadProvinces;
+  </script>
+  <script src="main.js"></script>
+</body>
+
+</html>

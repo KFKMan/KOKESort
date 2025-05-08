@@ -1,0 +1,13 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .card {
+    border-radius: 12px;
+  }
+  input:invalid, select:invalid {
+    border-color: #dc3545;
+  }
+  option[disabled] {
+    color: #999;
+  }
+  

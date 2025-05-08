@@ -1,4 +1,4 @@
-#include <Global.h>
+#include "Global.h"
 
 #ifdef WINDOWS
 #include <Windows.h>
@@ -6,6 +6,11 @@
 #include <sys/mman.h>
 #include <errno.h>
 #endif
+
+int TestFunction(void)
+{
+    return 1;
+}
 
 void* GetIndex(void* arr, size_t index, unsigned int elementSize)
 {

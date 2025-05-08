@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vote</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+  <div class="container mt-5">
+    <div class="card shadow p-4">
+      <h2 class="mb-4">Vote to Candidates</h2>
+      <form id="voteForm">
+        <div class="mb-4">
+          <label class="form-label">Select President:</label>
+          <select id="presidentSelect" class="form-select" required></select>
+        </div>
+        <div class="mb-4">
+          <label class="form-label">Select Mayor:</label>
+          <select id="mayorSelect" class="form-select" required></select>
+        </div>
+        <button class="btn btn-success w-100">Send Vote</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    let userJson = sessionStorage.getItem("user");
+
+    window.onload = () => {
+      // İl seçimi yapılmadıysa, sayfaya dönmesi için kullanıcıya uyarı veriyoruz.
+      if (!userJson) {
+        alert("Kullanıcı bilgisi yok, yeniden giriş yapın.");
+        window.location.href = "index.html";
+      }
+
+      // API hazır olduğunda veriyi çekmeye başlıyoruz.
+      let interval = setInterval(async function () {
+        if (window.pywebview && window.pywebview.api) {
+          clearInterval(interval);  // API ready, clear interval
+
+          try {
+            console.log("User Info:", userJson);
+
+            let province = JSON.parse(userJson).province
+            console.log("User Province:", province);
+
+            const data = await window.pywebview.api.get_candidates(province);
+
+            console.log("Candidates:", data);
+
+            const pres = document.getElementById("presidentSelect");
+            const mayor = document.getElementById("mayorSelect");
+
+            for (let name in data.president) {
+              pres.innerHTML += `<option>${name}</option>`;
+            }
+            for (let name in data.mayor) {
+              mayor.innerHTML += `<option>${name}</option>`;
+            }
+          } catch (error) {
+            console.error("Error on getting candidates:", error);
+          }
+        }
+      }, 100);
+    };
+
+
+    document.getElementById("voteForm").onsubmit = (e) => {
+      e.preventDefault();
+      const p = document.getElementById("presidentSelect").value;
+      const m = document.getElementById("mayorSelect").value;
+
+      let user = JSON.parse(userJson);
+      window.pywebview.api.submit_vote(user.name, user.surname, user.tc, user.province, p, m).then(res => {
+        if (res.status === "ok") {
+          alert("Vote Sended Successfully.");
+          window.location.href = "result.html";
+        }
+        else {
+          alert("Error Accoured on Sending Vote: " + res.message);
+        }
+      });
+    };
+  </script>
+</body>
+
+</html>

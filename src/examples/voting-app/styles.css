@@ -1,0 +1,88 @@
+html {
+    height: 100%;
+    background-color: #e3e2df;
+    background-size: cover;
+}
+
+#welcome_text {
+    color: #fff2e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3%;
+    font-family: sans-serif;
+    font-size: 2.5em;
+    text-shadow: 0 0 3.5px #000;
+    font-weight: bold;
+}
+
+#city_count_text {
+    color: #fff2e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: auto;
+    font-family: sans-serif;
+    font-size: 2.5em;
+    text-shadow: 0 0 3.5px #000;
+    font-weight: bold;
+}
+
+#map_container {
+    /*border: 3px solid white;
+    border-radius: 10px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    /* width: 1250px;
+    height: 550px; */
+    width: 100%;
+    background-color: #e3e2df;
+}
+
+.responsive-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#info-box{
+    display: block;
+    width: 100%;
+    align-items: center;
+    align-content: center;
+}
+
+#info-name{
+    text-align: center;
+}
+
+#candidates_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  
+  .candidate-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 12px;
+    width: 200px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  
+  .candidate-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+  

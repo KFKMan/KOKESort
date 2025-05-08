@@ -11,6 +11,8 @@ size_t FindInsertIndexBSNonSafe(VariableTypeArray arr, size_t size, VariableType
     {
         size_t mid = left + (right - left) / 2;
 
+        //printf("Left %Iu Right %Iu Mid (Accessing) %Iu \n", left, right, mid);
+
         #ifdef COMPARE_USE_SIMPLE
         if (comparer(element, GetIndex(arr, mid, elementSize)) == 1) //arr[mid] < element
         #else
@@ -188,13 +190,19 @@ void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t siz
     size_t selfArraySize = 1;
     //void* elementBackup = malloc(elementSize);
 
+    //printf("SortV1 Self Called \n");
+    //printf("Pointer Size %Iu \n", sizeof(void*));
+
     for(unsigned int i = 1; i < size; i++) //N Complexity, 0->N
     {
         void* element = GetIndex(unsortedArr, i, elementSize);
         //memcpy(elementBackup, element, elementSize);
+        //printf("Element Pointer %p \n", element);
 
+        //printf("Finding Insert Index \n");
         size_t insertIndex = FindInsertIndexBSNonSafe(unsortedArr, i, element, comparer, elementSize);
 
+        //printf("Moving Element \n");
         MoveElement(unsortedArr, elementSize, i, insertIndex);
 
         selfArraySize++;

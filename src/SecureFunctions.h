@@ -7,6 +7,10 @@
 #include <stdarg.h>
 #include <errno.h>
 
+#ifdef __cplusplus
+extern "C" {  /* C++ name mangling */
+#endif
+
 //https://stackoverflow.com/a/2524673
 #ifndef SIZE_T_IDENTIFIER
     #if defined(_MSC_VER)
@@ -111,5 +115,9 @@ static inline int fscanf_s_wrapper(FILE *stream, const char *format, ...) {
      (errno = EINVAL, -1))
 #endif
 
+#endif
+
+#ifdef __cplusplus
+};
 #endif
 #endif
