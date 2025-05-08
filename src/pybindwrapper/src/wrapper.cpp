@@ -10,10 +10,49 @@
 namespace py = nanobind;
 
 // py::function
-thread_local py::callable current_py_comparer;
+//thread_local py::callable current_py_comparer;
+
+struct SafeComparerHolder {
+    py::callable cmp;
+    
+    // Constructor
+    SafeComparerHolder(py::callable c) : cmp(std::move(c)) {
+        py::gil_scoped_acquire gil;
+        cmp.inc_ref();  // Increase Reference count
+    }
+    
+    // Destructor
+    ~SafeComparerHolder() {
+        if (Py_IsInitialized()) {  // Python is active?
+            py::gil_scoped_acquire gil;
+            cmp.dec_ref();  // Decrease Reference count
+        }
+    }
+    
+    // Disabling Copy and Assignment Constructors
+    SafeComparerHolder(const SafeComparerHolder&) = delete;
+    SafeComparerHolder& operator=(const SafeComparerHolder&) = delete;
+};
+
+thread_local std::unique_ptr<SafeComparerHolder> current_py_comparer;
+
+void set_comparer(py::callable cmp) {
+    // Cleaning old comparer
+    current_py_comparer.reset();
+    
+    // Creating new comparer
+    current_py_comparer = std::make_unique<SafeComparerHolder>(cmp);
+}
+
+void reset_comparer() {
+    py::gil_scoped_acquire gil;
+    current_py_comparer.reset();
+}
 
 int comparer_bridge(const void *a, const void *b)
 {
+    py::gil_scoped_acquire gil;
+
     //std::cout << "[comparer_bridge] Called" << std::endl;
     //py::object* obj_a_ptr = static_cast<py::object *>(const_cast<void *>(a));
     //py::object* obj_b_ptr = static_cast<py::object *>(const_cast<void *>(b));
@@ -26,7 +65,8 @@ int comparer_bridge(const void *a, const void *b)
     try
     {
         //std::cout << "[comparer_bridge] Try-Catch" << std::endl;
-        if (!current_py_comparer)
+        //if (!current_py_comparer)
+        if (!current_py_comparer || !current_py_comparer->cmp)
         {
             std::cerr << "[comparer_bridge] Python comparer is not set properly!" << std::endl;
             return 0;
@@ -35,7 +75,7 @@ int comparer_bridge(const void *a, const void *b)
         //std::cout << "[comparer_bridge] Calling Python Comparer" << std::endl;
 
         // py::object result_obj = current_py_comparer(obj_a, obj_b);
-        py::object result_obj = current_py_comparer(obj_a, obj_b);
+        py::object result_obj = current_py_comparer->cmp(obj_a, obj_b);
 
         //std::cout << "[comparer_bridge] Called Python Comparer" << std::endl;
         if (result_obj.is_none())
@@ -92,20 +132,31 @@ void test_static_fn()
 
 py::list SortV1Wrap(py::list arr, py::callable py_comparer, bool log = false)
 {
+    py::gil_scoped_acquire gil;
+    if(log){
+        std::cout << "GIL Acquired? " << PyGILState_Check() << std::endl;
+    }
     try
     {
-        //if (log)
-            //std::cout << "[SortV1] Starting sort..." << std::endl;
+        if (log){
+            std::cout << "[SortV1] Starting sort..." << std::endl;
+        }
 
         size_t size = arr.size();
         size_t elementSize = sizeof(py::object *);
 
-        //if (log)
-            //std::cout << "[SortV1] Array Size " << size << " Element Size (Pointer) " << elementSize << std::endl;
-        //if (log)
-            //std::cout << "[SortV1] Allocating..." << std::endl;
+        set_comparer(py_comparer);
+        //current_py_comparer = py_comparer;
+
+        if (log){
+            std::cout << "[SortV1] Array Size " << size << " Element Size (Pointer) " << elementSize << std::endl;
+        }
+        if (log){
+            std::cout << "[SortV1] Allocating..." << std::endl;
+        }
         // py::object** c_array = static_cast<py::object**>(malloc(size * elementSize));
 
+        /* OLD
         std::vector<py::object *> c_array;
         c_array.reserve(size);
 
@@ -118,6 +169,7 @@ py::list SortV1Wrap(py::list arr, py::callable py_comparer, bool log = false)
         }
         */
 
+        /* OLD
         for (size_t i = 0; i < size; ++i)
         {
             py::object obj = arr[i];
@@ -145,11 +197,41 @@ py::list SortV1Wrap(py::list arr, py::callable py_comparer, bool log = false)
         for (size_t i = 0; i < size; ++i)
         {
             result_list.append(*c_array[i]);
-            // delete c_array[i];
+            delete c_array[i];
         }
+            */
 
-        //if (log)
-            //std::cout << "[SortV1] Sort finished." << std::endl;
+            std::vector<py::object> c_array;
+            c_array.reserve(size);
+            
+            for (size_t i = 0; i < size; ++i)
+            {
+                c_array.push_back(arr[i]);
+            }
+            
+            std::vector<py::object*> c_array_ptrs;
+            c_array_ptrs.reserve(size);
+            
+            for (size_t i = 0; i < size; ++i)
+            {
+                c_array_ptrs.push_back(&c_array[i]);
+            }
+            
+            // Sıralama
+            SortV1Self(static_cast<void*>(c_array_ptrs.data()), size, elementSize, comparer_bridge);
+            
+            reset_comparer();
+
+            // Python listesine dönüştürme
+            py::list result_list;
+            for (size_t i = 0; i < size; ++i)
+            {
+                result_list.append(*c_array_ptrs[i]); // pointer üzerinden erişim
+            }            
+
+        if (log){
+            std::cout << "[SortV1] Sort finished." << std::endl;
+        }
         return result_list;
     }
     catch (const std::exception &e)

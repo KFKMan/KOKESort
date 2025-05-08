@@ -2,20 +2,29 @@ import json
 import os
 import KOKESortWrapper
 import copy
+import sys
+import traceback
+import threading
+import ctypes
+
+def log_exception(exc_type, exc_value, exc_tb):
+    print("Uncaught exception:", exc_type, exc_value)
+
+sys.excepthook = log_exception
 
 class Candidate:
-    def __init__(self, name: str, vote_count: int):
+    def __init__(self, name, voteCount):
         self.name = name
-        self.vote_count = vote_count
+        self.voteCount = voteCount
 
-    def to_dict(self):
-        return {
-            "name": self.name,
-            "voteCount": self.vote_count
-        }
-
-    def __repr__(self):
-        return f"{self.name} ({self.vote_count})"
+def voteComparer(a, b) -> int:
+    try:
+        return b.voteCount - a.voteCount
+    except Exception as e:
+        print("Error in my_comparer:")
+        print(e)
+        traceback.print_exc()
+        raise
 
 class API:
     def __init__(self):
@@ -51,13 +60,12 @@ class API:
 
 
     def get_candidates(self, province):
+        gil_held = ctypes.pythonapi.PyGILState_Check()
+        print(f"Function entry - GIL held: {gil_held}")
+
         province_code = province
 
         state = self._read_json(self.state_file)
-        candidates = {
-            "president": {},
-            "mayor": {}
-        }
 
         if not province_code.isnumeric():
             province_code = self.get_province_code(province_code)
@@ -65,27 +73,31 @@ class API:
 
         if province_code is None:
             return {"status": "error", "message": "Geçersiz il."}
+        
+        pres_list = [
+            Candidate(f"{pres['name']} {pres['surname']}", int(pres["voteCount"]))
+            for pres in state.get("presidents", [])
+        ]
 
-        for pres in state.get("presidents", []):
-            candidates["president"][f"{pres['name']} {pres['surname']}"] = pres["voteCount"]
+        mayor_list = [
+            Candidate(f"{mayor['name']} {mayor['surname']}", int(mayor["voteCount"]))
+            for mayor in state.get("mayors", [])
+            if mayor["targetCountry"] == province_code
+        ]
 
-        for mayor in state.get("mayors", []):
-            if mayor["targetCountry"] == province_code:
-                candidates["mayor"][f"{mayor['name']} {mayor['surname']}"] = mayor["voteCount"]
+        sorted_pres_list = KOKESortWrapper.SortV1(pres_list, voteComparer, True)
+        sorted_mayor_list = KOKESortWrapper.SortV1(mayor_list, voteComparer, True)
 
-        pres_list = [{"name": k, "voteCount": int(v)} for k, v in candidates["president"].items()]
+        result = {
+            "president": [
+                {"name": item.name, "voteCount": item.voteCount} for item in sorted_pres_list
+            ],
+            "mayor": [
+                {"name": item.name, "voteCount": item.voteCount} for item in sorted_mayor_list
+            ],
+        }
 
-        # Sorting here
-
-        candidates["president"] = {f"{item['name']}": item["voteCount"] for item in pres_list}
-
-        mayor_list = [{"name": k, "voteCount": int(v)} for k, v in candidates["mayor"].items()]
-
-        # Sorting here
-
-        candidates["mayor"] = {f"{item['name']}": item["voteCount"] for item in mayor_list}
-
-        return candidates
+        return result
 
     def add_candidate(self, province, role, name):
         state = self._read_json(self.state_file)

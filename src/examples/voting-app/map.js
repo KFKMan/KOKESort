@@ -15,34 +15,6 @@ function waitForAPI() {
   });
 }
 
-async function sortAndDisplayCandidates(data) {
-  const candidates = Object.entries(data.mayor).map(([name, voteCount]) => ({ name, voteCount }));
-
-  const comparerFunction = "(a, b) => b.voteCount - a.voteCount";
-
-  const response = await window.pywebview.api.sort(candidates, comparerFunction);
-
-  if (response.status === "ok") {
-    const sortedCandidates = response.sortedArray;
-
-    sortedCandidates.forEach(({ name, voteCount }) => {
-      const div = document.createElement("div");
-      div.className = "candidate-card";
-      div.innerHTML = `
-        <img src="images/default.jpg" alt="${name}">
-        <h4>${name}</h4>
-        <p>Vote Count: ${voteCount || 0}</p>
-      `;
-      container.appendChild(div);
-    });
-  } 
-  else 
-  {
-    console.error("Sorting failed:", response.message);
-    container.innerHTML = "<p>Error accoured.</p>";
-  }
-}
-
 
 async function initMap() {
   await waitForAPI(); // wait for API to be ready
@@ -89,13 +61,15 @@ async function initMap() {
 
           if (data && data.mayor) 
           {
-            for (let fullName in data.mayor) {
+            for (let key in data.mayor) {
               const div = document.createElement("div");
+              let fullName = data.mayor[key].name;
+              let voteCount = data.mayor[key].voteCount;
               div.className = "candidate-card";
               div.innerHTML = `
                 <img src="images/default.jpg" alt="${fullName}">
                 <h4>${fullName}</h4>
-                <p>Vote Count: ${data.mayor[fullName] || 0}</p>
+                <p>Vote Count: ${voteCount || 0}</p>
               `;
               container.appendChild(div);
             }

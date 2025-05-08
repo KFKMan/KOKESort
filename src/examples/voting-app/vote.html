@@ -52,11 +52,11 @@
             const pres = document.getElementById("presidentSelect");
             const mayor = document.getElementById("mayorSelect");
 
-            for (let name in data.president) {
-              pres.innerHTML += `<option>${name}</option>`;
+            for (let key in data.president) {
+              pres.innerHTML += `<option>${data.president[key].name}</option>`;
             }
-            for (let name in data.mayor) {
-              mayor.innerHTML += `<option>${name}</option>`;
+            for (let key in data.mayor) {
+              mayor.innerHTML += `<option>${data.mayor[key].name}</option>`;
             }
           } catch (error) {
             console.error("Error on getting candidates:", error);

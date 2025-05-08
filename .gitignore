@@ -67,3 +67,6 @@ mutated/
 *.pyd
 *.pyc
 **/__pycache__/
+
+**/state.json
+**/voters.json
