@@ -45,7 +45,7 @@
             let province = JSON.parse(userJson).province
             console.log("User Province:", province);
 
-            const data = await window.pywebview.api.get_candidates(provinc, "name");
+            const data = await window.pywebview.api.get_candidates(province, "name");
 
             console.log("Candidates:", data);
 

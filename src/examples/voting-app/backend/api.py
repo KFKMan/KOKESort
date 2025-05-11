@@ -32,9 +32,9 @@ def nameComparer(a, b) -> int:
         b_val = b.name
 
         if a_val > b_val:
-            return -1
-        elif a_val < b_val:
             return 1
+        elif a_val < b_val:
+            return -1
         else:
             return 0
     except Exception as e:

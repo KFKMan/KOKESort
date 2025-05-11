@@ -187,7 +187,6 @@ void SortV1AllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, VariableTypeAr
 
 void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t size, CompareFunction comparer, size_t elementSize)
 {
-    size_t selfArraySize = 1;
     //void* elementBackup = malloc(elementSize);
 
     //printf("SortV1 Self Called \n");
@@ -204,8 +203,6 @@ void SortV1SelfAllocatedNonZeroNonSafe(VariableTypeArray unsortedArr, size_t siz
 
         //printf("Moving Element \n");
         MoveElement(unsortedArr, elementSize, i, insertIndex);
-
-        selfArraySize++;
     }
 }
 

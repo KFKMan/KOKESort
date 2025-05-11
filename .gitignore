@@ -70,3 +70,5 @@ mutated/
 
 **/state.json
 **/voters.json
+
+**/futOutput*
