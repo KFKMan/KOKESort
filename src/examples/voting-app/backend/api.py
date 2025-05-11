@@ -26,6 +26,23 @@ def voteComparer(a, b) -> int:
         traceback.print_exc()
         raise
 
+def nameComparer(a, b) -> int:
+    try:
+        a_val = a.name
+        b_val = b.name
+
+        if a_val > b_val:
+            return -1
+        elif a_val < b_val:
+            return 1
+        else:
+            return 0
+    except Exception as e:
+        print("Error in my_comparer:")
+        print(e)
+        traceback.print_exc()
+        raise
+
 class API:
     def __init__(self):
         self.voters_file = "backend/data/voters.json"
@@ -59,7 +76,7 @@ class API:
         return None
 
 
-    def get_candidates(self, province):
+    def get_candidates(self, province, sort_by = "vote"):
         gil_held = ctypes.pythonapi.PyGILState_Check()
         print(f"Function entry - GIL held: {gil_held}")
 
@@ -85,8 +102,13 @@ class API:
             if mayor["targetCountry"] == province_code
         ]
 
-        sorted_pres_list = KOKESortWrapper.SortV1(pres_list, voteComparer, True)
-        sorted_mayor_list = KOKESortWrapper.SortV1(mayor_list, voteComparer, True)
+        comparer = voteComparer
+
+        if(sort_by == "name"):
+            comparer = nameComparer
+
+        sorted_pres_list = KOKESortWrapper.SortV1(pres_list, comparer, True)
+        sorted_mayor_list = KOKESortWrapper.SortV1(mayor_list, comparer, True)
 
         result = {
             "president": [
