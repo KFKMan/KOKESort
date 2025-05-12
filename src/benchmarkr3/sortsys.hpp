@@ -15,6 +15,7 @@ using SorterFunction = std::function<void(std::vector<int>&)>;
 #define SORT_FN(name, func) { name, [](SORT_VEC) { func(v); } }
 #define SORT_CPP(name, sorter) SORT_FN(name, cppsort::sorter{})
 #define SORT_C(name, cfunc) SORT_FN(name, wrap_c_sort<int>(cfunc))
+#define SORT_C_KOKESortV2(name, cfunc) SORT_FN(name, wrap_c_sort_for_KOKESortV2<int>(cfunc))
 
 inline std::unordered_map<std::string, SorterFunction> get_sorters() {
     return 
@@ -27,6 +28,7 @@ inline std::unordered_map<std::string, SorterFunction> get_sorters() {
         SORT_C("c_quick", quickSort),
         SORT_C("c_selection", selectionSort),
         SORT_C("c_kokev1", SortV1Self),
+        SORT_C_KOKESortV2("c_kokev2_quick", quickSort),
         SORT_CPP("counting",     counting_sorter),
         SORT_CPP("drop_merge",   drop_merge_sorter),
         SORT_CPP("heap",         heap_sorter),

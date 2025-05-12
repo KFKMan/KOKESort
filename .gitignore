@@ -72,3 +72,5 @@ mutated/
 **/voters.json
 
 **/futOutput*
+
+**/benchmark_results*

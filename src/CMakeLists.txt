@@ -193,11 +193,12 @@ include(CPack)
 
 set_target_properties(KOKESort PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-if(WIN32 AND NOT PYBINDWRAPPER)
-    target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
+if(PYBINDWRAPPER)
+message("KOKESORT_STATIC Defined")
+target_compile_definitions(KOKESort PRIVATE KOKESORT_STATIC)
 else()
-    message(INFO "KOKESORT_STATIC Defined")
-    target_compile_definitions(KOKESort PRIVATE KOKESORT_STATIC)
+message("KOKESORT_EXPORTS Defined")
+target_compile_definitions(KOKESort PRIVATE KOKESORT_EXPORTS)
 endif()
 
 #target_compile_definitions(KOKESort PRIVATE KOKESORT_IMPORTS)

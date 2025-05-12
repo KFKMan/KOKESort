@@ -1,8 +1,8 @@
 #pragma once
 #include <functional>
-
-using CompareFunction = int(*)(const void*, const void*);
-using CSortFunction = void(*)(void* arr, size_t size, size_t elemSize, CompareFunction cmp);
+#include <sort.h>
+#include <KOKESortV2.h>
+#include <config.hpp>
 
 template<typename T>
 int default_compare(const void* a, const void* b) {
@@ -20,7 +20,7 @@ int default_compare(const void* a, const void* b) {
 }
 
 template<typename T>
-std::function<void(std::vector<T>&)> wrap_c_sort(CSortFunction sorter) {
+std::function<void(std::vector<T>&)> wrap_c_sort(SortFunction sorter) {
     return [sorter](std::vector<T>& vec) 
     {
         if (vec.empty())
@@ -28,5 +28,25 @@ std::function<void(std::vector<T>&)> wrap_c_sort(CSortFunction sorter) {
             return;
         }
         sorter(static_cast<void*>(vec.data()), vec.size(), sizeof(T), default_compare<T>);
+    };
+}
+
+GenerateValueType Divider = MaxValue / SpaceCount;
+
+size_t indexer(const void *valptr)
+{
+    const GenerateValueType val1 = *(const GenerateValueType *)valptr;
+    return val1 / Divider;
+}
+
+template<typename T>
+std::function<void(std::vector<T>&)> wrap_c_sort_for_KOKESortV2(SortFunction sorter) {
+    return [sorter](std::vector<T>& vec) 
+    {
+        if (vec.empty())
+        {
+            return;
+        }
+        SortV2(static_cast<void*>(vec.data()), vec.size(), sizeof(T), SpaceCount, indexer, default_compare<T>, sorter);
     };
 }

@@ -1,4 +1,3 @@
-#include "sortsys.hpp"
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -7,6 +6,7 @@
 
 #include <sortsys.hpp>
 #include <cwrappersys.hpp>
+#include <config.hpp>
 
 using json = nlohmann::json;
 
@@ -53,21 +53,6 @@ void initialize_csv(const std::string &filename)
         std::cerr << "Error: Could not create file!" << std::endl;
     }
 }
-
-typedef int GenerateValueType;
-
-const int MaxValue = 10000000;
-
-const int SpaceCount = 100;
-
-GenerateValueType Divider = MaxValue / SpaceCount;
-
-size_t indexer(const void *valptr)
-{
-    const GenerateValueType val1 = *(const GenerateValueType *)valptr;
-    return val1 / Divider;
-}
-
 template <typename T>
 std::vector<T> random_vector(size_t size, T min, T max)
 {

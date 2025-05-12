@@ -75,12 +75,12 @@ extern "C" {  /* C++ name mangling */
 #ifdef WINDOWS
     #if defined(KOKESORT_STATIC)
         #define KOKESORT_API
-    #elif defined(KOKESORT_IMPORTS)
-        #define KOKESORT_API __declspec(dllimport)
+    //#elif defined(KOKESORT_IMPORTS)
+    //    #define KOKESORT_API __declspec(dllimport)
     #elif defined(KOKESORT_EXPORTS)
         #define KOKESORT_API __declspec(dllexport)
     #else
-        #define KOKESORT_API
+        #define KOKESORT_API __declspec(dllimport)
     #endif
 #else
     #define KOKESORT_API
