@@ -31,8 +31,6 @@ std::function<void(std::vector<T>&)> wrap_c_sort(SortFunction sorter) {
     };
 }
 
-GenerateValueType Divider = MaxValue / SpaceCount;
-
 size_t indexer(const void *valptr)
 {
     const GenerateValueType val1 = *(const GenerateValueType *)valptr;

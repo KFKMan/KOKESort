@@ -1,3 +1,5 @@
+//It's using https://algorithm-visualizer.org/ Api
+
 const { Array1DTracer, LogTracer, Layout, VerticalLayout, Tracer } = require('algorithm-visualizer');
 
 function generateRandomArray(size, min, max) {

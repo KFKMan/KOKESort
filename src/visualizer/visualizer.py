@@ -2,25 +2,21 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import glob
 import os
-import re
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
 import mplcursors
 from matplotlib.animation import FuncAnimation
-import sys
-import argparse
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+import math
 
 def find_csv_file(directory, name):
-    # İlk olarak belirtilen dizinde arama yap
     directory = os.path.abspath(directory)
     csv_files = glob.glob(os.path.join(directory, name))
     
     if not csv_files:
         print(f"No CSV files found in directory: {directory}. Searching in current directory...")
         
-        # Eğer dosya bulunamazsa, kendi klasöründe ara
         current_directory = os.path.abspath(os.curdir)
         csv_files = glob.glob(os.path.join(current_directory, name))
 
@@ -49,15 +45,44 @@ def print_fit_summary(algorithm_name, r2_scores, best_model_name, coeffs):
     }
 
     print(f"\nAlgorithm: {algorithm_name}\n")
-    print("Model Fits (R² Scores):")
-    for name, (r2, _) in r2_scores.items():
-        print(f"  {name:<10} => R² = {r2:.6f}")
-
     print(f"\nBest Fit: {best_model_name}")
     if best_model_name in model_equations:
         equation_str = model_equations[best_model_name](coeffs)
         print(f"   Approximated Equation:\n     y ≈ {equation_str}")
 
+
+def calculate_smape(y_true, y_pred):
+    denominator = (np.abs(y_true) + np.abs(y_pred)) / 2 + 1e-10  # Avoid division by zero by adding a small constant
+    return np.mean(np.abs(y_true - y_pred) / denominator) * 100
+
+def calculate_metrics(y_true, y_pred, k):
+    n = len(y_true)
+    residuals = y_true - y_pred
+
+    # MAE, MSE, RMSE
+    mae = mean_absolute_error(y_true, y_pred)
+    mse = mean_squared_error(y_true, y_pred)
+    rmse = math.sqrt(mse)
+
+    # MAPE
+    mape = np.mean(np.abs((y_true - y_pred) / (y_true + 1e-10))) * 100
+
+    smape = calculate_smape(y_true, y_pred)
+
+    # AIC, BIC
+    rss = np.sum(residuals ** 2)
+    aic = n * np.log(rss / n + 1e-10) + 2 * k
+    bic = n * np.log(rss / n + 1e-10) + k * np.log(n)
+
+    return {
+        "MAE": mae,
+        "MSE": mse,
+        "RMSE": rmse,
+        "MAPE (%)": mape,
+        "SMAPE (%)": smape,
+        "AIC": aic,
+        "BIC": bic,
+    }
 
 def analyze_fit(x, y, algorithm_name=None):
     x = np.array(x)
@@ -67,27 +92,30 @@ def analyze_fit(x, y, algorithm_name=None):
         x_reshaped = x_transformed.reshape(-1, 1)
         model = LinearRegression().fit(x_reshaped, y)
         y_pred = model.predict(x_reshaped)
-        return r2_score(y, y_pred), model
+
+        r2 = r2_score(y, y_pred)
+        metrics = calculate_metrics(y, y_pred, k=2)  # slope + intercept
+
+        return r2, model, y_pred, metrics
 
     # Inputs
     x_linear = x
-    x_nlogn = x * np.log2(x)
+    x_nlogn = x * np.log2(x + 1e-10) #Very little value for avoiding log(0)
     x_quadratic = x ** 2
 
     # Calculating R² scores
-    r2_linear, _ = fit_and_score(x_linear)
-    r2_nlogn, _ = fit_and_score(x_nlogn)
-    r2_quadratic, _ = fit_and_score(x_quadratic)
+    r2_linear, model_linear, pred_linear, metrics_linear = fit_and_score(x_linear)
+    r2_nlogn, model_nlogn, pred_nlogn, metrics_nlogn = fit_and_score(x_nlogn)
+    r2_quadratic, model_quadratic, pred_quadratic, metrics_quadratic = fit_and_score(x_quadratic)
 
-    # Best R²
     r2_scores = {
-        "O(n)": (r2_linear, x_linear),
-        "O(n log n)": (r2_nlogn, x_nlogn),
-        "O(n^2)": (r2_quadratic, x_quadratic)
+        "O(n)":      (r2_linear, x_linear, pred_linear, metrics_linear),
+        "O(n log n)":(r2_nlogn, x_nlogn, pred_nlogn, metrics_nlogn),
+        "O(n^2)":    (r2_quadratic, x_quadratic, pred_quadratic, metrics_quadratic),
     }
 
     best_model_name = max(r2_scores, key=lambda k: r2_scores[k][0])
-    best_r2, best_x = r2_scores[best_model_name]
+    best_r2, best_x, best_pred, best_metrics = r2_scores[best_model_name]
 
     # Polinom Fit
     coeffs = np.polyfit(best_x, y, 1)
@@ -95,15 +123,17 @@ def analyze_fit(x, y, algorithm_name=None):
 
     if algorithm_name:
         print(f"\nAlgorithm: {algorithm_name}")
-        for name, (r2, _) in r2_scores.items():
+        for name, (r2, _, _, metrics) in r2_scores.items():
             print(f"{name:<10}: R² = {r2:.6f}")
+            for metric_name, value in metrics.items():
+                print(f"  {metric_name:<10}: {value:.4f}")
         print(f"Best fit  : {best_model_name}")
         print_fit_summary(algorithm_name, r2_scores, best_model_name, coeffs)
 
     return fit_fn, best_x
 
 
-def plot_time_complexity(directory, degree):
+def plot_time_complexity(directory):
     directory = os.path.abspath(directory)
     csv_files = [find_csv_file(directory, "benchmark_results.csv")]
 
@@ -114,7 +144,6 @@ def plot_time_complexity(directory, degree):
     for file in csv_files:
         df = pd.read_csv(file)
         
-        # Burada tüm satırlardaki verileri işliyoruz
         for index, row in df.iterrows():
             algorithm_name = row['Algorithm']
             dataset_size = row['Size']
@@ -123,7 +152,6 @@ def plot_time_complexity(directory, degree):
             if algorithm_name not in algorithm_data:
                 algorithm_data[algorithm_name] = {'sizes': [], 'times': []}
             
-            # Verileri algoritmaya göre ekliyoruz
             algorithm_data[algorithm_name]['sizes'].append(dataset_size)
             algorithm_data[algorithm_name]['times'].append(time_value)
 
@@ -135,12 +163,10 @@ def plot_time_complexity(directory, degree):
         unique_sizes = np.unique(sizes)
 
         for size in unique_sizes:
-            # Aynı boyut için ilgili zamanları alıyoruz
             corresponding_times = [times[i] for i in range(len(sizes)) if sizes[i] == size]
-            # Minimi alıyoruz
+
             min_times.append(min(corresponding_times))
 
-        # Her algoritma için farklı çizim
         plt.plot(sizes, min_times, label=algorithm_name)
 
     global_min = 1000000000 * 1000 
@@ -164,11 +190,10 @@ def plot_time_complexity(directory, degree):
         mean_y = np.mean(averaged_y)
         std_y = np.std(averaged_y)
 
-        # Verilerin çoğu 1 veya 2 standart sapma içinde yer alır, bu sınırları kullanabiliriz
-        threshold_low = mean_y - 2 * std_y  # Ortalamadan 2 standart sapma düşük
-        threshold_high = mean_y + 2 * std_y  # Ortalamadan 2 standart sapma yüksek
+        threshold_low = mean_y - 2 * std_y
+        threshold_high = mean_y + 2 * std_y
 
-        # Filtreleme, yani aşırı uç Y değerlerini çıkart
+        # Filter, remove very high and low values
         valid_indices = (averaged_y >= threshold_low) & (averaged_y <= threshold_high)
         filtered_x = unique_x[valid_indices]
         filtered_y = averaged_y[valid_indices]
@@ -177,25 +202,6 @@ def plot_time_complexity(directory, degree):
         global_max = max(global_max, max(filtered_y))
 
         line, = plt.plot(filtered_x, filtered_y, 'o', label=f'{algorithm_name} Data')
-        
-        '''
-        log_filtered_x = np.log(filtered_x)
-        log_filtered_y = np.log(filtered_y)
-
-        poly_coeffs = np.polyfit(log_filtered_x, log_filtered_y, degree)
-        p = np.poly1d(poly_coeffs)
-
-        fitline, = plt.plot(log_filtered_x, p(log_filtered_x), '--', label=f'{algorithm_name} Fit')
-        '''
-
-        '''
-        # Filtrelenmiş verilerle polinom fit yap
-        poly_coeffs = np.polyfit(filtered_x, filtered_y, degree)
-        p = np.poly1d(poly_coeffs)
-
-        # Veriyi ve fit çizgisini çiz
-        fitline, = plt.plot(filtered_x, p(filtered_x), '--', label=f'{algorithm_name} Fit')
-        '''
 
         fit_fn, fit_x = analyze_fit(filtered_x, filtered_y, algorithm_name)
         fitline, = plt.plot(filtered_x, fit_fn(fit_x), '--', label="quick best fit")
@@ -216,32 +222,6 @@ def plot_time_complexity(directory, degree):
         print("Filtered Y:",filtered_y)
 
         algFuncs += f"Polynomial fit for {algorithm_name}:\n"
-        #algFuncs += f"f(x) = {poly_coeffs[0]} * x^2 + {poly_coeffs[1]} * x + {poly_coeffs[2]}\n\n"
-
-        '''
-        print(poly_coeffs)
-
-        for i in range(degree, -1, -1):
-            coef = poly_coeffs[degree - i]
-    
-            if coef == 0:
-                continue  # Katsayı sıfırsa eklemeyelim
-    
-            term = f"{abs(coef):.20f}"  # Mutlak değeri alarak katsayıyı yazdır (ondalık hassasiyeti ayarlanabilir)
-    
-            if i > 0:
-                term += f" * x^{i}"
-    
-            if i == degree:  
-                # İlk terim ise işareti kontrol etmeye gerek yok
-                algFuncs += term
-            else:
-                # İşarete göre + veya - ekleyelim
-                sign = " + " if coef > 0 else " - "
-                algFuncs += sign + term
-
-        algFuncs += "\n\n"
-        '''
 
 
     print("Global Min:", global_min)
@@ -250,8 +230,7 @@ def plot_time_complexity(directory, degree):
     plt.ylim(global_min * 0.7, global_max * 1.3)
     plt.xlabel('Parameter Size (Array Size)')
     plt.ylabel('Elapsed Time')
-    plt.title('Time Complexity Comparison with Polynomial Fit')
-    #plt.legend()
+    plt.title('Time Complexity Comparison')
 
     plt.legend(loc='upper left', bbox_to_anchor=(1, 1), title='Algorithms', fontsize='x-small')
     plt.tight_layout()
@@ -261,9 +240,4 @@ def plot_time_complexity(directory, degree):
 
 directory = r"..\benchres"
 
-parser = argparse.ArgumentParser(description="Generate and save unsorted arrays.")
-parser.add_argument("--degree", type=int, default=2, help="Polynom fit degree")
-
-args = parser.parse_args();
-
-plot_time_complexity(directory, args.degree)
+plot_time_complexity(directory)

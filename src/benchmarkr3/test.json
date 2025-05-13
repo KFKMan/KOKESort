@@ -29,5 +29,7 @@
     "USE_V1": true,
     "dataset_size": [10000, 100000],
     "repeat_size": 3,
-    "repeat_dataset": 3
+    "repeat_dataset": 3,
+    "V2_DYNAMIC": true,
+    "V2_DYNAMIC_DIVIDER": 1000
 }  

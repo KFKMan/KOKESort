@@ -1,6 +1,6 @@
 git clone https://github.com/ninja-build/ninja.git
-cd ninja
+Set-Location ninja
 git checkout release
 
-cmake -Bbuild-cmake
+cmake -B build-cmake
 cmake --build build-cmake

@@ -90,6 +90,9 @@ int main()
     size_t repeat_size = config.value("repeat_size", 3);
     size_t repeat_set = config.value("repeat_dataset", 3);
 
+    bool v2_use_dynamic_size = config.value("V2_DYNAMIC", false);
+    size_t v2_divider = config.value("V2_DYNAMIC_DIVIDER", 100);
+
     const std::string filename = "benchmark_results.csv";
     initialize_csv(filename);
 
@@ -105,6 +108,13 @@ int main()
 
     for (size_t size : sizes)
     {
+        std::cout << "Benchmarking for dataset size: " << size << std::endl;
+        if(v2_use_dynamic_size)
+        {
+            std::cout << "Dynamic Space Count: " << size / v2_divider << std::endl;
+            SetSpaceCount(size / v2_divider);
+        }
+
         // Repeat Per Dataset Size
         for (size_t dataset_idx = 0; dataset_idx < repeat_size; ++dataset_idx)
         {

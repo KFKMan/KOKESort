@@ -9,7 +9,7 @@ const chart = new ChartTracer();
 const tracer = new Array1DTracer();
 const logger = new LogTracer();
 Layout.setRoot(new VerticalLayout([chart, tracer, logger]));
-const D = Randomize.Array1D({ N: 15, value: () => Randomize.Integer({ min: 0, max: 1000 }), sorted: true });
+const D = Randomize.Array1D({ N: 15, value: () => Randomize.Integer({ min: 0, max: 1000 }), sorted: false });
 tracer.set(D);
 tracer.chart(chart);
 Tracer.delay();
@@ -104,7 +104,7 @@ function KOKESort(array) {
     for (let i = 1; i < size; i++) 
     {
         tracer.select(i);
-        let element = getValue(i);
+        let element = array[i];
         addElementToSortedArray(array, i, element, i);
     }
 }
