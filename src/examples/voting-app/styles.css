@@ -49,18 +49,18 @@ html {
     display: block;
 }
 
-#info-box{
+.info-box{
     display: block;
     width: 100%;
     align-items: center;
     align-content: center;
 }
 
-#info-name{
+.info-name{
     text-align: center;
 }
 
-#candidates_container {
+.candidates_container {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;

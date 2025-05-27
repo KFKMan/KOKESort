@@ -25,8 +25,15 @@ option(USE_RESTRAURANT_APP "Build Restaurant App" OFF)
 
 option(USE_MUTATION_TESTS "Using mutation tests" OFF)
 
+option(USE_PARALLEL_SUPPORT "Using parallel support" OFF)
+
 message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
 message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")
+
+if(USE_PARALLEL_SUPPORT)
+    set(CMAKE_C_STANDARD 17)
+    set(CMAKE_C_STANDARD_REQUIRED ON)
+endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
 include(get_cpm)
@@ -125,6 +132,10 @@ endif()
 
 set(SRC_FILES KOKESort.c KOKESortV2.c Global.c csv.c)
 set(INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(USE_PARALLEL_SUPPORT)
+    list(APPEND SRC_FILES cthreads.c KOKESortV2Parallel.c)
+endif()
 
 if(USE_GENERATOR)
 # ➤ Fonksiyonları ve parametrelerini tanımla

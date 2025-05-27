@@ -73,6 +73,8 @@ std::vector<T> random_vector(size_t size, T min, T max)
 
 int main()
 {
+    std::cout << "Starting Benchmarking..." << std::endl;
+
     std::ifstream file("test.json");
     if (!file)
     {
@@ -130,6 +132,11 @@ int main()
                     {
                         std::cout << "Benchmarking " << algo_name << " on " << size << " elements (Repeat " << repeat + 1 << " of Dataset " << dataset_idx + 1 << ")" << std::endl;
                         benchmark_sort(data, algo->second, algo_name, size, filename);
+                        std::cout << "Finished " << algo_name << " on " << size << " elements." << std::endl;
+
+                        std::cout << "Clearing last sort data..." << std::endl;
+                        ClearLastSortData(size, sizeof(GenerateValueType));
+                        std::cout << "Last sort data cleared." << std::endl;
                     }
                 }
             }

@@ -3,6 +3,7 @@ const MAP_COLOR = "#fff2e3";
 
 let infoName = document.getElementById("info-name");
 const container = document.getElementById("candidates_container");
+const presidentContainer = document.getElementById("presidents_container");
 
 function waitForAPI() {
   return new Promise((resolve) => {
@@ -58,6 +59,7 @@ async function initMap() {
 
           console.log("Candidate Data:", data);
           container.innerHTML = ""; // Clear
+          presidentContainer.innerHTML = ""; // Clear
 
           if (data && data.mayor) 
           {
@@ -78,6 +80,22 @@ async function initMap() {
           {
             container.innerHTML = "<p>No candidate found</p>";
           }
+
+          if (data && data.president) 
+          {
+            for (let key in data.president) {
+              const div = document.createElement("div");
+              let fullName = data.president[key].name;
+              let voteCount = data.president[key].voteCount;
+              div.className = "candidate-card";
+              div.innerHTML = `
+                <img src="images/default.jpg" alt="${fullName}">
+                <h4>${fullName}</h4>
+                <p>Vote Count: ${voteCount || 0}</p>
+              `;
+              presidentContainer.appendChild(div);
+            }
+          } 
         } catch (err) {
           console.error("Error accoured on getting candidates:", err);
           container.innerHTML = "<p>Error accoured.</p>";

@@ -74,3 +74,5 @@ mutated/
 **/futOutput*
 
 **/benchmark_results*
+
+**/CMakePresets.json

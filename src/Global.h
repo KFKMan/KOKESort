@@ -32,6 +32,28 @@ extern "C" {  /* C++ name mangling */
 #define debugErrorFast(fmt, ...) 
 #endif
 
+#ifdef DEBUG
+    #include <stdio.h>
+    #include <time.h>
+
+    #define K_LOG_DEBUG(fmt, ...) \
+        do { \
+            time_t rawtime; \
+            struct tm *timeinfo; \
+            char timeStr[20]; \
+            time(&rawtime); \
+            timeinfo = localtime(&rawtime); \
+            strftime(timeStr, sizeof(timeStr), "%Y-%m-%d %H:%M:%S", timeinfo); \
+            fprintf(stderr, "[DEBUG] %s %s:%d: " fmt "\n", timeStr, __FILE__, __LINE__, ##__VA_ARGS__); \
+            fflush(stderr); \
+        } while(0)
+#else
+    #define K_LOG_DEBUG(fmt, ...) do {} while(0)
+#endif
+
+
+#define K_LOG_ERROR(fmt, ...) fprintf(stderr, "[Error][%s:%d] " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+
 //https://stackoverflow.com/a/5920028
 //https://stackoverflow.com/a/18729350
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -85,6 +107,15 @@ extern "C" {  /* C++ name mangling */
 #else
     #define KOKESORT_API
 #endif
+
+#ifdef WINDOWS
+#include <Windows.h>
+#else
+#include <sys/mman.h>
+#include <errno.h>
+#endif
+
+#define LONG_INFINITE ((unsigned long)-1)
 
 #ifdef USE_COMPARER
 KOKESORT_API void* GetIndex(void* arr, size_t index, unsigned int elementSize);

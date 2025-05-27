@@ -25,13 +25,14 @@ std::function<void(std::vector<T>&)> wrap_c_sort(SortFunction sorter) {
     {
         if (vec.empty())
         {
+            std::cerr << "Error: Vector is empty!" << std::endl;
             return;
         }
         sorter(static_cast<void*>(vec.data()), vec.size(), sizeof(T), default_compare<T>);
     };
 }
 
-size_t indexer(const void *valptr)
+size_t indexer(const void *valptr, const void *data)
 {
     const GenerateValueType val1 = *(const GenerateValueType *)valptr;
     return val1 / Divider;
@@ -43,8 +44,9 @@ std::function<void(std::vector<T>&)> wrap_c_sort_for_KOKESortV2(SortFunction sor
     {
         if (vec.empty())
         {
+            std::cerr << "Error: Vector is empty!" << std::endl;
             return;
         }
-        SortV2(static_cast<void*>(vec.data()), vec.size(), sizeof(T), SpaceCount, indexer, default_compare<T>, sorter);
+        LastSortData = SortV2(static_cast<void*>(vec.data()), vec.size(), sizeof(T), SpaceCount, indexer, nullptr, default_compare<T>, sorter);
     };
 }

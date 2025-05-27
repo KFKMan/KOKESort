@@ -1,12 +1,5 @@
 #include "Global.h"
 
-#ifdef WINDOWS
-#include <Windows.h>
-#else
-#include <sys/mman.h>
-#include <errno.h>
-#endif
-
 int TestFunction(void)
 {
     return 1;

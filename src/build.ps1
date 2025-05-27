@@ -12,6 +12,13 @@ param (
     [switch]$EnableDocs = $false                   # Enable documentation generation
 )
 
+Write-Host "All Parameters:"
+Write-Host "-------------------------"
+$MyInvocation.MyCommand.Parameters.Keys | ForEach-Object {
+    $val = Get-Variable -Name $_ -ValueOnly -ErrorAction SilentlyContinue
+    Write-Host ("{0,-24}: {1}" -f $_, $val)
+}
+
 # ─────────────────────────────────────────────────────────────
 # Exclusive check: Only one of the test modes can be active
 $activeModes = @()

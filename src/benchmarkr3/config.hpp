@@ -9,8 +9,21 @@ int SpaceCount = 100;
 
 GenerateValueType Divider = MaxValue / SpaceCount;
 
+static PossibilitySpace* LastSortData = nullptr;
+
+void ClearLastSortData(size_t elementCount, size_t elementSize)
+{
+    if (LastSortData != nullptr)
+    {
+        FreePossibilitySpaceArray(LastSortData, SpaceCount, elementSize);
+        LastSortData = nullptr;
+    }
+
+    // Clear other resources if needed
+}
+
 void SetSpaceCount(int spaceCount)
 {
     SpaceCount = spaceCount;
-    Divider = MaxValue / SpaceCount;
+    Divider = (MaxValue / SpaceCount) + 1; // +1 for fixing floating and zero values
 }
