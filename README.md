@@ -12,18 +12,18 @@ KOKE Sort is a **cross-platform** corresponding library written in **C** as a mo
 
 **USING SCRIPTS**
 
-In Windows you can directly use (if requiretments installed) scripts with extension "**.bat**" for example install-ninja-source**.bat**
+In Windows you can directly use (if requiretments installed) scripts with extension "**.bat**" for example `install-ninja-source.bat`
 
-In Linux/MacOS you need to use scripts with extensions "**.sh**" (for example install-ninja-source**.sh**) with run permission, you can give run permission with `chmod +x filename` command (filename must be replaced with scripts fullname) for example `chmod +x install-ninja-source.sh`
+In Linux/MacOS you need to use scripts with extensions "**.sh**" (for example `install-ninja-source.sh`) with run permission, you can give run permission with `chmod +x filename` command (filename must be replaced with scripts fullname) for example `chmod +x install-ninja-source.sh`
 
 **PROJECT PARTS**
 
 * Library (src)
 * Test App (src/test)
-* Example App
-* Restaurant App
+* Example App (Voting App)
 * Fusion (fut)
-* OOP based Library (src/HighLevel/KOKESort/KOKESort) with Tests (src/HighLevel/KOKESort/UnitTests) and Example Appe (src/HighLevel/KOKESort/KOKESort.Example)
+* OOP based Library (src/HighLevel/KOKESort/KOKESort) with Tests (src/HighLevel/KOKESort/UnitTests) and Example Appe (src/HighLevel/KOKESort/KOKESort.Example) [Deprecated]
+* Mutation Tool (mutator/KOKEMutator)
 * C# Interop Example (src/HighLevel/KOKESort/KOKESort.ExampleInterop)
 * Python Wrapper (src/pybindwrapper): for using it in python you need to have KOKESort build files in the same directory.
 

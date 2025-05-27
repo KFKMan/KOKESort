@@ -44,20 +44,21 @@ typedef struct CountThreadArgs
     PossibilitySpace *pbSpaces;            
     size_t pbSpaceCount;                    // Maximum number of spaces (limit of indexer result)
     SpaceIndexerFn indexerFn;               // Function that extracts space index from element
+    void* indexerFnData;
+
     k_atomic_bool *errorFlag;               // Shared error flag
 } CountThreadArgs;
 
 typedef struct {
-    void* array;
-    size_t start, end;
+    void* startPoint;
+    size_t processCount;
     size_t elementSize;
 
     
-    PossibilitySpace* spaces;
+    PossibilitySpace* pbSpaces;
     size_t pbSpaceCount;
 
     SpaceIndexerFn indexerFn;
-
     void* indexerFnData;
 } CopyThreadArgs;
 
