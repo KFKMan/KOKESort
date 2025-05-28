@@ -98,6 +98,16 @@ struct cthreads_args {
   #if _POSIX_C_SOURCE >= 200112L
     #define CTHREADS_RWLOCK 1
   #endif
+
+  #if defined(__GLIBC__) && defined(__GLIBC_PREREQ)
+  #if __GLIBC_PREREQ(2, 3)
+    #define HAS_PTHREAD_TIMEDJOIN_NP 1
+  #else
+    #define HAS_PTHREAD_TIMEDJOIN_NP 0
+  #endif
+#else
+  #define HAS_PTHREAD_TIMEDJOIN_NP 0
+#endif
 #endif
 
 struct cthreads_thread {

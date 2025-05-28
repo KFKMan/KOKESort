@@ -170,7 +170,7 @@ int cthreads_thread_timedjoin(struct cthreads_thread thread, unsigned long timeo
     {
         return pthread_join(thread.pThread, NULL) == 0 ? 1 : 0;
     }
-#if defined(LINUX)
+#if HAS_PTHREAD_TIMEDJOIN_NP
     struct timespec timeout;
     clock_gettime(CLOCK_REALTIME, &timeout);
     timespec_add_ms(&timeout, timeoutMs);
