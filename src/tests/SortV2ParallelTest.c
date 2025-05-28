@@ -88,7 +88,7 @@ int main(void)
 
         K_LOG_DEBUG("Test %d: Divider = %d, Max = %d, SpaceCount = %d", rows, 10, max, spaceCount);
 
-        PossibilitySpace* result = SortV2_Parallel(arr, count, sizeof(int), spaceCount, indexerFunction, NULL, intComparer, qsort, 2, 1000 * 300);
+        PossibilitySpace* result = SortV2_Parallel(arr, count, sizeof(int), spaceCount, indexerFunction, NULL, intComparer, qsort, 1, 1000 * 300);
         void* resultArr = ToArray(result, spaceCount, count, sizeof(int));
 
         test_count++;
