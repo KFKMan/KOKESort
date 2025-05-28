@@ -190,6 +190,9 @@ int cthreads_thread_timedjoin(struct cthreads_thread thread, unsigned long timeo
     }
 
 #else
+    return pthread_join(thread.pThread, NULL) == 0 ? 1 : 0;
+
+        /*
     struct timespec start, now;
     clock_gettime(CLOCK_MONOTONIC, &start);
 
@@ -213,6 +216,7 @@ int cthreads_thread_timedjoin(struct cthreads_thread thread, unsigned long timeo
         struct timespec delay = {0, 10000000}; // 10ms
         nanosleep(&delay, NULL);
     }
+        */
 #endif
 #endif
 }
