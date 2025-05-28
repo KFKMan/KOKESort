@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SecureFunctions.h"
+#include <time.h>
 
 #ifdef __cplusplus
 extern "C" {  /* C++ name mangling */
