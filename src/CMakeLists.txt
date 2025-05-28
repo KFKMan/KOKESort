@@ -35,6 +35,22 @@ if(USE_PARALLEL_SUPPORT)
     set(CMAKE_C_STANDARD_REQUIRED ON)
 endif()
 
+include(CheckCSourceCompiles)
+
+check_c_source_compiles("
+  #include <pthread.h>
+  #include <time.h>
+  int main() {
+      pthread_t t;
+      struct timespec ts = {0};
+      return pthread_timedjoin_np(t, NULL, &ts);
+  }
+" HAVE_PTHREAD_TIMEDJOIN_NP)
+
+if(HAVE_PTHREAD_TIMEDJOIN_NP)
+    add_definitions(-DHAVE_PTHREAD_TIMEDJOIN_NP)
+endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts)
 include(get_cpm)
 
