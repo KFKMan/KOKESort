@@ -52,7 +52,16 @@ extern "C" {  /* C++ name mangling */
 #endif
 
 
-#define K_LOG_ERROR(fmt, ...) fprintf(stderr, "[Error][%s:%d] " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+#define K_LOG_ERROR(fmt, ...) do { \
+            time_t rawtime; \
+            struct tm *timeinfo; \
+            char timeStr[20]; \
+            time(&rawtime); \
+            timeinfo = localtime(&rawtime); \
+            strftime(timeStr, sizeof(timeStr), "%Y-%m-%d %H:%M:%S", timeinfo); \
+            fprintf(stderr, "[ERROR] %s %s:%d: " fmt "\n", timeStr, __FILE__, __LINE__, ##__VA_ARGS__); \
+            fflush(stderr); \
+        } while(0)
 
 //https://stackoverflow.com/a/5920028
 //https://stackoverflow.com/a/18729350

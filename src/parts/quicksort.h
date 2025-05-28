@@ -9,10 +9,8 @@ extern "C" {  /* C++ name mangling */
 
 #define quickSort qsort
 
-KOKESORT_API void quickSortBasic(void *arr, size_t low, size_t high, size_t elementSize, CompareFunction cmp);
-
 #ifdef __cplusplus
- };
+};
 #endif
 
 #endif

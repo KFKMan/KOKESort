@@ -37,6 +37,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Global.h"
 #include <time.h>
 
+#ifdef __cplusplus
+extern "C" {  /* C++ name mangling */
+#endif
+
 struct cthreads_args {
   void *(*func)(void *data);
   void *data;
@@ -576,6 +580,10 @@ size_t cthreads_error_string(int error_code, char *buf, size_t length);
   * @return 0 on success, non-zero error code on failure.
   */
   int cthreads_sem_destroy(struct cthreads_semaphore *sem);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* CTHREADS_H */

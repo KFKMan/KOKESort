@@ -113,8 +113,9 @@ int main()
         std::cout << "Benchmarking for dataset size: " << size << std::endl;
         if(v2_use_dynamic_size)
         {
-            std::cout << "Dynamic Space Count: " << size / v2_divider << std::endl;
-            SetSpaceCount(size / v2_divider);
+            int spaceCount = (size / v2_divider) + 1; // +1 for fixing floating and zero values
+            std::cout << "Dynamic Space Count: " << spaceCount << std::endl;
+            SetSpaceCount(spaceCount);
         }
 
         // Repeat Per Dataset Size

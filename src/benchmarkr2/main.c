@@ -113,7 +113,7 @@ void benchmarkSortFunction(DATA_TYPE id, const DATA_TYPE *data, size_t size, Sor
 
     elapsed = end - start;
 
-    printf("%s | %zu --> ", sortFnEntry.name, size);
+    printf("%s | " SIZE_T_IDENTIFIER " --> ", sortFnEntry.name, size);
     formatDuration(elapsed);
 
     char saveFile[R2_MAX_FILENAME];

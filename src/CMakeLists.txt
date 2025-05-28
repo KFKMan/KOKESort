@@ -25,7 +25,7 @@ option(USE_RESTRAURANT_APP "Build Restaurant App" OFF)
 
 option(USE_MUTATION_TESTS "Using mutation tests" OFF)
 
-option(USE_PARALLEL_SUPPORT "Using parallel support" OFF)
+option(USE_PARALLEL_SUPPORT "Using parallel support" ON) #Don't change it, currently not supporting OFF parameter
 
 message("C Compiler ID: ${CMAKE_C_COMPILER_ID}")
 message("CXX Compiler ID: ${CMAKE_C_COMPILER_ID}")

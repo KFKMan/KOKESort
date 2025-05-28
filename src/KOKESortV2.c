@@ -141,7 +141,7 @@ PossibilitySpace* SortV2(void *array, size_t arraySize, size_t elementSize, size
     if (!CountPossibilitySpaces(array, arraySize, elementSize, pbSpaceCount, indexerFn, indexerFnData, pbSpaces))
     {
         K_LOG_ERROR("Failed to count possibility spaces.");
-        FreePossibilitySpaceArray(&pbSpaces, pbSpaceCount, elementSize);
+        FreePossibilitySpaceArray(pbSpaces, pbSpaceCount, elementSize);
         return NULL;
     }
 
@@ -149,7 +149,7 @@ PossibilitySpace* SortV2(void *array, size_t arraySize, size_t elementSize, size
     if (!AllocatePossibilitySpaceElements(elementSize, pbSpaceCount, pbSpaces))
     {
         K_LOG_ERROR("Failed to allocate elements for possibility spaces.");
-        FreePossibilitySpaceArray(&pbSpaces, pbSpaceCount, elementSize);
+        FreePossibilitySpaceArray(pbSpaces, pbSpaceCount, elementSize);
         return NULL;
     }
 
@@ -157,7 +157,7 @@ PossibilitySpace* SortV2(void *array, size_t arraySize, size_t elementSize, size
     if (!CopyElementsToPossibilitySpaces(array, arraySize, elementSize, pbSpaceCount, pbSpaces, indexerFn, indexerFnData))
     {
         K_LOG_ERROR("Failed to copy elements to possibility spaces.");
-        FreePossibilitySpaceArray(&pbSpaces, pbSpaceCount, elementSize);
+        FreePossibilitySpaceArray(pbSpaces, pbSpaceCount, elementSize);
         return NULL;
     }
 
@@ -165,7 +165,7 @@ PossibilitySpace* SortV2(void *array, size_t arraySize, size_t elementSize, size
     if (!SortPossibilitySpaces(pbSpaceCount, pbSpaces, elementSize, comparerFn, sortFn))
     {
         K_LOG_ERROR("Failed to sort possibility spaces.");
-        FreePossibilitySpaceArray(&pbSpaces, pbSpaceCount, elementSize);
+        FreePossibilitySpaceArray(pbSpaces, pbSpaceCount, elementSize);
         return NULL;
     }
 
@@ -244,7 +244,7 @@ bool CountPossibilitySpaces(
 
         if (index >= pbSpaceCount)
         {
-            K_LOG_ERROR("indexerFn returned invalid index: %zu", index);
+            K_LOG_ERROR("indexerFn returned invalid index: " SIZE_T_IDENTIFIER, index);
             return false;
         }
 
@@ -302,7 +302,7 @@ bool CopyElementsToPossibilitySpaces(
         // Check if index is within bounds
         if (index >= pbSpaceCount)
         {
-            K_LOG_ERROR("indexerFn returned out-of-bounds index: %zu", index);
+            K_LOG_ERROR("indexerFn returned out-of-bounds index: " SIZE_T_IDENTIFIER, index);
             return false;
         }
 
@@ -311,7 +311,7 @@ bool CopyElementsToPossibilitySpaces(
         // Out of bounds check for target space
         if (target->Size >= target->Capacity)
         {
-            K_LOG_ERROR("Target space index %zu is out of bounds. Size: %zu, Capacity: %zu", index, target->Size, target->Capacity);
+            K_LOG_ERROR("Target space index " SIZE_T_IDENTIFIER " is out of bounds. Size: " SIZE_T_IDENTIFIER ", Capacity: " SIZE_T_IDENTIFIER, index, target->Size, target->Capacity);
             return false;
         }
 

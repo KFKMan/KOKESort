@@ -2,6 +2,7 @@
 #include <functional>
 #include <sort.h>
 #include <KOKESortV2.h>
+#include <KOKESortV2Parallel.h>
 #include <config.hpp>
 
 template<typename T>
@@ -48,5 +49,20 @@ std::function<void(std::vector<T>&)> wrap_c_sort_for_KOKESortV2(SortFunction sor
             return;
         }
         LastSortData = SortV2(static_cast<void*>(vec.data()), vec.size(), sizeof(T), SpaceCount, indexer, nullptr, default_compare<T>, sorter);
+    };
+}
+
+template<typename T>
+std::function<void(std::vector<T>&)> wrap_c_sort_for_KOKESortV2_Parallel(SortFunction sorter) {
+    return [sorter](std::vector<T>& vec) 
+    {
+        if (vec.empty())
+        {
+            std::cerr << "Error: Vector is empty!" << std::endl;
+            return;
+        }
+
+        // TODO: Add thread count and timeout parameters option
+        LastSortData = SortV2_Parallel(static_cast<void*>(vec.data()), vec.size(), sizeof(T), SpaceCount, indexer, nullptr, default_compare<T>, sorter, 5, 1000 * 300);
     };
 }
