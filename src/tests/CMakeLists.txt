@@ -3,6 +3,12 @@ project(KOKESortTest VERSION 0.1.0 LANGUAGES C)
 
 message(STATUS "Working on tests...")
 
+if(DEFINED ENV{GITHUB_ACTIONS})
+    set(IS_GITHUB_ACTIONS TRUE)
+else()
+    set(IS_GITHUB_ACTIONS FALSE)
+endif()
+
 set(TARGET_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 if(USE_MUTATION_TESTS)
@@ -30,6 +36,8 @@ endif()
 
 file(GLOB TEST_SOURCES "${TARGET_DIR}/*.c")
 
+
+
 foreach(TEST_FILE ${TEST_SOURCES})
     get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
 
@@ -41,6 +49,10 @@ foreach(TEST_FILE ${TEST_SOURCES})
 
     target_include_directories(${TEST_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../ ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../parts)
 
+    if(IS_GITHUB_ACTIONS)
+        target_compile_definitions(${TEST_NAME} PRIVATE GITHUB_ACTIONS)
+    endif()
+    
     #set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
 
     add_custom_command(TARGET ${TEST_NAME} POST_BUILD

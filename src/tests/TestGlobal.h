@@ -6,6 +6,7 @@
 #include <string.h>
 #include "SecureFunctions.h"
 #include "KOKESort.h"
+#include "Global.h"
 
 
 #ifdef _WIN32
